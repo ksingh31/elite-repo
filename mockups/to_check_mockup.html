@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup: To check (resolve invoice rows)</title>
+<style>
+/* Same tokens as the real app */
+:root{color-scheme:light dark;--bg:light-dark(#f2f5f7,#0b131e);--card:light-dark(#fff,#121e2f);--ink:light-dark(#17212c,#e5ecf2);--mute:light-dark(#5a6774,#93a3b4);--line:light-dark(#dbe3e9,#23344a);--navy:#14263d;--teal:light-dark(#0d7a75,#41c4b9);--tealbg:light-dark(#e2f0ef,#103534);--alt:light-dark(#f4f7f9,#16253a);--red:light-dark(#b42318,#ff8f85);--redbg:light-dark(#fdeceb,#3a1a1a);--field:light-dark(#fff,#0d1826);--up:light-dark(#b45309,#ffb35c);
+  --okbg:light-dark(#e3f4ee,#0f3a2f);--okfg:light-dark(#0d6b52,#6fe0bd);--duebg:light-dark(#fdecdc,#3a2a10);--duefg:light-dark(#a24a07,#ffc27a);--nobg:light-dark(#e8edf3,#1d2c40);--nofg:light-dark(#3b4b60,#a9b8c9);--upbox:light-dark(#f7fbfb,#0f1a29);
+  --purbg:light-dark(#efeafd,#2a2142);--purfg:light-dark(#5b3fb5,#c4b3ff);--hl:light-dark(#fff3cd,#3a3214)}
+:root.force-light{color-scheme:light}:root.force-dark{color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;margin:0;font-weight:800}
+h2{font-size:18px;margin:0 0 4px;color:var(--teal)}
+.lbl{font-size:13px;color:var(--mute)}
+.num,.mn{font-variant-numeric:tabular-nums}
+.mn{white-space:nowrap;font-weight:700}
+.nw{white-space:nowrap}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+/* ---------- Mockup chrome ---------- */
+.mockbar{position:sticky;top:0;z-index:40;background:repeating-linear-gradient(135deg,#ffe7a8 0 14px,#ffdf8f 14px 28px);color:#3d2a00;border-bottom:2px solid #d9a521;padding:8px max(2.5vw,16px);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.mockbar b.mk{font-size:13px;letter-spacing:.04em;text-transform:uppercase;background:#3d2a00;color:#ffe7a8;border-radius:6px;padding:3px 8px}
+.mockbar .msg{font-weight:700;font-size:14px}
+.mockbar .sp{flex:1}
+.seg{display:inline-flex;border:1px solid rgba(61,42,0,.35);border-radius:8px;overflow:hidden;background:rgba(255,255,255,.55)}
+.seg button{border:0;background:transparent;padding:6px 11px;min-height:36px;font-size:13px;font-weight:700;color:#3d2a00}
+.seg button+button{border-left:1px solid rgba(61,42,0,.25)}
+.seg button[aria-pressed=true]{background:#3d2a00;color:#ffe7a8}
+.mockbar .hw{border:1px solid rgba(61,42,0,.45);background:rgba(255,255,255,.55);border-radius:8px;min-height:36px;padding:0 11px;font-weight:700;font-size:13px;color:#3d2a00}
+.notes{background:light-dark(#fffaf0,#1d1a10);border-bottom:1px solid light-dark(#ecd9a6,#4a3d14);padding:14px max(2.5vw,16px) 16px;display:none}
+.notes.open{display:block}
+.notes .in{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:18px 28px}
+.notes h3{margin:0 0 6px;font-size:15px}
+.notes ul{margin:0;padding-left:18px}.notes li{margin:3px 0;font-size:14px}
+@media(max-width:820px){.notes .in{grid-template-columns:1fr}}
+
+/* ---------- App header ---------- */
+.top{background:var(--navy);color:#fff;padding:18px max(2.5vw,16px) 0}
+.brand{font-size:12px;font-weight:700;color:#b9c9d8;letter-spacing:.02em;margin-bottom:4px}
+.toprow{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #3a5272;background:transparent;color:#fff;font-weight:600;white-space:nowrap}
+.btn:hover{background:#21395a}.btn.pri{background:#2bb3a8;border-color:#2bb3a8;color:#06231f}
+.savestate{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:700;background:#1d3350;color:#c8d6e3}
+.savestate::before{content:"";width:7px;height:7px;border-radius:50%;background:#9fb3c6}
+.ctxbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.ctxbar .lbl{color:#b9c9d8;font-weight:700;font-size:13px}
+.top select{min-height:44px;border-radius:8px;border:1px solid #3a5272;background:#1d3350;color:#fff;padding:0 12px;font-weight:600;max-width:100%;font-size:16px}
+.tabs{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+.tabs a{flex:none;color:#c8d6e3;text-decoration:none;padding:12px 16px;border-radius:8px 8px 0 0;font-weight:600;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.tabs a[aria-current=page]{background:var(--bg);color:var(--ink)}
+.tabs .cnt{background:#e8a33d;color:#2b1a00;border-radius:999px;font-size:12px;font-weight:800;min-width:22px;height:22px;display:inline-grid;place-items:center;padding:0 7px;font-variant-numeric:tabular-nums}
+.tabs .cnt.zero{background:#2bb3a8;color:#06231f}
+@media(max-width:640px){.top .hide-s{display:none}.tabs a{padding:10px 12px}.tabs a.hide-s{display:none}}
+
+main{max-width:1280px;margin:0 auto;padding:24px max(2.5vw,16px) 120px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.ghost{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-weight:600;color:var(--ink)}
+.ghost:hover{border-color:var(--teal)}
+.ghost.sm{min-height:36px;font-size:14px}
+.pribtn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #2bb3a8;background:#2bb3a8;color:#06231f;font-weight:700}
+.pribtn:disabled{opacity:.45;cursor:not-allowed}
+.linkbtn{background:none;border:0;padding:0;color:var(--teal);font-weight:700;text-decoration:underline;text-underline-offset:2px;cursor:pointer;min-height:0}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.tile{background:var(--tealbg);border-radius:10px;padding:14px 16px}
+.tile .lbl{color:var(--mute);font-size:14px}
+.tile .v{font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums;line-height:1.2;white-space:nowrap}
+.tile .s{font-size:12px;color:var(--mute);margin-top:2px}
+.tile .s b{color:var(--ink)}
+
+/* "To check" banner on Budget */
+.tcbanner{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;border:1px solid light-dark(#efc98f,#5a4317);background:light-dark(#fff8ec,#211a0d);border-radius:12px;padding:14px 18px;margin-bottom:18px}
+.tcbanner.done{border-color:light-dark(#b9dcd9,#1f5653);background:var(--tealbg)}
+.tcbanner .t{display:flex;gap:12px;align-items:center;min-width:0}
+.tcbanner .big{flex:none;background:#e8a33d;color:#2b1a00;border-radius:999px;font-weight:800;min-width:40px;height:40px;display:grid;place-items:center;font-size:17px;padding:0 10px;font-variant-numeric:tabular-nums}
+.tcbanner.done .big{background:#2bb3a8;color:#06231f}
+.tcbanner b{display:block}
+.tcbanner .lbl{font-size:14px}
+
+/* Budget table */
+.ihead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.switch{display:inline-flex;gap:8px;align-items:center;font-size:14px}
+.switch input{appearance:none;width:40px;height:24px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:.15s;flex:none}
+.switch input::before{content:"";position:absolute;inset:-10px -4px}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.switch input:checked{background:var(--teal)}.switch input:checked::after{left:18px}
+.switch span{cursor:default;user-select:none}
+table{border-collapse:collapse;width:100%}
+th{background:var(--navy);color:#fff;text-align:right;padding:8px 10px;font-weight:600;white-space:nowrap;font-size:14px}
+th.l{text-align:left}
+td{padding:8px 10px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;border-bottom:1px solid var(--line);vertical-align:middle}
+td.l{text-align:left;white-space:normal}
+tr.cat td{background:var(--alt);font-weight:800;border-top:2px solid var(--line)}
+tr.ln.flash td{animation:flash 1.6s}
+tr.ln.isnew td:first-child::after,.bcard.isnew .nm::after{content:"NEW";margin-left:8px;font-size:10px;font-weight:800;letter-spacing:.04em;background:#e8a33d;color:#2b1a00;border-radius:999px;padding:1px 7px;vertical-align:2px}
+.delta{display:block;font-size:12px;font-weight:700}
+.up{color:var(--up)}.down{color:var(--teal)}
+@keyframes flash{from{background:var(--hl)}to{background:transparent}}
+.tcchip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;min-height:36px;padding:0 12px 0 8px;font-weight:700;font-size:13.5px;white-space:nowrap;border:1px solid light-dark(#efc98f,#6a4f1c);background:var(--duebg);color:var(--duefg)}
+.tcchip .n{background:var(--duefg);color:light-dark(#fff,#2b1a00);border-radius:999px;font-size:11px;min-width:20px;height:20px;display:inline-grid;place-items:center;padding:0 6px}
+.tcchip.wait{background:var(--nobg);color:var(--nofg);border-color:var(--line)}
+.tcchip.wait .n{background:var(--nofg);color:var(--card)}
+.bmob{display:none}
+
+/* ---------- To check page ---------- */
+.tchead{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:flex-start}
+.tchead p{margin:2px 0 0;color:var(--mute);font-size:14px;max-width:720px}
+.prog{margin-top:14px}
+.prog .bar{height:10px;border-radius:999px;background:var(--alt);border:1px solid var(--line);overflow:hidden;display:flex}
+.prog .bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+.prog .bar i.w{background:light-dark(#9fb3c6,#4d6380)}
+.prog .pl{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;font-size:14px;margin-bottom:6px}
+.prog .pl b{font-size:16px}
+.sumgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.sumgrid>div{background:var(--alt);border-radius:10px;padding:10px 12px;min-width:0}
+.sumgrid .lbl,.sumgrid .v,.sumgrid .s{display:block}
+.sumgrid .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sumgrid .s{font-size:12px;color:var(--mute)}
+.sumgrid .v.t{color:var(--teal)}.sumgrid .v.o{color:var(--duefg)}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.fchip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:14px;color:var(--ink)}
+.fchip .c{color:var(--mute);font-variant-numeric:tabular-nums;font-weight:700}
+.fchip[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.fchip[aria-pressed=true] .c{color:#b9c9d8}
+:root.force-dark .fchip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#062420}
+@media(prefers-color-scheme:dark){:root:not(.force-light) .fchip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#062420}:root:not(.force-light) .fchip[aria-pressed=true] .c{color:#0a3b37}}
+:root.force-dark .fchip[aria-pressed=true] .c{color:#0a3b37}
+.linefilter{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 6px 0 14px;border-radius:999px;background:var(--tealbg);color:var(--teal);font-weight:700;font-size:14px;border:1px solid light-dark(#b9dcd9,#1f5653)}
+.linefilter button{border:0;background:transparent;color:inherit;width:36px;height:36px;border-radius:50%;font-size:16px}
+.listhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;margin:22px 0 10px}
+.listhead h3{margin:0;font-size:17px}
+.listhead .lbl{font-size:14px}
+
+/* checkbox: only the box is clickable */
+.cb{appearance:none;-webkit-appearance:none;margin:0;width:24px;height:24px;border-radius:6px;border:2px solid light-dark(#8b9aa8,#5b7392);background:var(--field);position:relative;cursor:pointer;flex:none;display:inline-grid;place-items:center}
+.cb::before{content:"";position:absolute;inset:-10px}
+.cb:checked{background:var(--teal);border-color:var(--teal)}
+.cb:checked::after{content:"";width:6px;height:11px;border:solid light-dark(#fff,#062420);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+.cb:indeterminate{background:var(--teal);border-color:var(--teal)}
+.cb:indeterminate::after{content:"";width:12px;height:2.5px;background:light-dark(#fff,#062420)}
+.cbtxt{cursor:default;user-select:none}
+.selall{display:inline-flex;gap:12px;align-items:center;font-size:14px;padding-right:4px}
+.act strong{font-weight:700;color:var(--ink)}
+
+/* item card */
+.tc{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;display:grid;grid-template-columns:52px minmax(0,1fr) 330px;scroll-margin-top:80px}
+.tc.sel{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.tc.flash{animation:flashc 1.8s}
+@keyframes flashc{0%,40%{box-shadow:0 0 0 3px #e8a33d}100%{box-shadow:none}}
+.tc .ck{padding:20px 0 0 16px}
+.tc .bd{padding:16px 18px 16px 4px;min-width:0}
+.tc .ac{padding:16px 18px;border-left:1px solid var(--line);background:var(--upbox);border-radius:0 12px 12px 0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.hd{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.hd .who{min-width:0}
+.hd .cbw{display:none}
+.hd .vend{font-weight:800;font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.hd .amt{flex:none;text-align:right;font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.25}
+.hd .amt small{display:block;font-size:12px;font-weight:600;color:var(--mute)}
+.hd .amt small.ow{color:var(--up)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:800;letter-spacing:.01em;white-space:nowrap}
+.pill.p-dup{background:var(--redbg);color:var(--red)}
+.pill.p-cat,.pill.p-nocat{background:var(--duebg);color:var(--duefg)}
+.pill.p-date,.pill.p-sheet{background:var(--purbg);color:var(--purfg)}
+.pill.p-ownline{background:var(--tealbg);color:var(--teal)}
+.pill.wait{background:var(--nobg);color:var(--nofg)}
+.why{margin:10px 0 0;display:flex;gap:10px;align-items:flex-start;background:var(--alt);border-radius:10px;padding:10px 12px;font-size:15px}
+.why .q{flex:none;width:22px;height:22px;border-radius:50%;background:#e8a33d;color:#2b1a00;display:grid;place-items:center;font-weight:800;font-size:13px;margin-top:1px}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 16px;margin:12px 0 0}
+.kv>div{min-width:0}
+.kv dt{font-size:12px;color:var(--mute);font-weight:600}
+.kv dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+.kv dd.miss{color:var(--up)}
+.kv dd .chg{display:block;font-size:12px;color:var(--teal);font-weight:700}
+.linkline{background:none;border:0;padding:0;color:var(--teal);font-weight:700;text-align:left;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.rel{margin-top:10px;font-size:14px;color:var(--mute);border-left:3px solid var(--line);padding:2px 0 2px 10px}
+.rel b{color:var(--ink)}
+
+/* comparison table */
+.cmp{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cmp table{table-layout:fixed}
+.cmp th{background:var(--alt);color:var(--ink);font-size:13px;text-align:left;padding:8px 10px;white-space:normal;line-height:1.3;vertical-align:bottom}
+.cmp th:first-child,.cmp td:first-child{width:30%}
+.cmp td{text-align:left;white-space:normal;overflow-wrap:anywhere;font-size:14px;padding:7px 10px}
+.cmp td:first-child{color:var(--mute);font-weight:600}
+.cmp tr.same td:not(:first-child){background:light-dark(#fff6e0,#2a2310)}
+.cmp tr.diff td:not(:first-child){background:light-dark(#efeafd,#221b38)}
+.cmp .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+.cmp .tag.s{background:#e8a33d;color:#2b1a00}
+.cmp .tag.d{background:var(--purfg);color:var(--card)}
+.cmp tr:last-child td{border-bottom:0}
+.keepseg{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:14px}
+.keepseg .seg2{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.keepseg .seg2 button{border:0;background:var(--field);min-height:40px;padding:0 12px;font-weight:700;font-size:14px;color:var(--mute)}
+.keepseg .seg2 button+button{border-left:1px solid var(--line)}
+.keepseg .seg2 button[aria-pressed=true]{background:var(--teal);color:light-dark(#fff,#062420)}
+
+/* inline edit fields */
+.edit{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px 14px}
+.fld label{display:block;font-size:12px;color:var(--mute);font-weight:700;margin-bottom:3px}
+.fld input,.fld select,.fld textarea,.sheet input,.sheet select,.sheet textarea{width:100%;min-height:44px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--field);color:var(--ink);font-size:16px}
+.fld textarea,.sheet textarea{padding:8px 10px;min-height:64px;resize:vertical}
+.fld .hint{font-size:12px;color:var(--mute);margin-top:3px}
+.hintbtn{display:inline-flex;align-items:center;min-height:36px;font-size:13px}
+.fld input.changed{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+
+/* actions */
+.ac .h{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}
+.act{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 12px;min-height:52px;color:var(--ink)}
+.act:hover{border-color:var(--teal)}
+.act>b{display:block;font-size:15px;line-height:1.3}
+.act small{display:block;font-size:12.5px;color:var(--mute);line-height:1.4;margin-top:2px}
+.act small .mn{font-weight:700;color:var(--ink)}
+.act.pri{border-color:#2bb3a8;background:light-dark(#e9f6f5,#0f2e2d)}
+.act.pri>b{color:var(--teal)}
+.act.dng>b{color:var(--red)}
+.act:disabled{opacity:.5;cursor:not-allowed}
+.act .sug{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.04em;background:#e8a33d;color:#2b1a00;border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:2px}
+.sec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:2px}
+.sec button{min-height:44px;border-radius:8px;border:1px solid var(--line);background:transparent;font-weight:600;font-size:13px;color:var(--ink);padding:0 4px;line-height:1.2}
+.sec button:hover{border-color:var(--teal)}
+.sec button[aria-expanded=true]{border-color:var(--teal);color:var(--teal)}
+.notebox{display:none}
+.notebox.open{display:block}
+.notebox textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--field);color:var(--ink);font-size:16px;resize:vertical}
+.notebox .lbl{font-size:12px}
+.waitnote{font-size:13.5px;background:var(--nobg);color:var(--nofg);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.waitnote button{min-height:36px}
+
+/* resolved list */
+.rs{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:4px 12px;align-items:start}
+.rs.flash{animation:flashc 1.8s}
+.rs .ok{width:28px;height:28px;border-radius:50%;background:var(--teal);color:light-dark(#fff,#062420);display:grid;place-items:center;margin-top:2px}
+.rs .ok svg{width:16px;height:16px}
+.rs .t1{font-weight:800;overflow-wrap:anywhere}
+.rs .t1 .mn{font-weight:800}
+.rs .t2{font-size:14px}
+.rs .eff{font-size:14px;color:var(--mute);margin-top:2px}
+.rs .eff .mn{color:var(--ink)}
+.rs .by{font-size:12.5px;color:var(--mute);margin-top:4px}
+.rs .nt{font-size:13.5px;margin-top:4px;background:var(--alt);border-radius:8px;padding:6px 10px}
+.rs .rb{align-self:center}
+.empty{color:var(--mute);font-size:15px;padding:24px;text-align:center;border:1px dashed var(--line);border-radius:12px;background:var(--card)}
+.empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:2px}
+
+/* bulk bar */
+.bulk{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(1100px,calc(100% - 24px));background:var(--card);border:1px solid var(--teal);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.25);padding:12px 14px;z-index:45;display:none}
+.bulk.open{display:block}
+.bulk .r1{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.bulk .r1 b{font-size:15px}
+.bulk .acts{display:flex;flex-wrap:wrap;gap:8px}
+.bulk .acts .act{width:auto;flex:1 1 200px}
+.bulk .hint{font-size:13px;color:var(--mute)}
+.bulk .bsec{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.bulk .bsec .ghost{min-width:150px}
+
+/* sheet / dialog */
+.scrim{position:fixed;inset:0;background:rgba(5,12,22,.5);z-index:50;opacity:0;visibility:hidden;transition:.18s}
+.scrim.open{opacity:1;visibility:visible}
+.sheet{position:fixed;left:50%;top:50%;transform:translate(-50%,-48%);width:min(560px,calc(100% - 32px));max-height:min(86vh,760px);background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);z-index:51;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:.18s}
+.sheet.open{opacity:1;visibility:visible;transform:translate(-50%,-50%)}
+.sh-h{padding:14px 16px 12px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.sh-h h2{margin:0;font-size:18px;color:var(--ink)}
+.sh-h .lbl{font-size:13.5px}
+.sh-h .x{flex:none;width:44px;height:44px;border-radius:8px;border:1px solid var(--line);background:transparent;font-size:18px;color:var(--mute)}
+.sh-b{padding:12px 18px;overflow:auto;flex:1;min-height:0}
+.sh-f{padding:12px 18px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;background:var(--upbox);border-radius:0 0 14px 14px}
+.sh-f .row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.preview{font-size:14px;border-radius:8px;background:var(--alt);padding:8px 10px;border-left:3px solid var(--teal)}
+.preview.none{border-left-color:var(--line);color:var(--mute)}
+.preview .mn{font-weight:800}
+.search{position:sticky;top:-12px;background:var(--card);padding:0 0 10px;z-index:1}
+.grp{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);margin:12px 0 4px}
+.lopt{display:flex;width:100%;justify-content:space-between;gap:12px;align-items:center;min-height:48px;padding:6px 12px;border:1px solid transparent;border-radius:8px;background:transparent;text-align:left;color:var(--ink)}
+.lopt:hover{background:var(--alt)}
+.lopt[aria-pressed=true]{border-color:var(--teal);background:var(--tealbg)}
+.lopt .n{font-weight:700;min-width:0;overflow-wrap:anywhere}
+.lopt .n small{display:block;font-weight:500;color:var(--mute);font-size:12px}
+.lopt .v{flex:none;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lopt.new{border:1px dashed var(--teal);color:var(--teal);margin-top:8px}
+.splitrow{display:grid;grid-template-columns:minmax(0,1fr) 150px 44px;gap:8px;align-items:end;margin-bottom:10px}
+.splitrow .rm{width:44px;height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--mute)}
+.money{position:relative}.money span{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--mute);font-weight:700}
+.money input{padding-left:24px!important;text-align:right;font-variant-numeric:tabular-nums}
+.remain{display:flex;justify-content:space-between;gap:10px;align-items:center;border-radius:8px;padding:10px 12px;font-weight:700;background:var(--okbg);color:var(--okfg);margin-top:4px}
+.remain.bad{background:var(--duebg);color:var(--duefg)}
+.remain .mn{font-size:16px}
+.add{min-height:44px;border-radius:8px;border:1px dashed var(--teal);background:transparent;color:var(--teal);font-weight:600;padding:0 14px}
+.who-opt{display:flex;width:100%;gap:12px;align-items:center;min-height:56px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);text-align:left;margin-bottom:8px;color:var(--ink)}
+.who-opt[aria-pressed=true]{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal);background:var(--tealbg)}
+.who-opt .av{flex:none;width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.who-opt small{display:block;color:var(--mute);font-size:12.5px}
+
+.toast{position:fixed;left:50%;bottom:var(--lift,22px);transform:translateX(-50%) translateY(20px);background:#0e1b2c;color:#e5ecf2;border:1px solid #2c4262;border-left:4px solid #2bb3a8;border-radius:10px;padding:8px 8px 8px 14px;font-size:14px;z-index:60;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;width:max-content;max-width:min(560px,calc(100% - 24px));display:flex;gap:12px;align-items:center}
+.toast.show{opacity:1;visibility:visible;transform:translateX(-50%)}
+
+.toast .tx{min-width:0}
+.toast button{flex:none;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #3a5272;background:#1d3350;color:#7fe3d9;font-weight:800}
+
+/* ---------- Tablet ---------- */
+@media(max-width:1000px){
+  .tc{grid-template-columns:52px minmax(0,1fr)}
+  .tc .ac{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);border-radius:0 0 12px 12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tc .ac .h,.tc .ac .sec,.tc .ac .notebox,.tc .ac .waitnote{grid-column:1/-1}
+  .sumgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* ---------- Phones ---------- */
+@media(max-width:640px){
+  .mockbar{position:static}
+  main{padding:16px 12px 140px}
+  .card{padding:16px 14px}
+  .tiles{grid-template-columns:1fr 1fr;gap:10px}
+  .tile{padding:12px}
+  .tile .v{font-size:19px}
+  .bdesk{display:none}.bmob{display:block}
+  .tcbanner{padding:14px}
+  .tcbanner .pribtn{width:100%}
+  .tc{display:block}
+  .tc .ck{display:none}
+  .tc .bd{padding:14px 14px 12px}
+  .tc .ac{display:flex;padding:12px 14px 14px}
+  .hd{flex-wrap:wrap}
+  .hd .who{flex:1 1 100%;display:flex;gap:12px;align-items:flex-start}
+  .hd .who .cbw{display:grid;place-items:center;flex:none;width:44px;height:44px;margin:-10px -6px -10px -10px}
+  .ghost.sm,.hintbtn{min-height:44px}
+  .cmp th,.cmp td{padding:7px 8px;font-size:13.5px}
+  .keepseg .seg2 button{min-height:44px}
+  .linkline,.linkbtn{display:inline-flex;align-items:center;min-height:44px;text-align:right}
+  .rel .linkline{display:inline;min-height:0;padding:12px 0;line-height:inherit}
+  .linefilter button{width:44px;height:44px}
+  .waitnote button{min-height:44px}
+  .hd .amt{flex:1 1 100%;display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:1px solid var(--line);padding-top:8px;margin-top:2px;text-align:left}
+  .hd .amt small{font-size:13px}
+  .kv{display:block;margin-top:8px}
+  .kv>div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .kv>div:last-child{border-bottom:0}
+  .kv dt{font-size:13.5px;flex:none}
+  .kv dd{text-align:right;min-width:0}
+  .act{min-height:56px;padding:10px 14px}
+  .sec button{font-size:13px}
+  .edit{grid-template-columns:1fr}
+  .sumgrid{grid-template-columns:1fr 1fr;gap:8px}
+  .sumgrid .v{font-size:17px}
+  .filters{gap:6px}
+  .fchip{padding:0 12px;font-size:13.5px}
+  .rs{grid-template-columns:28px minmax(0,1fr);padding:12px}
+  .rs .ok{width:24px;height:24px}
+  .rs .rb{grid-column:1/-1;width:100%;margin-top:6px}
+  .bulk{bottom:0;width:100%;border-radius:14px 14px 0 0;border-width:1px 0 0;padding:12px 12px calc(12px + env(safe-area-inset-bottom))}
+  .bulk .acts{display:grid;grid-template-columns:1fr}
+  .bulk .acts .act{width:100%}
+  .bulk .bsec{display:grid;grid-template-columns:1fr 1fr}
+  .bulk .bsec .ghost{min-width:0}
+  .bulk .acts .act{min-height:50px;padding:8px 12px}
+  .bulk .r1{margin-bottom:6px}
+  .sheet{left:0;right:0;top:auto;bottom:0;width:100%;max-height:90vh;transform:translateY(102%);border-radius:16px 16px 0 0;border-width:1px 0 0}
+  .sheet.open{transform:none}
+  .sheet::before{content:"";display:block;width:40px;height:4px;border-radius:4px;background:var(--line);margin:8px auto 0}
+  .sh-f{border-radius:0;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+  .sh-f .row{flex-direction:column-reverse}
+  .sh-f .row button{width:100%}
+  .splitrow{grid-template-columns:minmax(0,1fr) 44px;grid-template-areas:"ln rm" "am am"}
+  .splitrow .f-ln{grid-area:ln}.splitrow .f-am{grid-area:am}.splitrow .rm{grid-area:rm}
+  .listhead .ghost{width:100%}
+}
+/* budget mobile cards */
+.bcat{background:var(--alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:14px 0 8px;font-weight:800;display:flex;justify-content:space-between;gap:10px}
+.bcat .mn{font-weight:800}
+.bcard{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px;margin:0 0 10px}
+.bcard.flash{animation:flashc 1.8s}
+.bcard .nm{font-weight:800;line-height:1.3}
+.bcard .rows{margin-top:8px}
+.bcard .rows>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:5px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.bcard .rows>div:last-child{border-bottom:0}
+.bcard .rows dt{color:var(--mute)}
+.bcard .rows dd{margin:0;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bcard .tcchip{width:100%;justify-content:center;min-height:44px;margin-top:10px}
+
+/* why disclosure */
+.whyrule{margin-top:8px;font-size:14px}
+.whyrule summary{min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--mute);font-weight:700;width:max-content;max-width:100%}
+.whyrule summary::before{content:"ⓘ";color:var(--teal)}
+.whyrule p{margin:0 0 4px;background:var(--alt);border-radius:8px;padding:8px 10px}
+.pill.p-est{background:var(--purbg);color:var(--purfg)}
+.pill.p-nopay{background:var(--duebg);color:var(--duefg)}
+/* staged (not saved) resolutions */
+.explain{margin:8px 0 0!important;color:var(--ink)!important;background:light-dark(#fff4dc,#2a2108);border:1px solid light-dark(#e8c77a,#5a4317);border-radius:8px;padding:6px 10px;display:inline-block;font-size:14px}
+.prog .bar i.p{background:repeating-linear-gradient(135deg,#e8a33d 0 6px,#f3c77a 6px 12px)}
+.pend{color:var(--duefg);font-weight:800}
+.tc.staged{border:2px dashed #e8a33d;background:light-dark(#fffaf0,#1a160c)}
+.tc.staged .ac{background:transparent;border-left-color:light-dark(#efc98f,#5a4317)}
+.tc.busy{opacity:.7}
+.stdot{color:#e8a33d;font-size:18px;line-height:1;display:inline-block;padding:4px}
+.pill.p-st{background:#e8a33d;color:#2b1a00}
+.stbox{margin-top:10px;border-radius:10px;background:var(--card);border:1px solid light-dark(#efc98f,#5a4317);padding:10px 12px;display:grid;gap:6px}
+.st1{font-weight:800;font-size:16px;overflow-wrap:anywhere}
+.st2,.st3,.st4{font-size:14px}
+.st3{color:var(--mute);display:flex;gap:8px}.st3 b{color:var(--ink)}
+.st4{background:var(--alt);border-radius:8px;padding:6px 10px}
+.pribtn.full,.ghost.full{width:100%}
+.stnote{margin:0;font-size:12.5px}
+.hist{margin-top:10px;font-size:14px}
+.hist summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--teal);font-weight:700;width:max-content;max-width:100%}
+.hist ol{margin:0 0 4px;padding-left:20px}.hist li{margin:4px 0}
+.synced{color:var(--okfg);font-weight:600}
+.tns{color:#ffc27a;font-weight:700}
+.pbar{position:sticky;top:0;z-index:44;background:light-dark(#fff4dc,#2a2108);color:light-dark(#4a2e00,#ffd9a0);border-bottom:1px solid light-dark(#e8c77a,#6a4f1c);padding:10px max(2.5vw,16px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.pbar .pin{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.pbar .sp{flex:1 1 300px;font-size:14.5px}
+.pbtn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid light-dark(#c9a24c,#8a6a2a);background:var(--card);color:var(--ink);font-weight:700}
+.pbtn.p{background:#14a39a;border-color:#14a39a;color:#06231f}
+.pbtn:disabled{opacity:.55;cursor:not-allowed}
+.modal{position:fixed;inset:0;background:rgba(10,20,32,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:70}
+.mbox{background:var(--card);border-radius:12px;padding:22px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mbox h2{color:var(--ink);font-size:20px;margin:0}
+.mbox p{margin:6px 0 16px}
+.mbox .ctrl{display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:640px){
+  .pbar{position:fixed;left:0;right:0;bottom:0;top:auto;border-bottom:0;border-top:1px solid light-dark(#e8c77a,#6a4f1c);padding:10px 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -6px 18px rgba(0,0,0,.15)}
+  .pbar .pin{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pbar .sp{grid-column:1/-1;flex:none}
+  .hide-xs{display:none}
+  .bulk{bottom:var(--pbh,0px)}
+  main{padding-bottom:calc(140px + var(--pbh,0px))}
+  .toast{bottom:calc(var(--lift,12px) + var(--pbh,0px))}
+  .mbox .ctrl{flex-direction:column}.mbox .ctrl button{width:100%}
+  .tc.staged .ac{border-top-color:light-dark(#efc98f,#5a4317)}
+}
+</style>
+</head>
+<body>
+
+<div class="mockbar" role="region" aria-label="Mockup controls">
+  <b class="mk">Mockup</b><span class="msg">Sample data. Nothing here saves.</span>
+  <span class="sp"></span>
+  <span class="seg" id="themeseg" role="group" aria-label="Theme">
+    <button data-th="auto" aria-pressed="true">Auto</button><button data-th="light" aria-pressed="false">Light</button><button data-th="dark" aria-pressed="false">Dark</button>
+  </span>
+  <button class="hw" id="hwbtn" aria-expanded="false">How it would work</button>
+  <button class="hw" id="leavebtn" title="Demo: what happens on refresh or close with unsaved resolutions">Simulate refresh</button><button class="hw" id="resetbtn">Reset</button>
+</div>
+
+<section class="notes" id="notes" aria-label="How it would work">
+  <div class="in">
+    <div>
+      <h3>How it would work</h3>
+      <ul>
+        <li><b>The invoice check makes a list, you decide.</b> Each row the check could not settle becomes an item on the <b>To check</b> tab. The Budget tab shows the count and puts a chip on every line that has an item.</li>
+        <li><b>Every item says what is odd in one sentence</b> and offers the answers that fit that kind of problem. Each button shows what it will change before you tap it.</li>
+        <li><b>Resolve = decide. Save = apply.</b> Picking an answer only stages it (“Resolved — not saved”). <b>Save</b> on the card, or <b>Save all</b> in the bar, applies it to the budget and marks the row Resolved in the backup sheet’s <b>To check</b> tab with the note, name and date. <b>Undo</b> on the card or <b>Discard all</b> throws staged answers away.</li>
+        <li><b>Reopen is staged too.</b> Saving a reopen puts the money back and sets the backup row to Open; the old answer stays in the card’s History.</li>
+        <li><b>Leaving with unsaved answers</b> (another tab, refresh, close) asks “Save your resolutions?”. Try it with <b>Simulate refresh</b> or any tab.</li>
+        <li><b>One tap resolves.</b> Answers that need a choice (another line, a split, a new line) open a picker that shows the effect live and saves with one more tap.</li>
+        <li><b>Nothing is final.</b> Undo right after, or Reopen any time from <b>Resolved</b>. Reopening puts the money back where it was.</li>
+        <li><b>Who and when</b> are saved with every answer, plus an optional note.</li>
+        <li><b>Not sure?</b> “Not sure yet” hides it for a week. “Ask someone” sends the question and parks it under <b>Waiting</b>.</li>
+        <li><b>Select several of the same kind</b> to answer them together (for example both Star Interiors rows, or all four with no category).</li>
+        <li><b>Projected cost</b> per line = budget or invoices, whichever is higher (Done lines use invoices). That is why moving money can change it.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Open questions for you</h3>
+      <ul>
+        <li>Should answers also <b>write back to the invoice sheet</b> (category, invoice no., deleting the copy), or only change the calculator and leave a reminder?</li>
+        <li>Is <b>Nov 1, 2026</b> the right guess for the two Dec 1 dates, or were those due dates?</li>
+        <li>Willow Doors rows 33 and 34: are they <b>the same invoice</b> (rows shifted) or two invoices of $8,505.00?</li>
+        <li>Who should be in the <b>Ask someone</b> list?</li>
+        <li>Is a <b>kept estimate</b> counted like an invoice everywhere (reports too), or only in projected cost?</li>
+        <li>Should a <b>deposit</b> be linked automatically when the matching invoice is entered?</li>
+        <li>Should <b>excluded</b> receipts (e.g. Corner Coffee) still show somewhere, like a “Not in budget” list?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<header class="top">
+  <div class="brand">ELITECRAFT / REAL ESTATE</div>
+  <div class="toprow">
+    <h1>Project profit calculator</h1>
+    <div class="ctrl hide-s"><span class="savestate">All changes saved</span><button class="btn" data-mock>Export</button><button class="btn" data-mock>Backups</button><button class="btn pri" data-mock>Save for team</button></div>
+  </div>
+  <div class="ctxbar"><span class="lbl">Budget</span><select aria-label="Budget"><option>Maple Grove - North budget</option></select></div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<div class="pbar" id="pbar" hidden role="region" aria-label="Unsaved resolutions"></div>
+<main id="main"></main>
+<div class="modal" id="leave" hidden></div>
+
+<div class="bulk" id="bulk" role="region" aria-label="Selected items"></div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shtitle"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ======================= Data ======================= */
+const CATS=["Soft costs","Site and foundation","Structure and envelope","Mechanical and electrical","Interior finishes","Exterior and garage","Site operations"];
+// [cat, name, budget, invoiced, paid, #invoices]
+const RAW=[[0,"New home warranty",100,95,95,1],[0,"Construction insurance",4500,4740,4740,2],[0,"Permit fees",9000,8852.46,8852.46,5],[0,"Architecture and rendering",7000,6518.13,6518.13,4],[0,"Interior design",9000,8925,8925,1],[0,"Survey Arc",2600,1428,1428,4],[0,"P2P permit",8500,8360.9,8360.9,2],[0,"Engineering",0,0,0,0],[0,"Marketing (photo and video)",0,6067.5,420,3],[0,"Engineering review",0,866.25,866.25,2],
+[1,"Demolition + Excavation",32000,32550,32550,1],[1,"Foundation",46915.05,46915.05,46915.05,1],[1,"Weeping Tile + Basement + garage",32000,32004.79,32004.79,3],[1,"Services",30642.2,30642.2,30642.2,1],
+[2,"Lumber + truss package",60000,60252.54,50677.9,20],[2,"Framing",56000,55470,55470,2],[2,"Stairs",1600,1653.75,0,1],[2,"Windows and doors",50000,51296.05,51296.05,3],[2,"Roofing",13500,14200.94,13000.94,3],[2,"Siding (stucco, etc.)",54000,54392.65,54392.65,4],[2,"Stone",37000,42248.63,42248.63,15],[2,"Insulation w material and spray",22135,21755.33,21755.33,1],
+[3,"Plumbing material",25000,25756.08,25756.08,2],[3,"Plumber",32000,37750.13,27723.99,7],[3,"Electrician",40000,42738.48,29916.93,1],[3,"HVAC + AC",33000,32056.5,27826.05,3],[3,"Lighting",19500,24864.25,24864.25,7],[3,"Fireplace",5000,6588.75,6588.75,3],
+[4,"Drywall/ mudtape",34000,31814.68,29139.48,4],[4,"Paint",38000,35098.35,20133.35,2],[4,"Kitchen cabinets",106000,106417.5,15000,1],[4,"Moulding store",15000,21052.79,7838.35,16],[4,"Carpenter Finishing",13000,11655,10000,1],[4,"Countertop",24780,25567.5,15000,1],[4,"Flooring",30000,30675.62,25661.5,3],[4,"Carpet/ additional flooring",2500,1514.1,0,1],[4,"Mantel",6900,8042.39,7042.39,4],[4,"Glass work",17000,18000,0,1],[4,"Tiles",10000,12409.35,12409.35,4],[4,"Tiles installation",14000,14475,0,1],[4,"Wallpaper/ plaster/ decorative",5500,7050.1,5950.1,4],[4,"Appliances",30000,30982.18,30982.18,2],
+[5,"Concrete steps",8000,8284.5,0,1],[5,"Outside railing",1000,472.5,0,1],[5,"Garage doors",3650,3774,0,1],[5,"Garage epoxy",3500,5670,0,1],[5,"Landscaping",18500,31971.4,23466.4,41],
+[6,"Pit stop",1000,1906.24,1906.24,8],[6,"Garbage truck",5800,6420.45,5720.45,7],[6,"Construction fence",1200,2102.63,2102.63,23],[6,"Cleaning",3000,2000,0,1],[6,"Staging",8000,3937.5,0,1],[6,"Miscellaneous",10000,7528.97,7528.97,84],[6,"Site refreshments (coffee)",0,1023.49,1023.49,64]];
+const DONE=new Set(["New home warranty","Construction insurance","Permit fees","Architecture and rendering","Interior design","Survey Arc","P2P permit","Demolition + Excavation","Foundation","Weeping Tile + Basement + garage","Services","Framing","Windows and doors","Siding (stucco, etc.)","Stone","Insulation w material and spray","Plumbing material","Lighting","Fireplace","Tiles"]);
+const mkLines=()=>RAW.map(r=>({cat:CATS[r[0]],name:r[1],amt:r[2],act:r[3],paid:r[4],ninv:r[5],done:DONE.has(r[1])}));
+
+const TYPES={dup:{pill:'Likely duplicate',grp:'dup'},cat:{pill:'Check the budget line',grp:'cat'},nocat:{pill:'No category',grp:'cat'},date:{pill:'Odd date',grp:'det'},sheet:{pill:'Invoice sheet changed',grp:'det'},ownline:{pill:'Needs its own line',grp:'oth'},est:{pill:'Placeholder / estimate',grp:'det'},nopay:{pill:'Payment with no invoice',grp:'oth'}};
+const WHY={dup:'Two rows in the same tab have the same invoice no., date and amount (and cheque no. when there is one).',cat:'The vendor or description doesn’t usually belong on this budget line, or similar purchases are filed on a different line.',nocat:'The row has no category in the invoice sheet, so the sheet’s own Budget tab can’t count it.',date:'The invoice date is later than today.',sheet:'The invoice sheet now has a different value than the calculator for the same invoice.',ownline:'A whole tab of the invoice sheet has no matching line on the sheet’s Budget tab.',est:'A row with no invoice no. and no date is treated as a placeholder or estimate, not a real invoice.',nopay:'A payment isn’t linked to any invoice: this tab’s payments add up to more than its invoices.'};
+const UNMATCHED=[{vendor:'Meridian Tile Ltd.',inv:'SLI01-I005120',date:'2026-08-28',total:29412.5,note:'Not on any budget line yet'},{vendor:'Meridian Tile Ltd.',inv:'SLI01-I005388',date:'2026-09-30',total:10540.35,note:'Not on any budget line yet'}];
+const LUMBER_INVS=[{id:'t15',label:'Missing lumber (Added by Sam): placeholder',total:30000,paid:0},{inv:'SLI01-I005120',label:'Meridian Tile SLI01-I005120 · Aug 28, 2026 (not entered yet)',total:29412.5,paid:0},{inv:'YJQ95-H580203',label:'Meridian Tile YJQ95-H580203 · Jun 6, 2026',total:7016.8,paid:7016.8},{inv:'BQD23-K774807',label:'Meridian Tile BQD23-K774807 · Jun 6, 2026',total:5375.61,paid:5375.61}];
+const GROUPS=[['all','All'],['dup','Duplicates'],['cat','Category'],['det','Details'],['oth','Other']];
+const TODAY='2026-11-26';
+const ME='Alex';
+const PEOPLE=[['Jordan','Site manager','KS'],['Priya','Bookkeeping (enters the invoice sheet)','PR'],['Dev','Project partner','DV']];
+
+// From to_check_rows.json, plus the twin rows/sheet values the check found.
+const mkItems=()=>[
+ {id:'t1',type:'dup',tab:'Fixed expenses',row:38,vendor:'Redstone Windows Ltd.',inv:'207',date:'2026-06-30',total:360.15,paid:360.15,sheetCat:'Grabage truck',line:'Garbage truck',
+  why:'Invoice 207 is in the Fixed expenses tab twice (rows 38 and 39): same amount, same date, same cheque no. 235. It is probably counted twice.',
+  twin:{row:39,inv:'207',date:'2026-06-30',total:360.15,paid:360.15,cheque:'235',sheetCat:'Grabage truck'},cheque:'235'},
+ {id:'t2',type:'dup',tab:'Corner Coffee',row:61,vendor:'Corner Coffee',inv:'376784102',date:'2026-11-23',total:8.99,paid:8.99,sheetCat:'(Corner Coffee tab)',line:'Site refreshments (coffee)',
+  why:'Receipt 376784102 is in the Corner Coffee tab twice (rows 60 and 61): same receipt no., date and amount.',
+  twin:{row:60,inv:'376784102',date:'2026-11-23',total:8.99,paid:8.99,sheetCat:'(Corner Coffee tab)'}},
+ {id:'t3',type:'cat',tab:'Trade',row:33,vendor:'Willow Doors Inc.',inv:'',date:'2026-11-24',total:8505,paid:0,sheetCat:'Landscaping',line:'Landscaping',
+  why:'A framing company’s $8,505.00 invoice is filed under Landscaping. It has no invoice no. and is not paid yet. Is it deck or fence work?',
+  sugg:[{newLine:'Fence & deck',cat:'Exterior and garage'}],pick:['Framing','Outside railing','Concrete steps','Construction fence'],rel:'t14'},
+ {id:'t4',type:'cat',tab:'Supplier',row:64,vendor:'Redstone Surveys',inv:'J953585063620',date:'2026-10-13',total:7728.12,paid:7728.12,sheetCat:'Landscaping',line:'Landscaping',
+  why:'One large Redstone Surveys purchase ($7,728.12) is filed under Landscaping. Redstone Surveys also sells lumber and building supplies: is all of it landscaping?',
+  pick:['Lumber + truss package','Miscellaneous','Concrete steps','Outside railing'],splitHint:'Lumber + truss package'},
+ {id:'t5',type:'cat',tab:'Supplier',row:78,vendor:'Clearwater Glass Co.',inv:'1',date:'2026-10-26',total:367.5,paid:367.5,sheetCat:'Flooring',line:'Flooring',
+  why:'Floor protection (covering floors during the build) is filed under Flooring. Other floor-protection purchases are under Miscellaneous.',
+  sugg:[{line:'Miscellaneous'}],pick:['Miscellaneous','Cleaning','Carpet/ additional flooring']},
+ {id:'t6',type:'cat',tab:'Supplier',row:79,vendor:'Clearwater Glass Co.',inv:'520',date:'2026-10-29',total:294,paid:294,sheetCat:'Flooring',line:'Flooring',
+  why:'Floor protection (covering floors during the build) is filed under Flooring. Other floor-protection purchases are under Miscellaneous.',
+  sugg:[{line:'Miscellaneous'}],pick:['Miscellaneous','Cleaning','Carpet/ additional flooring']},
+ {id:'t7',type:'date',tab:'Trade',row:46,vendor:'Rosewood Lighting Ltd.',inv:'',date:'2026-12-01',total:100,paid:100,sheetCat:'Appliances',line:'Appliances',
+  why:'The date is Dec 1, 2026, which is after today. Typo? It also has no invoice no.',sugDate:'2026-11-01'},
+ {id:'t8',type:'date',tab:'Trade',row:26,vendor:'Prairie Excavating Ltd',inv:'967',date:'2026-12-01',total:472.5,paid:0,sheetCat:'outside railing',line:'Outside railing',
+  why:'The date is Dec 1, 2026, which is after today. Typo, or was the due date entered instead of the invoice date?',sugDate:'2026-11-01'},
+ {id:'t9',type:'nocat',tab:'Documentation',row:20,vendor:'Willow Concrete Group',inv:'',date:'',total:1500,paid:0,sheetCat:'',line:'Marketing (photo and video)',
+  why:'No category in the invoice sheet, so the sheet’s own Budget tab doesn’t count this $1,500.00. Here it sits on Marketing. Also missing: date and invoice no.',
+  sheetCatSug:'Marketing',pick:['Staging','Interior design','Architecture and rendering']},
+ {id:'t10',type:'nocat',tab:'Documentation',row:23,vendor:'Cobalt Lighting Group',inv:'',date:'2026-09-23',total:4147.5,paid:0,sheetCat:'',line:'Marketing (photo and video)',
+  why:'No category in the invoice sheet, so the sheet’s own Budget tab doesn’t count this $4,147.50. Here it sits on Marketing.',
+  sheetCatSug:'Marketing',pick:['Staging','Interior design','Architecture and rendering']},
+ {id:'t11',type:'nocat',tab:'Documentation',row:24,vendor:'Engineering review',inv:'20095791',date:'2026-09-12',total:682.5,paid:682.5,sheetCat:'',line:'Engineering review',
+  why:'No category, and the budget line is just the company name. What is this for? Pick the line it belongs to.',
+  pick:['Engineering','Survey Arc','Architecture and rendering','Permit fees']},
+ {id:'t12',type:'nocat',tab:'Documentation',row:25,vendor:'Engineering review',inv:'20095955',date:'2026-10-13',total:183.75,paid:183.75,sheetCat:'',line:'Engineering review',
+  why:'No category, and the budget line is just the company name. What is this for?',
+  pick:['Engineering','Survey Arc','Architecture and rendering','Permit fees']},
+ {id:'t13',type:'ownline',tab:'Corner Coffee',row:'all',vendor:'Corner Coffee (all receipts)',inv:'',date:'',total:1023.49,paid:1023.49,sheetCat:'(Corner Coffee tab)',line:'Site refreshments (coffee)',
+  why:'The invoice sheet’s Budget tab has no line for the Corner Coffee tab, so the calculator made one: “Site refreshments”. Keep it as its own line?',
+  sugg:[{line:'Miscellaneous'}],pick:['Miscellaneous','Pit stop','Cleaning']},
+ {id:'t14',type:'sheet',tab:'Trade',row:34,vendor:'Willow Doors Inc.',inv:'',date:'2026-11-24',total:8505,paid:0,sheetCat:'Landscaping',line:'Landscaping',note:'',
+  why:'The invoice sheet now shows invoice no. 378 with the note “fence deck” for this invoice. The calculator has no invoice no. Update to match?',
+  sheetVals:{inv:'378',note:'fence deck'},rel:'t3'},
+ {id:'t15',type:'est',tab:'Meridian Tile',row:23,vendor:'Missing lumber (Added by Sam)',inv:'',date:'',total:30000,paid:0,sheetCat:'Lumber + truss package',line:'Lumber + truss package',
+  why:'A $30,000.00 row with no invoice no. and no date, added by hand. It looks like a placeholder for an invoice that hasn’t been entered. Is there a real invoice now?',est:false},
+ {id:'t16',type:'nopay',pay:true,tab:'Meridian Tile',row:'p1',vendor:'Meridian Tile Ltd.',inv:'',date:'2026-08-31',total:10000,paid:10000,sheetCat:'Lumber + truss package',line:'Lumber + truss package',method:'Not recorded',
+  why:'A $10,000.00 payment to Meridian Tile on Aug 31, 2026 isn’t linked to any invoice.'},
+ {id:'t17',type:'nopay',pay:true,tab:'Meridian Tile',row:'p2',vendor:'Meridian Tile Ltd.',inv:'',date:'2026-08-28',total:30000,paid:30000,sheetCat:'Lumber + truss package',line:'Lumber + truss package',method:'Not recorded',
+  why:'A $30,000.00 payment to Meridian Tile on Aug 28, 2026 isn’t linked to any invoice. Same amount as the “Missing lumber” placeholder: maybe they belong together.',rel:'t15'}
+].map(i=>Object.assign(i,{status:'open',res:null,until:null,ask:null,orig:{inv:i.inv,date:i.date,note:i.note||''},pending:null,history:[]}));
+
+/* ======================= State ======================= */
+let LINES,ITEMS,S;
+function reset(){
+  LINES=mkLines();ITEMS=mkItems();
+  S={view:'tocheck',grp:'all',line:null,sel:new Set(),notes:{},noteOpen:new Set(),edits:{},keep:{},hist:[],saving:new Set(),leave:null,sheet:null,onlyCheck:true,flashLine:null,flashItem:null,showResolved:true};
+  START=totals(LINES);
+}
+let START;
+
+/* ======================= Helpers ======================= */
+const m=x=>'$'+Math.abs(x).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const m0=x=>(x<0?'−':'')+'$'+Math.round(Math.abs(x)).toLocaleString('en-US');
+const sg=x=>Math.abs(x)<0.005?'$0.00':(x>0?'+':'−')+m(x);
+const MN=s=>`<span class="mn">${s}</span>`;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fd=d=>{if(!d)return '';const [y,mo,da]=d.split('-').map(Number);return `${MON[mo-1]} ${da}, ${y}`};
+const fdn=d=>d?fd(d):'No date';
+const now=()=>{const d=new Date();let h=d.getHours(),mi=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'pm':'am';h=h%12||12;return `Nov 26, ${h}:${mi} ${ap}`};
+const byId=id=>ITEMS.find(i=>i.id===id);
+const L=(name,arr=LINES)=>arr.find(l=>l.name===name);
+const proj=l=>l.done?l.act:Math.max(l.amt,l.act);
+const CHECK='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+function totals(arr){const t={amt:0,act:0,paid:0,proj:0};arr.forEach(l=>{t.amt+=l.amt;t.act+=l.act;t.paid+=l.paid;t.proj+=proj(l)});return t}
+const isOpen=i=>i.status==='open';
+const isWait=i=>i.status==='snoozed'||i.status==='asked';
+const grpOf=i=>TYPES[i.type].grp;
+const RL=it=>it.row==='all'?'all rows':it.pay?`payment of ${fd(it.date)}`:'row '+it.row;
+const sumU=list=>sumU0(list.filter(i=>i.type!=='nopay'));
+const sumU0=list=>list.filter(i=>!(i.type==='sheet'&&list.includes(byId(i.rel)))).reduce((s,i)=>s+(i.type==='ownline'?(L(i.line)?.act??i.total):i.total),0);
+
+/* ======================= Effects engine ======================= */
+// ops: {op:'inv',line,d,dp,dn} | {op:'newline',name,cat,amt} | {op:'drop',name} | {op:'field',ids,key,to,from} | {op:'remind',text}
+function applyOps(arr,ops,dir,items){
+  const list=dir>0?ops:[...ops].reverse();
+  for(const o of list){
+    if(o.op==='inv'){const l=L(o.line,arr);if(l){l.act+=dir*o.d;l.paid+=dir*(o.dp||0);l.ninv+=dir*(o.dn||0);if(Math.abs(l.act)<0.005)l.act=0;if(Math.abs(l.paid)<0.005)l.paid=0}}
+    else if(o.op==='newline'){let l=L(o.name,arr);
+      if(dir>0){if(l){l.refs=(l.refs||0)+1}else{const idx=lastIdxOfCat(arr,o.cat)+1;arr.splice(idx,0,{cat:o.cat,name:o.name,amt:o.amt||0,act:0,paid:0,ninv:0,done:false,created:true,refs:1})}}
+      else if(l&&l.created){l.refs--;if(l.refs<=0&&Math.abs(l.act)<0.005)arr.splice(arr.indexOf(l),1)}}
+    else if(o.op==='drop'){
+      if(dir>0){const l=L(o.name,arr);if(l){if(arr===LINES){o.saved={...l};o.idx=arr.indexOf(l)}arr.splice(arr.indexOf(l),1)}}
+      else if(o.saved&&!L(o.name,arr)){arr.splice(Math.min(o.idx,arr.length),0,{...o.saved,act:0,paid:0,ninv:0})}}
+    else if(o.op==='field'&&items){o.ids.forEach(id=>{const it=items.find(x=>x.id===id);if(it)it[o.key]=dir>0?o.to:o.from})}
+  }
+}
+function lastIdxOfCat(arr,cat){let k=-1;arr.forEach((l,i)=>{if(l.cat===cat)k=i});return k<0?arr.length-1:k}
+const clone=arr=>arr.map(l=>({...l}));
+function simulate(ops,dir=1){
+  const a=clone(LINES);const before=totals(LINES);applyOps(a,ops.map(o=>({...o})),dir,null);const after=totals(a);
+  const diffs=[];const names=new Set([...LINES.map(l=>l.name),...a.map(l=>l.name)]);
+  names.forEach(n=>{const x=L(n),y=L(n,a);
+    if(x&&!y)diffs.push({n,removed:true,d:-x.act});
+    else if(!x&&y)diffs.push({n,added:true,d:y.act});
+    else if(Math.abs(y.act-x.act)>0.004)diffs.push({n,d:y.act-x.act})});
+  return {diffs,dAct:after.act-before.act,dProj:after.proj-before.proj,dPaid:after.paid-before.paid};
+}
+function effectHTML(ops,opts={}){
+  const parts=[];
+  const money=ops.some(o=>o.op==='inv'||o.op==='drop'||o.op==='newline');
+  if(money){
+    const s=simulate(ops,opts.dir||1);
+    const neg=s.diffs.filter(d=>d.d<0&&!d.removed).map(d=>`${esc(d.n)} ${MN(sg(d.d))}`);
+    const rem=s.diffs.filter(d=>d.removed).map(d=>`${esc(d.n)} ${d.d?MN(sg(d.d))+', ':''}line removed`);
+    const pos=s.diffs.filter(d=>d.d>0||(d.added&&!d.d)).map(d=>`${esc(d.n)}${d.added?' (new line)':''} ${MN(sg(d.d))}`);
+    let t=[...neg,...rem].join(', ');
+    if(pos.length)t+=(t?' → ':'')+pos.join(', ');
+    if(t)parts.push(t);
+    parts.push(Math.abs(s.dProj)<0.005?'projected cost unchanged':`projected cost ${MN(sg(s.dProj))}`);
+  }
+  const rv=opts.dir===-1;
+  ops.filter(o=>o.op==='field').map(o=>rv?{...o,from:o.to,to:o.from}:o).forEach(o=>{
+    const lab={inv:'Invoice no.',date:'Date',note:'Note',vendor:'Vendor',total:'Amount',match:'Linked to'}[o.key];if(!lab)return;
+    const f=v=>o.key==='date'?(v?fd(v):'none'):o.key==='total'?MN(m(+v||0)):(v?'“'+esc(v)+'”':'none');
+    if(o.key==='match'){parts.push(rv?`Payment unlinked from ${f(o.from)}`:`Payment linked to <strong>${f(o.to)}</strong>`);return}
+    parts.push(`${lab} ${f(o.from)} → <strong class="nw">${f(o.to)}</strong>`);
+  });
+  if(!rv)ops.filter(o=>o.op==='remind').forEach(o=>parts.push(esc(o.text)));
+  if(!parts.length)return 'No change to budget totals';
+  if(!money&&!opts.noTotals&&ops.some(o=>o.op==='field'))parts.push('totals unchanged');
+  return parts.join(' · ');
+}
+
+/* ======================= Actions per item ======================= */
+function moveOps(it,to,amt){amt=amt??it.total;const share=it.total?amt/it.total:1;return [{op:'inv',line:it.line,d:-amt,dp:-(it.paid*share),dn:amt===it.total?-1:0},{op:'inv',line:to,d:amt,dp:it.paid*share,dn:1}]}
+function actionsFor(it){
+  const A=[];
+  if(it.type==='dup'){
+    const keep=S.keep[it.id]||'first';const delRow=keep==='first'?Math.max(it.row,it.twin.row):Math.min(it.row,it.twin.row);
+    A.push({k:'deldup',label:`Delete the copy (row ${delRow})`,cls:'pri',ops:[{op:'inv',line:it.line,d:-it.total,dp:-it.paid,dn:-1}],res:`Deleted row ${delRow}, the duplicate`});
+    A.push({k:'keepboth',label:'Both are real, keep both',ops:[],res:'Kept both rows: two real charges'});
+  }
+  if(it.type==='cat'){
+    A.push({k:'keep',label:`Keep on ${it.line}`,ops:[],res:`Kept on ${it.line}`});
+    (it.sugg||[]).forEach(s=>{
+      if(s.newLine)A.push({k:'sugnew',label:`Move to new line “${s.newLine}”`,sug:true,cls:'pri',ops:[{op:'newline',name:s.newLine,cat:s.cat,amt:0},...moveOps(it,s.newLine)],res:`Moved to new line ${s.newLine}`});
+      else A.push({k:'sugmove',label:`Move to ${s.line}`,sug:true,cls:'pri',ops:moveOps(it,s.line),res:`Moved to ${s.line}`});
+    });
+    A.push({k:'move',label:'Move to another line…',open:'picker',sub:'Search all budget lines, or make a new one'});
+    A.push({k:'split',label:'Split across lines…',open:'split',sub:`Divide the ${m(it.total)} between two or more lines`});
+  }
+  if(it.type==='nocat'){
+    const remind=it.sheetCatSug?[{op:'remind',text:`Reminder: set category “${it.sheetCatSug}” in the invoice sheet (${it.tab} tab, ${RL(it)})`}]:[{op:'remind',text:'Reminder: add the category in the invoice sheet'}];
+    const fx=detailOps(it);
+    A.push({k:'keep',label:`Keep on ${it.line}`,cls:it.sheetCatSug?'pri':'',ops:[...fx,...remind],res:`Kept on ${it.line}`});
+    A.push({k:'assign',label:'Assign another line…',open:'picker',sub:'Pick the line this belongs to'});
+    A.push({k:'create',label:'Create new line…',open:'create',sub:'Name it, pick a group, and the invoice moves there'});
+  }
+  if(it.type==='date'){
+    const fx=detailOps(it);
+    A.push({k:'save',label:'Save details',cls:'pri',ops:fx,res:'Details corrected',dis:!fx.length,sub:fx.length?undefined:'Change a field first'});
+    A.push({k:'asis',label:'It’s correct as is',ops:[],res:`Confirmed: ${fdn(it.date)} is correct`,sub:'Keep the date; stop flagging it'});
+  }
+  if(it.type==='sheet'){
+    const ids=[it.id,it.rel].filter(Boolean);
+    A.push({k:'usesheet',label:'Use invoice sheet values',cls:'pri',ops:[{op:'field',ids,key:'inv',from:it.inv,to:it.sheetVals.inv},{op:'field',ids,key:'note',from:it.note||'',to:it.sheetVals.note}],res:'Updated to match the invoice sheet'});
+    A.push({k:'keepours',label:'Keep ours',ops:[],res:'Kept the calculator values',sub:'The invoice sheet keeps its own values'});
+  }
+  if(it.type==='est'){
+    A.push({k:'replace',label:'Replace with the real invoice…',cls:'pri',open:'replace',sub:'Pick an invoice that isn’t on the budget yet, or type in its invoice no., date and amount'});
+    A.push({k:'keepest',label:'Keep as an estimate',ops:[{op:'field',ids:[it.id],key:'est',from:false,to:true},{op:'remind',text:'Marked “Estimate”: still counted in projected cost, flagged as not an invoice'}],res:'Kept as an estimate',subX:''});
+    A.push({k:'remove',label:'Remove it',cls:'dng',ops:[{op:'inv',line:it.line,d:-it.total,dp:-it.paid,dn:-1}],res:'Removed the placeholder row'});
+  }
+  if(it.type==='nopay'){
+    A.push({k:'match',label:'Match to an invoice…',cls:'pri',open:'match',sub:'Link this payment to the invoice it paid'});
+    A.push({k:'deposit',label:'Record as a deposit / prepayment',ops:[{op:'remind',text:`Shown as a deposit on ${it.line}; applied when the invoice arrives`}],res:'Recorded as a deposit / prepayment'});
+    A.push({k:'leave',label:'Leave for now',ops:[{op:'remind',text:'Stays an unlinked payment; the check asks again when a new invoice comes in'}],res:'Left unlinked for now'});
+  }
+  if(it.type==='ownline'){
+    const l=L(it.line);const amt=l?l.act:0,paid=l?l.paid:0,n=l?l.ninv:0;
+    A.push({k:'keep',label:'Keep as its own line',cls:'pri',ops:[],res:'Kept Site refreshments as its own line',sub:'Stays as “Site refreshments (coffee)” · no change to totals'});
+    A.push({k:'merge',label:'Merge into Miscellaneous',sug:true,ops:[{op:'inv',line:it.line,d:-amt,dp:-paid,dn:-n},{op:'inv',line:'Miscellaneous',d:amt,dp:paid,dn:n},{op:'drop',name:it.line}],res:'Merged into Miscellaneous'});
+    A.push({k:'mergeto',label:'Merge into another line…',open:'picker',sub:'Pick the line the receipts should join'});
+    A.push({k:'exclude',label:'Exclude from budget',cls:'dng',ops:[{op:'inv',line:it.line,d:-amt,dp:-paid,dn:-n},{op:'drop',name:it.line}],res:'Excluded from the budget',subX:' · receipts stay in the invoice sheet'});
+  }
+  A.forEach(a=>{if(a.ops&&a.sub===undefined)a.sub=effectHTML(a.ops)+(a.subX||'')});
+  return A;
+}
+function detailOps(it){
+  const e=S.edits[it.id]||{};const ops=[];
+  const want=k=>e[k]!==undefined?e[k]:(k==='date'&&it.sugDate&&it.type==='date'?it.sugDate:it[k]);
+  ['inv','date'].forEach(k=>{const v=want(k);if(v!==undefined&&v!==it[k])ops.push({op:'field',ids:[it.id],key:k,from:it[k],to:v})});
+  return ops;
+}
+
+/* ======================= Stage / save / discard ======================= */
+// Picking an answer only STAGES it (it.pending). Save applies it to the budget and syncs the backup sheet.
+const snap=it=>({status:it.status,res:it.res,until:it.until,ask:it.ask,pending:it.pending});
+function setState(it,p){it.status=p.status;it.res=p.res;it.until=p.until;it.ask=p.ask;it.pending=p.pending}
+const pendingItems=()=>ITEMS.filter(i=>i.pending);
+const rowRef=it=>it.row==='all'?`the ${it.tab} tab row`:`row ${it.row} (${it.tab})`;
+function resolveItems(list,label){ // stage
+  const entry=[];
+  list.forEach(x=>{const it=x.it;entry.push({id:it.id,prev:snap(it)});
+    it.pending={kind:'resolve',ops:x.ops,res:x.res,note:(x.note??S.notes[it.id])||'',at:now()};
+    S.sel.delete(it.id);S.noteOpen.delete(it.id)});
+  S.hist.push(entry);S.flashItem=list.length===1?list[0].it.id:null;
+  render();toast(`${label} <span class="tns">Not saved yet.</span>`,true);
+}
+function stageReopen(id){
+  const it=byId(id);S.hist.push([{id,prev:snap(it)}]);
+  it.pending={kind:'reopen',note:'',at:now()};S.flashItem=id;render();
+  toast(`Reopen <b>${esc(it.vendor)}</b> staged. <span class="tns">Not saved yet.</span>`,true);
+}
+function discard(ids,quiet){
+  ids.forEach(id=>{const it=byId(id);it.pending=null;S.saving.delete(id)});
+  S.hist=S.hist.filter(e=>!e.some(x=>ids.includes(x.id)));
+  render();if(!quiet)toast(ids.length>1?`Discarded ${ids.length} unsaved changes.`:`Discarded. <b>${esc(byId(ids[0]).vendor)}</b> is back as it was.`,false);
+}
+function commit(it){
+  const p=it.pending;if(!p)return;
+  if(p.kind==='resolve'){
+    const eff=effectHTML(p.ops);applyOps(LINES,p.ops,1,ITEMS);
+    it.status='resolved';it.res={ops:p.ops,label:p.res,eff,by:ME,at:now(),note:p.note};
+    it.history.push({kind:'Resolved',label:p.res,by:ME,at:it.res.at,note:p.note});
+    delete S.notes[it.id];delete S.edits[it.id];
+    const pos=p.ops.find(o=>o.op==='inv'&&o.d>0)||p.ops.find(o=>o.op==='inv');if(pos)S.flashLine=pos.line;
+  }else{
+    applyOps(LINES,it.res.ops,-1,ITEMS);
+    it.history.push({kind:'Reopened',label:`“${it.res.label}” taken back`,by:ME,at:now(),note:p.note});
+    it.status='open';it.res=null;
+  }
+  it.pending=null;it.until=null;it.ask=null;
+}
+function save(ids,then){
+  ids=ids.filter(id=>byId(id).pending&&!S.saving.has(id));if(!ids.length){then&&then();return}
+  ids.forEach(id=>S.saving.add(id));render();
+  setTimeout(()=>{
+    const its=ids.map(byId);const nRe=its.filter(i=>i.pending.kind==='reopen').length,nRes=its.length-nRe;
+    its.forEach(it=>{commit(it);S.saving.delete(it.id)});
+    S.hist=S.hist.filter(e=>!e.some(x=>ids.includes(x.id)));
+    S.flashItem=its.length===1?its[0].id:null;
+    render();
+    const rows=its.map(i=>i.row==='all'?'Corner Coffee tab':RL(i));
+    toast(`<b>Saved ${its.length===1?'':its.length+' '}${nRes&&nRe?'changes':nRe?'reopen'+(nRe>1?'s':''):'resolution'+(nRes>1?'s':'')}.</b> Budget updated · backup sheet’s To check tab: ${esc(rows.length>3?rows.length+' rows':rows.join(', '))} marked ${nRe&&!nRes?'Open':nRe?'Resolved / Open':'Resolved'}.`,false);
+    then&&then();
+  },900);
+}
+function parkItems(ids,mode,who,msg){
+  const entry=[];
+  ids.forEach(id=>{const it=byId(id);entry.push({id,prev:snap(it)});
+    if(mode==='snooze'){it.status='snoozed';it.until='Dec 3'}else{it.status='asked';it.ask={who,msg,at:now()}}
+    S.sel.delete(id)});
+  S.hist.push(entry);render();
+  toast(mode==='snooze'?`${ids.length>1?ids.length+' items':'Item'} snoozed until <b>Dec 3</b>. Find ${ids.length>1?'them':'it'} under Waiting.`:`Asked <b>${esc(who)}</b>. ${ids.length>1?'Items wait':'It waits'} under Waiting until they answer.`,true);
+}
+function undo(){ // undoes the last stage / snooze / ask (never a save)
+  const entry=S.hist.pop();if(!entry)return;
+  [...entry].reverse().forEach(({id,prev})=>setState(byId(id),prev));
+  S.flashItem=entry.length===1?entry[0].id:null;
+  render();toast('Undone. Back as it was.',false);
+  if(entry.length===1)scrollToItem(entry[0].id);
+}
+
+/* ======================= Leave guard ======================= */
+function guard(what,fn){
+  const n=pendingItems().length;if(!n){fn();return}
+  S.leave={what,fn};document.getElementById('toast').classList.remove('show');renderLeave();
+}
+function renderLeave(){
+  const el=document.getElementById('leave');if(!S.leave){el.hidden=true;return}
+  const n=pendingItems().length,busy=S.saving.size>0;
+  el.innerHTML=`<div class="mbox" role="alertdialog" aria-modal="true" aria-labelledby="lvt" aria-describedby="lvx"><h2 id="lvt">Save your resolutions?</h2>
+   <p id="lvx">${n} resolution${n>1?'s':''} ${n>1?'aren’t':'isn’t'} saved. If you leave, ${n>1?'they’ll':'it’ll'} be discarded.</p>
+   <p class="lbl" style="margin-top:-8px">You were about to ${esc(S.leave.what)}.</p>
+   <div class="ctrl"><button class="pribtn" data-act="lv-save" ${busy?'disabled':''}>${busy?'Saving…':'Save all and continue'}</button><button class="ghost" data-act="lv-discard" ${busy?'disabled':''}>Discard and continue</button><button class="ghost" data-act="lv-back" ${busy?'disabled':''}>Go back</button></div></div>`;
+  el.hidden=false;if(!busy)el.querySelector('[data-act=lv-save]').focus();
+}
+window.addEventListener('beforeunload',e=>{if(pendingItems().length){e.preventDefault();e.returnValue=''}});
+
+/* ======================= Render: header/tabs ======================= */
+function counts(){const o=ITEMS.filter(isOpen).length,w=ITEMS.filter(isWait).length,r=ITEMS.filter(i=>i.status==='resolved').length,p=pendingItems().length,pr=ITEMS.filter(i=>i.pending&&i.pending.kind==='resolve').length;return {o,w,r,p,pr,n:ITEMS.length,left:o+w}}
+function pendingSim(){const a=clone(LINES);pendingItems().forEach(it=>{if(it.pending.kind==='resolve')applyOps(a,it.pending.ops.map(o=>({...o})),1,null);else applyOps(a,it.res.ops.map(o=>({...o})),-1,null)});const x=totals(a),y=totals(LINES);return {dA:x.act-y.act,dP:x.proj-y.proj}}
+function renderTabs(){
+  const c=counts();
+  document.getElementById('tabs').innerHTML=['Inputs','Builder + investor','Investor report','Builder report'].map(t=>`<a href="#" class="hide-s" data-mock>${t}</a>`).join('')+
+   `<a href="#" data-act="view" data-v="budget" ${S.view==='budget'?'aria-current="page"':''}>Budget</a>`+
+   `<a href="#" data-act="view" data-v="tocheck" ${S.view==='tocheck'?'aria-current="page"':''}>To check <span class="cnt${c.left?'':' zero'}" aria-label="${c.left} left">${c.left||'✓'}</span></a>`;
+}
+
+/* ======================= Render: Budget page ======================= */
+function lineItems(name){return ITEMS.filter(i=>i.line===name&&(isOpen(i)||isWait(i)))}
+function chipFor(name){
+  const li=lineItems(name);if(!li.length)return '';
+  const o=li.filter(isOpen).length;
+  return `<button class="tcchip${o?'':' wait'}" data-act="goline" data-line="${esc(name)}" aria-label="${li.length} to check on ${esc(name)}"><span class="n">${li.length}</span>${o?'to check':'waiting'}</button>`;
+}
+function renderBudget(){
+  const T=totals(LINES),c=counts();
+  const d=(a,b)=>{const x=a-b;return Math.abs(x)<0.005?'':`<b class="${x>0?'up':'down'}">${sg(x)}</b> from To check`};
+  const openAmt=sumU(ITEMS.filter(i=>isOpen(i)||isWait(i)));
+  const tiles=[['Budget',m0(T.amt),d(T.amt,START.amt)||'All lines'],['Invoiced so far',m0(T.act),d(T.act,START.act)||'From the invoice sheet'],['Paid so far',m0(T.paid),d(T.paid,START.paid)||'&nbsp;'],['Projected final cost',m0(T.proj),d(T.proj,START.proj)||'Budget or invoices, if higher']];
+  const vis=LINES.filter(l=>!S.onlyCheck||lineItems(l.name).length||l.created||l.name===S.flashLine);
+  let rows='',cards='';
+  CATS.forEach(cat=>{const ls=vis.filter(l=>l.cat===cat);if(!ls.length)return;
+    const all=LINES.filter(l=>l.cat===cat),ct=totals(all);
+    rows+=`<tr class="cat"><td class="l">${cat}</td><td>${m(ct.amt)}</td><td>${m(ct.act)}</td><td>${m(ct.paid)}</td><td>${m(ct.proj)}</td><td></td></tr>`;
+    cards+=`<div class="bcat"><span>${cat}</span><span class="mn">${m(ct.act)}</span></div>`;
+    ls.forEach(l=>{const fl=l.name===S.flashLine?' flash':'',nw=l.created?' isnew':'';
+      rows+=`<tr class="ln${fl}${nw}" data-line="${esc(l.name)}"><td class="l"><b>${esc(l.name)}</b></td><td>${m(l.amt)}</td><td>${m(l.act)}<span class="lbl" style="display:block;font-size:12px">${l.ninv} invoice${l.ninv===1?'':'s'}</span></td><td>${m(l.paid)}</td><td>${m(proj(l))}</td><td>${chipFor(l.name)}</td></tr>`;
+      cards+=`<div class="bcard${fl}${nw}" data-line="${esc(l.name)}"><div class="nm">${esc(l.name)}</div><dl class="rows"><div><dt>Budget</dt><dd>${m(l.amt)}</dd></div><div><dt>Invoiced (${l.ninv})</dt><dd>${m(l.act)}</dd></div><div><dt>Paid</dt><dd>${m(l.paid)}</dd></div><div><dt>Projected</dt><dd>${m(proj(l))}</dd></div></dl>${chipFor(l.name)}</div>`;
+    })});
+  return `
+  <div class="tiles">${tiles.map(t=>`<div class="tile"><div class="lbl">${t[0]}</div><div class="v">${t[1]}</div><div class="s">${t[2]}</div></div>`).join('')}</div>
+  <div class="tcbanner${c.left?'':' done'}"><div class="t"><span class="big">${c.left||'✓'}</span><div><b>${c.left?`${c.left} invoice row${c.left>1?'s':''} to check`:'Nothing left to check'}</b><span class="lbl">${c.left?`${MN(m(openAmt))} on rows the invoice check couldn’t settle · ${c.r} of ${c.n} resolved${c.w?` · ${c.w} waiting`:''}`:`All ${c.n} rows resolved. Totals below include your answers.`}</span></div></div><button class="pribtn" data-act="view" data-v="tocheck">${c.left?'Review now':'See what changed'}</button></div>
+  <section class="card">
+    <div class="ihead"><h2 style="margin:0">Items</h2><span class="switch"><input type="checkbox" class="sw" id="onlycheck" ${S.onlyCheck?'checked':''} aria-label="Only lines with something to check"><span>Only lines with something to check</span></span></div>
+    <div class="bdesk" style="overflow-x:auto"><table><thead><tr><th class="l">Line</th><th>Budget</th><th>Invoiced</th><th>Paid</th><th>Projected</th><th class="l">To check</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="bmob">${cards}</div>
+  </section>`;
+}
+
+/* ======================= Render: To check page ======================= */
+function inFilter(i){return (S.grp==='all'||grpOf(i)===S.grp)&&(!S.line||i.line===S.line||(i.res&&i.res.ops.some(o=>o.line===S.line)))}
+function renderToCheck(){
+  const c=counts(),T=totals(LINES);
+  const openAmt=sumU(ITEMS.filter(isOpen));
+  const waitAmt=sumU(ITEMS.filter(isWait));
+  const moved=new Set();ITEMS.filter(i=>i.status==='resolved').forEach(i=>i.res.ops.forEach(o=>{if(o.op==='inv')moved.add(o.line)}));
+  const dA=T.act-START.act,dP=T.proj-START.proj;
+  const pr=c.r/c.n*100,pw=c.w/c.n*100,pp=c.pr/c.n*100;const PS=pendingSim();
+  const fc=g=>ITEMS.filter(i=>(isOpen(i)||isWait(i))&&(g==='all'||grpOf(i)===g)&&(!S.line||i.line===S.line)).length;
+  const selectable=ITEMS.filter(i=>isOpen(i)&&!i.pending&&inFilter(i));const open=ITEMS.filter(i=>isOpen(i)&&inFilter(i)),wait=ITEMS.filter(i=>isWait(i)&&inFilter(i)),done=ITEMS.filter(i=>i.status==='resolved'&&inFilter(i));
+  const allSel=selectable.length&&selectable.every(i=>S.sel.has(i.id));
+  return `
+  <section class="card">
+    <div class="tchead"><div><h2>To check</h2><p>The invoice check found these rows and couldn’t decide on its own. Pick an answer for each; every answer shows what it will change.</p><p class="explain"><b>Resolve</b> = decide. <b>Save</b> = apply to the budget and update the backup sheet.</p></div>
+      <button class="ghost sm" data-act="view" data-v="budget">← Back to Budget</button></div>
+    <div class="prog"><div class="pl"><span><b>${c.r} of ${c.n} resolved</b>${c.pr?` · <span class="pend">${c.pr} not saved</span>`:''}${c.w?` · ${c.w} waiting`:''}</span><span class="lbl">${c.o-c.pr} still to do</span></div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${c.n}" aria-valuenow="${c.r}" aria-label="Resolved"><i style="width:${pr}%"></i><i class="p" style="width:${pp}%"></i><i class="w" style="width:${pw}%"></i></div></div>
+    <div class="sumgrid">
+      <div><span class="lbl">Still to check</span><span class="v o">${m(openAmt)}</span><span class="s">${c.o} row${c.o===1?'':'s'}${ITEMS.filter(isOpen).some(i=>i.id==='t3')&&isOpen(byId('t14'))?' (Willow Doors counted once)':''}${c.w?` · ${m(waitAmt)} waiting`:''}</span></div>
+      <div><span class="lbl">Invoiced change</span><span class="v ${Math.abs(dA)<0.005?'':'t'}">${sg(dA)}</span><span class="s">${Math.abs(PS.dA)>0.004?`${MN(sg(PS.dA))} more when saved`:'saved answers'}</span></div>
+      <div><span class="lbl">Projected cost change</span><span class="v ${Math.abs(dP)<0.005?'':'t'}">${sg(dP)}</span><span class="s">${Math.abs(PS.dP)>0.004?`${MN(sg(PS.dP))} more when saved`:'now '+m0(T.proj)}</span></div>
+      <div><span class="lbl">Not saved yet</span><span class="v ${c.p?'o':''}">${c.p}</span><span class="s">${c.p?'Save to apply them':moved.size?moved.size+' budget line'+(moved.size>1?'s':'')+' changed':'nothing pending'}</span></div>
+    </div>
+  </section>
+
+  <div class="filters" role="group" aria-label="Filter by kind">
+    ${GROUPS.map(([g,t])=>`<button class="fchip" data-act="grp" data-g="${g}" aria-pressed="${S.grp===g}">${t} <span class="c">${fc(g)}</span></button>`).join('')}
+    ${S.line?`<span class="linefilter">Line: ${esc(S.line)}<button data-act="clearline" aria-label="Show all lines">✕</button></span>`:''}
+  </div>
+
+  <div class="listhead"><h3>To do <span class="lbl">(${open.length})</span></h3>
+    ${selectable.length>1?`<span class="selall"><input type="checkbox" class="cb" id="selall" ${allSel?'checked':''} aria-label="Select all shown"><span class="cbtxt lbl">Select all shown</span></span>`:''}</div>
+  ${open.length?open.map(cardHTML).join(''):`<div class="empty"><b>${c.o?'Nothing here with this filter':'All done here'}</b>${c.o?'Try “All”.':'Every item in this view has a saved answer.'}</div>`}
+
+  ${wait.length?`<div class="listhead"><h3>Waiting <span class="lbl">(${wait.length})</span></h3><span class="lbl">Snoozed, or asked someone</span></div>${wait.map(cardHTML).join('')}`:''}
+
+  <div class="listhead"><h3>Resolved <span class="lbl">(${done.length})</span></h3>${done.length?`<button class="ghost sm" data-act="togres" aria-expanded="${S.showResolved}">${S.showResolved?'Hide':'Show'}</button>`:''}</div>
+  ${done.length?(S.showResolved?done.map(resHTML).join(''):''):`<div class="empty">Answers you pick show up here, with who, when and what changed. You can reopen any of them.</div>`}`;
+}
+
+function kvHTML(it){
+  const r=[];
+  r.push(['Budget line',`<button class="linkline" data-act="goline-budget" data-line="${esc(it.line)}">${esc(it.line)}</button>`]);
+  r.push(['Invoice sheet',`${esc(it.tab)} tab · ${RL(it)}`]);
+  if(it.type==='ownline'){const l=L(it.line);r.push(['Receipts',l?`${l.ninv} receipts`:'—']);}
+  else if(it.type==='nopay'){r.push(['Paid on',fdn(it.date)]);r.push(['Method',esc(it.method)]);r.push(['Linked invoice',it.match?esc(it.match):'<span class="miss">None</span>',!it.match])}
+  else{
+    const ch=k=>it[k]!==it.orig[k]?`<span class="chg">was ${k==='date'?fdn(it.orig[k]):(it.orig[k]||'none')}</span>`:'';
+    r.push(['Invoice no.',it.inv?esc(it.inv)+ch('inv'):'<span class="miss">None</span>',!it.inv]);
+    r.push(['Date',fdn(it.date)+ch('date'),!it.date||it.date>TODAY]);
+    if(it.type!=='dup')r.push(['Category in sheet',it.sheetCat?esc(it.sheetCat):'None',!it.sheetCat]);
+    if(it.note)r.push(['Note',`“${esc(it.note)}”`]);
+    if(it.type==='est')r.push(['Status',it.est?'Estimate (not an invoice)':'<span class="miss">Placeholder?</span>',!it.est]);
+  }
+  return `<dl class="kv">${r.map(x=>`<div><dt>${x[0]}</dt><dd class="${x[2]?'miss':''}">${x[1]}</dd></div>`).join('')}</dl>`;
+}
+function bodyExtra(it){
+  if(it.type==='dup'){
+    const a={row:it.row,inv:it.inv,date:it.date,total:it.total,paid:it.paid,cheque:it.cheque,sheetCat:it.sheetCat},b=it.twin;
+    const first=a.row<b.row?a:b,second=a.row<b.row?b:a;
+    const rows=[['Invoice no.',x=>x.inv],['Date',x=>fd(x.date)],['Amount',x=>m(x.total)],['Paid',x=>m(x.paid)]];
+    if(a.cheque)rows.push(['Cheque no.',x=>x.cheque]);
+    const keep=S.keep[it.id]||'first';
+    return `<div class="cmp"><table><thead><tr><th>Field</th><th>Row ${first.row}</th><th>Row ${second.row}</th></tr></thead><tbody>${rows.map(([lab,f])=>{const s=f(first)===f(second);return `<tr class="${s?'same':''}"><td>${lab}${s?'<span class="tag s">same</span>':''}</td><td>${esc(f(first))}</td><td>${esc(f(second))}</td></tr>`}).join('')}</tbody></table></div>
+     <div class="keepseg"><span class="lbl">If deleting, keep:</span><span class="seg2" role="group" aria-label="Which row to keep"><button data-act="keeprow" data-id="${it.id}" data-v="first" aria-pressed="${keep==='first'}">Row ${first.row}</button><button data-act="keeprow" data-id="${it.id}" data-v="second" aria-pressed="${keep==='second'}">Row ${second.row}</button></span></div>`;
+  }
+  if(it.type==='sheet'){
+    const rows=[['Invoice no.',it.inv||'—',it.sheetVals.inv],['Note',it.note?'“'+it.note+'”':'—','“'+it.sheetVals.note+'”'],['Amount',m(it.total),m(it.total)],['Date',fd(it.date),fd(it.date)],['Category',it.sheetCat,it.sheetCat]];
+    return `<div class="cmp"><table><thead><tr><th>Field</th><th>Calculator</th><th>Invoice sheet</th></tr></thead><tbody>${rows.map(r=>{const d=r[1]!==r[2];return `<tr class="${d?'diff':''}"><td>${r[0]}${d?'<span class="tag d">differs</span>':''}</td><td>${esc(r[1])}</td><td>${d?'<b>'+esc(r[2])+'</b>':esc(r[2])}</td></tr>`}).join('')}</tbody></table></div>
+     <div class="rel">Probably the same invoice as <button class="linkline" data-act="jump" data-id="t3">Willow Doors, row 33</button> (same vendor, date and amount). Its note “fence deck” hints where the money belongs.</div>`;
+  }
+  if(it.type==='date'||(it.type==='nocat'&&(!it.date||!it.inv))){
+    const e=S.edits[it.id]||{};
+    const dv=e.date!==undefined?e.date:(it.type==='date'?it.sugDate:it.date);
+    const iv=e.inv!==undefined?e.inv:it.inv;
+    const f=[];
+    if(it.type==='date'||!it.date)f.push(`<div class="fld"><label for="d-${it.id}">${it.type==='date'?'Invoice date':'Date (optional)'}</label><input type="date" id="d-${it.id}" data-edit="date" data-id="${it.id}" value="${dv||''}" class="${dv!==it.date?'changed':''}">${it.type==='date'?`<div class="hint">Filled in our guess: ${fd(it.sugDate)} (month typo?).</div>${dv!==it.date?`<button class="linkbtn hintbtn" data-act="resetdate" data-id="${it.id}">Put back ${fd(it.date)}</button>`:''}`:''}</div>`);
+    if(!it.inv||it.type==='date')f.push(`<div class="fld"><label for="i-${it.id}">Invoice no. ${it.inv?'':'(optional)'}</label><input type="text" id="i-${it.id}" data-edit="inv" data-id="${it.id}" value="${esc(iv)}" placeholder="Not on the invoice" autocomplete="off" class="${iv!==it.inv?'changed':''}"></div>`);
+    return `<div class="edit">${f.join('')}</div>`;
+  }
+  if(it.type==='cat'&&it.rel){const r=byId(it.rel);return `<div class="rel">The invoice sheet now says invoice <b>378</b>, note <b>“fence deck”</b> for this one${r.status==='resolved'?' (already updated)':''}. <button class="linkline" data-act="jump" data-id="${it.rel}">See that item</button></div>`}
+  if(it.type==='est'){const p=ITEMS.filter(x=>x.type==='nopay'&&x.line===it.line&&(isOpen(x)||isWait(x)));return `<div class="rel">On ${esc(it.line)}: <b>${UNMATCHED.length} Meridian Tile invoices</b> aren’t on the budget yet${p.length?`, and <b>${p.length} payment${p.length>1?'s':''}</b> have no invoice (<button class="linkline" data-act="jump" data-id="${p[0].id}">see ${p.length>1?'them':'it'}</button>)`:''}.</div>`}
+  if(it.type==='nopay'){const l=L(it.line);return `<div class="rel">${esc(it.line)} right now: invoices <b class="nw">${m(l.act)}</b>, payments <b class="nw">${m(l.paid)}</b>. ${it.rel&&!byId(it.rel).res?`Possible match: <button class="linkline" data-act="jump" data-id="${it.rel}">the $30,000.00 placeholder</button>.`:''}</div>`}
+  if(it.type==='ownline'){const l=L(it.line);return l?`<div class="rel">Right now: <b>${l.ninv} receipts</b>, <b class="nw">${m(l.act)}</b>, budget <b class="nw">${m(l.amt)}</b>. Similar small purchases (coffee, site snacks) usually go under <b>Miscellaneous</b>.</div>`:''}
+  return '';
+}
+function cardHTML(it){
+  if(it.pending)return stagedHTML(it);
+  const T=TYPES[it.type];const A=actionsFor(it);const wait=isWait(it);
+  const sel=S.sel.has(it.id);const nopen=S.noteOpen.has(it.id);
+  const cbx=`<input type="checkbox" class="cb" data-sel="${it.id}" ${sel?'checked':''} aria-label="Select ${esc(it.vendor)}, ${RL(it)}">`;
+  const amtSub=it.type==='nopay'?'Payment, no invoice':it.type==='ownline'?'Paid in full':it.paid>=it.total-0.004?'Paid in full':it.paid>0?`${m(it.total-it.paid)} owed`:'Not paid yet';
+  const l=it.type==='ownline'?L(it.line):null;const tot=l?l.act:it.total;
+  return `<article class="tc${sel?' sel':''}${S.flashItem===it.id?' flash':''}" id="card-${it.id}" data-id="${it.id}">
+   <div class="ck">${cbx}</div>
+   <div class="bd">
+    <div class="hd"><div class="who"><span class="cbw">${cbx}</span><div><div class="pills"><span class="pill p-${it.type}">${T.pill}</span>${wait?`<span class="pill wait">${it.status==='snoozed'?'Snoozed':'Asked '+esc(it.ask.who)}</span>`:''}</div><div class="vend">${esc(it.vendor)}</div></div></div>
+     <div class="amt"><small class="lbl-amt">${amtSub==='Not paid yet'||/owed/.test(amtSub)?`<span class="up">${amtSub}</span>`:amtSub}</small><span>${m(tot)}</span></div></div>
+    <div class="why"><span class="q" aria-hidden="true">?</span><span>${esc(it.why)}</span></div>
+    ${kvHTML(it)}
+    ${bodyExtra(it)}
+    <details class="whyrule"><summary>Why is this here?</summary><p>${WHY[it.type]}</p></details>
+    ${histHTML(it)}
+   </div>
+   <div class="ac">
+    ${wait?`<div class="waitnote"><span>${it.status==='snoozed'?`Snoozed until ${it.until}`:`Asked ${esc(it.ask.who)} · ${it.ask.at}`}</span><button class="ghost sm" data-act="wake" data-id="${it.id}">${it.status==='snoozed'?'Wake now':'Cancel ask'}</button></div>`:''}
+    <div class="h">Pick an answer</div>
+    ${A.map(a=>`<button class="act ${a.cls||''}" data-act="do" data-id="${it.id}" data-k="${a.k}" ${a.dis?'disabled':''}><b>${esc(a.label)}${a.sug?'<span class="sug">SUGGESTED</span>':''}</b>${a.sub?`<small data-prev="${it.id}-${a.k}">${a.sub}</small>`:''}</button>`).join('')}
+    <div class="sec">
+     <button data-act="snooze" data-id="${it.id}" ${it.status==='snoozed'?'disabled':''}>Not sure yet</button>
+     <button data-act="ask" data-id="${it.id}">Ask someone</button>
+     <button data-act="note" data-id="${it.id}" aria-expanded="${nopen}">${S.notes[it.id]?'Note ✓':'Add note'}</button>
+    </div>
+    <div class="notebox${nopen?' open':''}"><label class="lbl" for="n-${it.id}">Note (saved with your answer)</label><textarea id="n-${it.id}" data-note="${it.id}" placeholder="e.g. Checked with Jordan, it’s the rear deck">${esc(S.notes[it.id]||'')}</textarea></div>
+   </div>
+  </article>`;
+}
+function resHTML(it){
+  if(it.pending)return stagedHTML(it);
+  const r=it.res;
+  return `<div class="rs${S.flashItem===it.id?' flash':''}" id="card-${it.id}"><span class="ok" aria-hidden="true">${CHECK}</span>
+   <div><div class="t1">${esc(it.vendor)} <span class="lbl">· ${esc(it.tab)} · ${RL(it)} ·</span> ${MN(m(it.total))}</div>
+    <div class="t2"><span class="pill p-${it.type}" style="margin-right:6px">${TYPES[it.type].pill}</span><b>${esc(r.label)}</b></div>
+    <div class="eff">${r.eff}</div>
+    ${r.note?`<div class="nt">“${esc(r.note)}”</div>`:''}
+    <div class="by">Resolved by ${r.by} · ${r.at} · <span class="synced">✓ Backup sheet: ${it.row==='all'?'Corner Coffee tab':RL(it)} marked Resolved</span></div>${histHTML(it,true)}</div>
+   <button class="ghost sm rb" data-act="reopen" data-id="${it.id}">Reopen</button></div>`;
+}
+
+function histHTML(it,skipLast){
+  const h=skipLast?it.history.slice(0,-1):it.history;if(!h.length)return '';
+  return `<details class="hist"><summary>History (${h.length})</summary><ol>${[...h].reverse().map(x=>`<li><b>${x.kind}</b>: ${esc(x.label)} <span class="lbl">· ${x.by} · ${x.at}</span>${x.note?`<div class="lbl">“${esc(x.note)}”</div>`:''}</li>`).join('')}</ol></details>`;
+}
+function stagedHTML(it){
+  const p=it.pending,re=p.kind==='reopen',busy=S.saving.has(it.id);
+  const effRe=re?effectHTML(it.res.ops,{dir:-1}):effectHTML(p.ops);
+  const row=it.row==='all'?'the Corner Coffee tab row':it.pay?'the '+RL(it)+' row':RL(it);
+  const l=it.type==='ownline'?L(it.line):null;const tot=l?l.act:it.total;
+  return `<article class="tc staged${busy?' busy':''}${S.flashItem===it.id?' flash':''}" id="card-${it.id}" data-id="${it.id}">
+   <div class="ck"><span class="stdot" aria-hidden="true">●</span></div>
+   <div class="bd">
+    <div class="hd"><div class="who"><div><div class="pills"><span class="pill p-st">${re?'Reopen — not saved':'Resolved — not saved'}</span><span class="pill p-${it.type}">${TYPES[it.type].pill}</span></div><div class="vend">${esc(it.vendor)}</div></div></div>
+     <div class="amt"><small>${esc(it.tab)} · ${RL(it)}</small><span>${m(tot)}</span></div></div>
+    <div class="stbox">
+     <div class="st1">${re?`Reopen: take back “${esc(it.res.label)}”`:esc(p.res)}</div>
+     <div class="st2"><b>When saved:</b> ${effRe}</div>
+     <div class="st3"><span aria-hidden="true">⇄</span><span>Updates the budget and marks ${row} <b>${re?'Open':'Resolved'}</b> in the backup sheet’s To check tab, with your note, name and date.${re?' The earlier answer stays in the history.':''}</span></div>
+     ${p.note?`<div class="st4">Note: “${esc(p.note)}”</div>`:''}
+    </div>
+    ${histHTML(it)}
+   </div>
+   <div class="ac">
+    <div class="h">${busy?'Saving…':'Not saved yet'}</div>
+    <button class="pribtn full" data-act="saveone" data-id="${it.id}" ${busy?'disabled':''}>${busy?'Saving…':'Save'}</button>
+    <button class="ghost full" data-act="discardone" data-id="${it.id}" ${busy?'disabled':''}>Undo</button>
+    <p class="lbl stnote">Undo throws this decision away. Nothing has changed yet.</p>
+   </div>
+  </article>`;
+}
+function renderPbar(){
+  const el=document.getElementById('pbar');const n=pendingItems().length,busy=S.saving.size>0;
+  if(!n||S.view!=='tocheck'){el.hidden=true;el.innerHTML='';document.documentElement.style.setProperty('--pbh','0px');return}
+  el.hidden=false;
+  el.innerHTML=`<div class="pin"><span class="sp"><b>${n} resolution${n>1?'s':''} not saved.</b> <span class="hide-xs">Saving applies ${n>1?'them':'it'} to the budget and updates the backup sheet.</span></span>
+   <button class="pbtn" data-act="discardall" ${busy?'disabled':''}>Discard all</button><button class="pbtn p" data-act="saveall" ${busy?'disabled':''}>${busy?'Saving…':`Save all (${n})`}</button></div>`;
+  requestAnimationFrame(()=>document.documentElement.style.setProperty('--pbh',(innerWidth<=640?el.offsetHeight:0)+'px'));
+}
+/* ======================= Bulk ======================= */
+function bulkDefs(items){
+  const types=[...new Set(items.map(i=>i.type))];
+  if(types.length!==1)return {mixed:true,acts:[]};
+  const t=types[0],D=[];
+  const sameAll=(k)=>items.map(i=>actionsFor(i).find(a=>a.k===k));
+  const mk=(k,label,cls)=>{const as=sameAll(k);if(as.some(a=>!a||!a.ops||a.dis))return;const ops=as.flatMap(a=>a.ops);D.push({k,label,cls,sub:bulkSub(ops),list:items.map((it,j)=>({it,ops:as[j].ops,res:as[j].res}))})};
+  if(t==='dup'){mk('deldup','Delete all the copies','pri');mk('keepboth','Keep all: they’re real')}
+  if(t==='cat'){mk('keep','Keep all on their current line');
+    const sl=items.map(i=>(i.sugg||[])[0]?.line);if(sl[0]&&sl.every(x=>x===sl[0]))mk('sugmove',`Move all to ${sl[0]}`,'pri');
+    D.push({k:'bulkmove',label:'Move all to…',open:'picker',sub:'Pick one line for all of them'})}
+  if(t==='nocat'){mk('keep','Keep all on their current line','pri');D.push({k:'bulkmove',label:'Assign all to…',open:'picker',sub:'Pick one line for all of them'})}
+  if(t==='date'){mk('save','Use the suggested dates','pri');mk('asis','All correct as is')}
+  if(t==='sheet'){mk('usesheet','Use invoice sheet values','pri');mk('keepours','Keep ours')}
+  if(t==='ownline'){mk('keep','Keep as its own line','pri')}
+  if(t==='nopay'){mk('deposit','Record all as deposits','pri');mk('leave','Leave all for now')}
+  if(t==='est'){mk('keepest','Keep all as estimates','pri')}
+  return {mixed:false,type:t,acts:D};
+}
+function bulkSub(ops){
+  const money=ops.filter(o=>['inv','newline','drop'].includes(o.op)),f=ops.filter(o=>o.op==='field'),r=ops.filter(o=>o.op==='remind');const p=[];
+  if(money.length)p.push(effectHTML(money));
+  if(f.length)p.push(f.every(o=>o.key==='date')&&f.length>1?`${f.length} dates → ${fd(f[0].to)}`:f.length===1?effectHTML(f,{noTotals:true}):`${f.length} details updated`);
+  if(r.length)p.push(`${r.length} reminder${r.length>1?'s':''} to fix the invoice sheet`);
+  if(!money.length&&p.length)p.push('totals unchanged');
+  return p.length?p.join(' · '):'No change to budget totals';
+}
+function renderBulk(){
+  const el=document.getElementById('bulk');
+  const items=[...S.sel].map(byId).filter(i=>i&&!i.pending&&(isOpen(i)||isWait(i)));
+  if(S.view!=='tocheck'||!items.length){el.classList.remove('open');el.innerHTML='';document.getElementById('main').style.paddingBottom='';document.documentElement.style.setProperty('--lift',innerWidth<=640?'12px':'22px');return}
+  const B=bulkDefs(items);
+  el.innerHTML=`<div class="r1"><b>${items.length} selected${B.mixed?'':' · '+TYPES[B.type].pill}</b><button class="ghost sm" data-act="clearsel">Clear</button></div>
+   ${B.mixed?`<div class="hint" style="margin-bottom:8px">These are different kinds of problems. Select items of one kind to answer them together, or:</div>`:''}
+   <div class="acts"${B.acts.length?'':' hidden'}>${B.acts.map(a=>`<button class="act ${a.cls||''}" data-act="bulkdo" data-k="${a.k}"><b>${esc(a.label)}</b><small>${a.sub}</small></button>`).join('')}
+   </div>
+   <div class="bsec"><button class="ghost" data-act="bulksnooze">Not sure yet</button><button class="ghost" data-act="bulkask">Ask someone</button></div>`;
+  el.classList.add('open');
+  requestAnimationFrame(()=>{if(!el.classList.contains('open'))return;const h=el.offsetHeight;document.getElementById('main').style.paddingBottom=(h+40)+'px';document.documentElement.style.setProperty('--lift',(h+24)+'px')});
+}
+
+/* ======================= Sheets (pickers) ======================= */
+function openSheet(s){S.sheet=s;document.getElementById('toast').classList.remove('show');renderSheet();document.getElementById('scrim').classList.add('open');const el=document.getElementById('sheet');el.classList.add('open');setTimeout(()=>{const f=el.querySelector('[data-autofocus]')||el.querySelector('.x');f&&f.focus({preventScroll:true})},60)}
+function closeSheet(){S.sheet=null;document.getElementById('scrim').classList.remove('open');document.getElementById('sheet').classList.remove('open')}
+function sheetItems(){return S.sheet.ids.map(byId)}
+function sheetOps(){
+  const s=S.sheet,its=sheetItems();
+  if(s.kind==='picker'){if(!s.sel)return null;
+    const created=s.sel.startsWith('+')?s.sel.slice(1):null,to=created||s.sel;
+    return its.flatMap(it=>{
+      if(it.type==='ownline'){const l=L(it.line);return [{op:'inv',line:it.line,d:-l.act,dp:-l.paid,dn:-l.ninv},{op:'inv',line:to,d:l.act,dp:l.paid,dn:l.ninv},{op:'drop',name:it.line}]}
+      return [...detailOps(it).filter(()=>it.type==='nocat'),...moveOps(it,to)]})}
+  if(s.kind==='create'){const nm=(s.name||'').trim();if(!nm||L(nm))return null;return [{op:'newline',name:nm,cat:s.cat,amt:+s.amt||0},...its.flatMap(it=>[...(it.type==='nocat'?detailOps(it):[]),...moveOps(it,nm)])]}
+  if(s.kind==='replace'){const it=its[0];const amt=+String(s.ramt).replace(/[$,]/g,'');if(!s.rinv.trim()||!s.rdate||!(amt>0))return null;
+    const ch=s.choice!=null&&s.choice!=='manual'?UNMATCHED[s.choice]:null;const ops=[];
+    if(Math.abs(amt-it.total)>0.004)ops.push({op:'inv',line:it.line,d:amt-it.total,dp:0,dn:0});
+    if(ch&&ch.vendor!==it.vendor)ops.push({op:'field',ids:[it.id],key:'vendor',from:it.vendor,to:ch.vendor});
+    ops.push({op:'field',ids:[it.id],key:'inv',from:it.inv,to:s.rinv.trim()},{op:'field',ids:[it.id],key:'date',from:it.date,to:s.rdate});
+    if(Math.abs(amt-it.total)>0.004)ops.push({op:'field',ids:[it.id],key:'total',from:it.total,to:amt});
+    return ops}
+  if(s.kind==='match'){if(s.sel==null)return null;const it=its[0],o=LUMBER_INVS[s.sel];const after=o.paid+it.total;
+    return [{op:'field',ids:[it.id],key:'match',from:it.match||'',to:o.label.split(':')[0].split(' · ')[0]},{op:'remind',text:`that invoice then shows ${m(after)} paid of ${m(o.total)}${after>o.total+0.004?' (more than the invoice: check the amount)':''}`}]}
+  if(s.kind==='split'){const it=its[0];const rows=s.rows;const sum=rows.reduce((a,r)=>a+(+r.amt||0),0);if(Math.abs(sum-it.total)>0.004)return null;if(rows.some(r=>!r.line||!(+r.amt>0)))return null;
+    const ops=[];rows.forEach(r=>{if(r.line===it.line)return;const share=(+r.amt)/it.total;ops.push({op:'inv',line:it.line,d:-(+r.amt),dp:-it.paid*share,dn:0},{op:'inv',line:r.line,d:+r.amt,dp:it.paid*share,dn:1})});
+    if(!ops.length)return null;return ops}
+  return null;
+}
+function lineOpt(l,sel,sub){return `<button class="lopt" data-act="pick" data-line="${esc(l.name)}" aria-pressed="${sel===l.name}"><span class="n">${esc(l.name)}${sub?`<small>${sub}</small>`:''}</span><span class="v">${m(l.act)}</span></button>`}
+function renderPickerList(){
+  const s=S.sheet,its=sheetItems(),cur=new Set(its.map(i=>i.line));const q=(s.q||'').trim().toLowerCase();
+  const pool=LINES.filter(l=>!cur.has(l.name));
+  let h='';
+  if(!q){const sug=[...new Set(its.flatMap(i=>[...(i.sugg||[]).map(x=>x.line).filter(Boolean),...(i.pick||[])]))].map(n=>L(n)).filter(l=>l&&!cur.has(l.name));
+    if(sug.length)h+=`<div class="grp">Suggested</div>`+sug.map(l=>lineOpt(l,s.sel,l.cat)).join('');
+    CATS.forEach(c=>{const ls=pool.filter(l=>l.cat===c);if(ls.length)h+=`<div class="grp">${c}</div>`+ls.map(l=>lineOpt(l,s.sel)).join('')});
+  }else{const ls=pool.filter(l=>l.name.toLowerCase().includes(q)||l.cat.toLowerCase().includes(q));
+    h+=ls.length?ls.map(l=>lineOpt(l,s.sel,l.cat)).join(''):`<div class="lbl" style="padding:10px 4px">No line matches “${esc(s.q)}”.</div>`;
+    if(!LINES.some(l=>l.name.toLowerCase()===q))h+=`<button class="lopt new" data-act="tocreate"><span class="n">+ Create new line “${esc(s.q.trim())}”</span></button>`;}
+  if(!q)h+=`<button class="lopt new" data-act="tocreate"><span class="n">+ Create a new line…</span></button>`;
+  return h;
+}
+function sheetFoot(ops,cta){
+  return `<div class="preview ${ops?'':'none'}" id="shprev">${ops?'<b>When saved:</b> '+effectHTML(ops):({split:'Amounts must add up to the full total first.',replace:'Pick an invoice or fill in all three fields.',match:'Pick the invoice this payment was for.'})[S.sheet.kind]||'Pick a line to see what changes.'}</div>
+   <div class="fld"><label for="shnote" class="lbl">Note (optional)</label><input type="text" id="shnote" value="${esc(S.sheet.note||'')}" data-shf="note" placeholder="Why, or who confirmed it"></div>
+   <div class="row"><button class="ghost" data-act="closesheet">Cancel</button><button class="pribtn" data-act="shconfirm" ${ops?'':'disabled'}>${esc(cta)}</button></div>`;
+}
+function renderSheet(){
+  const el=document.getElementById('sheet');const s=S.sheet;if(!s)return;const its=sheetItems();
+  const who=its.length>1?`${its.length} items · ${m(its.reduce((a,i)=>a+i.total,0))}`:`${esc(its[0].vendor)} · ${m(its[0].type==='ownline'?(L(its[0].line)?.act||0):its[0].total)} · now on ${esc(its[0].line)}`;
+  let title='',body='',foot='';
+  if(s.kind==='picker'){
+    title=s.mode==='merge'?'Merge into which line?':s.mode==='assign'?'Assign to which line?':'Move to which line?';
+    const ops=sheetOps();const to=s.sel?(s.sel.startsWith('+')?s.sel.slice(1):s.sel):'';
+    body=`<div class="search"><input type="search" id="shq" data-shf="q" value="${esc(s.q||'')}" placeholder="Search lines, e.g. fence, misc" aria-label="Search budget lines" data-autofocus autocomplete="off"></div><div id="plist">${renderPickerList()}</div>`;
+    foot=sheetFoot(ops,to?`${s.mode==='merge'?'Merge into':s.mode==='assign'?'Assign to':'Move to'} ${to}`:'Pick a line');
+  }
+  if(s.kind==='create'){
+    title='Create a new budget line';
+    const ops=sheetOps();const dup=s.name&&L(s.name.trim());
+    body=`<div class="fld"><label for="cn">Line name</label><input id="cn" data-shf="name" value="${esc(s.name||'')}" data-autofocus autocomplete="off">${dup?'<div class="hint" style="color:var(--up)">A line with this name already exists. Pick it from “Move to” instead.</div>':''}</div>
+     <div class="fld" style="margin-top:10px"><label for="cg">Group</label><select id="cg" data-shf="cat">${CATS.map(c=>`<option ${c===s.cat?'selected':''}>${c}</option>`).join('')}</select></div>
+     <div class="fld" style="margin-top:10px"><label for="ca">Budget for this line</label><div class="money"><span>$</span><input id="ca" data-shf="amt" inputmode="decimal" value="${esc(s.amt??'0')}"></div><div class="hint">Leave at $0 if it wasn’t planned. Projected cost then uses the invoices.</div></div>`;
+    foot=sheetFoot(ops,ops?`Create and move ${MNtext(its)}`:'Create line');
+  }
+  if(s.kind==='split'){
+    const it=its[0];title='Split across lines';
+    const sum=s.rows.reduce((a,r)=>a+(+r.amt||0),0),left=it.total-sum;
+    const opts=n=>CATS.map(c=>`<optgroup label="${c}">${LINES.filter(l=>l.cat===c).map(l=>`<option ${l.name===n?'selected':''}>${esc(l.name)}</option>`).join('')}</optgroup>`).join('');
+    body=s.rows.map((r,k)=>`<div class="splitrow"><div class="fld f-ln"><label for="sl${k}">Line ${k+1}</label><select id="sl${k}" data-split="${k}" data-f="line"><option value="">Pick a line…</option>${opts(r.line)}</select></div>
+      <div class="fld f-am"><label for="sa${k}">Amount</label><div class="money"><span>$</span><input id="sa${k}" data-split="${k}" data-f="amt" inputmode="decimal" value="${esc(r.amt)}"></div></div>
+      <button class="rm" data-act="splitrm" data-k="${k}" aria-label="Remove line ${k+1}" ${s.rows.length<=2?'disabled':''}>✕</button></div>`).join('')+
+      `<button class="add" data-act="splitadd">+ Add another line</button>
+      <div class="remain ${Math.abs(left)>0.004?'bad':''}" id="remain"><span>${Math.abs(left)<=0.004?'All assigned':left>0?'Left to assign':'Over by'}</span>${MN(m(left))}</div>
+      <button class="linkbtn" style="margin-top:8px" data-act="splitfill" ${Math.abs(left)>0.004?'':'hidden'}>Put the rest on the last line</button>`;
+    foot=sheetFoot(sheetOps(),'Save split');
+  }
+  if(s.kind==='replace'){
+    const it=its[0];title='Replace with the real invoice';
+    body=`<div class="grp">Meridian Tile invoices not on the budget yet</div>${UNMATCHED.map((u,k)=>`<button class="lopt" data-act="repick" data-k="${k}" aria-pressed="${s.choice===k}"><span class="n">${esc(u.inv)}<small>${esc(u.vendor)} · ${fd(u.date)}</small></span><span class="v">${m(u.total)}</span></button>`).join('')}
+     <div class="grp">Or type it in</div>
+     <div class="edit" style="margin-top:4px"><div class="fld"><label for="rinv">Invoice no.</label><input id="rinv" data-shf="rinv" value="${esc(s.rinv)}" autocomplete="off"></div>
+     <div class="fld"><label for="rdate">Invoice date</label><input id="rdate" type="date" data-shf="rdate" value="${esc(s.rdate)}"></div>
+     <div class="fld"><label for="ramt">Amount</label><div class="money"><span>$</span><input id="ramt" data-shf="ramt" inputmode="decimal" value="${esc(s.ramt)}"></div><div class="hint">The placeholder was ${m(it.total)}. The line changes by the difference.</div></div></div>`;
+    foot=sheetFoot(sheetOps(),'Replace with this invoice');
+  }
+  if(s.kind==='match'){
+    title='Match to an invoice';
+    body=`<div class="grp">Invoices on ${esc(its[0].line)}</div>${LUMBER_INVS.map((o,k)=>{const t=o.id?byId(o.id):null;if(t&&t.status==='resolved'&&!t.est)return '';const left=o.total-o.paid;return `<button class="lopt" data-act="mpick" data-k="${k}" aria-pressed="${s.sel===k}"><span class="n">${esc(o.label)}<small>${left>0.004?m(left)+' not paid yet':'Already paid in full'}</small></span><span class="v">${m(o.total)}</span></button>`}).join('')}`;
+    foot=sheetFoot(sheetOps(),s.sel!=null?'Match to this invoice':'Pick an invoice');
+  }
+  if(s.kind==='ask'){
+    title='Ask someone';
+    body=`${PEOPLE.map(p=>`<button class="who-opt" data-act="askwho" data-who="${p[0]}" aria-pressed="${s.who===p[0]}"><span class="av">${p[2]}</span><span><b>${p[0]}</b><small>${p[1]}</small></span></button>`).join('')}
+     <div class="fld" style="margin-top:6px"><label for="askmsg">Question</label><textarea id="askmsg" data-shf="msg" rows="4">${esc(s.msg)}</textarea></div>`;
+    foot=`<div class="preview none">They get a link to ${its.length>1?'these items':'this item'}. ${its.length>1?'They wait':'It waits'} under <b>Waiting</b> until answered; nothing changes in the budget.</div><div class="row"><button class="ghost" data-act="closesheet">Cancel</button><button class="pribtn" data-act="asksend" ${s.who?'':'disabled'}>${s.who?'Send to '+s.who:'Pick someone'}</button></div>`;
+  }
+  el.innerHTML=`<div class="sh-h"><div><h2 id="shtitle">${title}</h2><div class="lbl">${who}</div></div><button class="x" data-act="closesheet" aria-label="Close">✕</button></div><div class="sh-b">${body}</div><div class="sh-f">${foot}</div>`;
+}
+function MNtext(its){return its.length>1?its.length+' invoices':m(its[0].total)}
+function refreshSheetFoot(){ // keep focus while typing
+  const s=S.sheet;if(!s)return;const ops=sheetOps();const p=document.getElementById('shprev');
+  if(p){p.className='preview '+(ops?'':'none');p.innerHTML=ops?'<b>When saved:</b> '+effectHTML(ops):({split:'Amounts must add up to the full total first.',replace:'Pick an invoice or fill in all three fields.',match:'Pick the invoice this payment was for.'})[s.kind]||'Pick a line to see what changes.'}
+  const b=document.querySelector('[data-act=shconfirm]');if(b){b.disabled=!ops;if(s.kind==='create')b.textContent=ops?`Create and move ${MNtext(sheetItems())}`:'Create line'}
+  if(s.kind==='split'){const it=sheetItems()[0];const left=it.total-s.rows.reduce((a,r)=>a+(+r.amt||0),0);const r=document.getElementById('remain');
+    if(r){r.className='remain'+(Math.abs(left)>0.004?' bad':'');r.innerHTML=`<span>${Math.abs(left)<=0.004?'All assigned':left>0?'Left to assign':'Over by'}</span>${MN(m(left))}`}
+    const sf=document.querySelector('[data-act=splitfill]');if(sf)sf.hidden=Math.abs(left)<=0.004}
+}
+function confirmSheet(){
+  const s=S.sheet,its=sheetItems(),ops=sheetOps();if(!ops)return;
+  const note=s.note||'';let label,res;
+  if(s.kind==='picker'){const to=s.sel.startsWith('+')?s.sel.slice(1):s.sel;res=(s.mode==='merge'?'Merged into ':s.mode==='assign'?'Assigned to ':'Moved to ')+to;label=`${its.length>1?its.length+' items':'<b>'+esc(its[0].vendor)+'</b>'} ${res.toLowerCase().replace(to.toLowerCase(),'<b>'+esc(to)+'</b>')}.`}
+  if(s.kind==='create'){res=`Moved to new line ${s.name.trim()}`;label=`New line <b>${esc(s.name.trim())}</b> created.`}
+  if(s.kind==='replace'){res=`Replaced with invoice ${s.rinv.trim()}`;label=`<b>${esc(its[0].vendor)}</b>: replace with invoice ${esc(s.rinv.trim())}.`}
+  if(s.kind==='match'){const o=LUMBER_INVS[s.sel];res=`Matched to ${o.label.split(':')[0].split(' · ')[0]}`;label=`Payment ${m(its[0].total)}: match to ${esc(o.label.split(' · ')[0])}.`}
+  if(s.kind==='split'){res='Split: '+s.rows.map(r=>`${r.line} ${m(+r.amt)}`).join(', ');label=`<b>${esc(its[0].vendor)}</b> split across ${s.rows.length} lines.`}
+  closeSheet();
+  if(its.length===1)resolveItems([{it:its[0],ops,res,note}],label);
+  else{ // per-item ops for clean reopen
+    const list=its.map(it=>{let o;
+      if(s.kind==='picker'){const to=s.sel.startsWith('+')?s.sel.slice(1):s.sel;o=[...(it.type==='nocat'?detailOps(it):[]),...moveOps(it,to)]}
+      else o=[...(it.type==='nocat'?detailOps(it):[]),...moveOps(it,s.name.trim())];
+      return {it,ops:o,res,note}});
+    if(s.kind==='create')list[0].ops.unshift({op:'newline',name:s.name.trim(),cat:s.cat,amt:+s.amt||0});
+    resolveItems(list,label);
+  }
+}
+
+/* ======================= Toast ======================= */
+let tt;
+function toast(t,undoable){const e=document.getElementById('toast');e.innerHTML=`<span class="tx">${t}</span>${undoable&&S.hist.length?'<button data-act="undo">Undo</button>':''}`;
+  e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),undoable?7000:2600)}
+
+/* ======================= Render root ======================= */
+function render(){
+  renderTabs();
+  document.getElementById('main').innerHTML=S.view==='budget'?renderBudget():renderToCheck();
+  const sa=document.getElementById('selall');if(sa){const open=ITEMS.filter(i=>isOpen(i)&&!i.pending&&inFilter(i));sa.indeterminate=open.some(i=>S.sel.has(i.id))&&!open.every(i=>S.sel.has(i.id))}
+  renderPbar();renderBulk();renderLeave();
+  if(S.sheet)renderSheet();
+  S.flashLine=S.view==='budget'?null:S.flashLine;S.flashItem=null;
+}
+function scrollToItem(id){requestAnimationFrame(()=>{const c=document.getElementById('card-'+id);if(c){c.scrollIntoView({block:'start',behavior:'instant'});c.classList.remove('flash');void c.offsetWidth;c.classList.add('flash')}})}
+
+/* ======================= Events ======================= */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act],[data-mock],[data-th]');if(!b)return;
+  if(b.dataset.th){document.documentElement.classList.remove('force-light','force-dark');if(b.dataset.th!=='auto')document.documentElement.classList.add('force-'+b.dataset.th);document.querySelectorAll('#themeseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));return}
+  if(b.hasAttribute('data-mock')&&!b.dataset.act){e.preventDefault();const t=b.textContent.trim();if(b.tagName==='A'&&S.view==='tocheck')guard(`open the ${t} tab`,()=>toast(`The ${esc(t)} tab isn’t part of this mockup.`,false));else toast('Not part of this mockup.',false);return}
+  const a=b.dataset.act,id=b.dataset.id,it=id&&byId(id);
+  if(b.tagName==='A')e.preventDefault();
+  switch(a){
+    case 'view':{const v=b.dataset.v;if(v===S.view)break;const go=()=>{S.view=v;S.sel.clear();render();window.scrollTo(0,0)};S.view==='tocheck'?guard(v==='budget'?'open the Budget tab':'switch tabs',go):go()}break;
+    case 'grp':S.grp=b.dataset.g;render();break;
+    case 'clearline':S.line=null;render();break;
+    case 'goline':S.view='tocheck';S.line=b.dataset.line;S.grp='all';render();{const f=ITEMS.find(i=>(isOpen(i)||isWait(i))&&i.line===S.line);if(f)scrollToItem(f.id)}break;
+    case 'goline-budget':guard('open the Budget tab',()=>{S.view='budget';S.flashLine=b.dataset.line;render();requestAnimationFrame(()=>{const r=[...document.querySelectorAll(`[data-line="${CSS.escape(b.dataset.line)}"]`)].find(x=>x.offsetParent&&!x.matches('button'));r&&r.scrollIntoView({block:'center',behavior:'instant'})})});break;
+    case 'jump':{const t=byId(id);if(!inFilter(t)){S.grp='all';S.line=null}render();scrollToItem(id)}break;
+    case 'keeprow':S.keep[id]=b.dataset.v;render();break;
+    case 'resetdate':S.edits[id]={...(S.edits[id]||{}),date:it.date};render();break;
+    case 'do':{const A=actionsFor(it).find(x=>x.k===b.dataset.k);if(!A||A.dis)return;
+      if(A.open==='picker')openSheet({kind:'picker',mode:A.k==='assign'?'assign':A.k==='mergeto'?'merge':'move',ids:[id],q:'',sel:null,note:S.notes[id]||''});
+      else if(A.open==='split'){const h=it.splitHint||(it.pick||[])[0]||'';const half=Math.round(it.total/2*100)/100;openSheet({kind:'split',ids:[id],rows:[{line:it.line,amt:(it.total-half).toFixed(2)},{line:h,amt:half.toFixed(2)}],note:S.notes[id]||''})}
+      else if(A.open==='replace')openSheet({kind:'replace',ids:[id],choice:null,rinv:'',rdate:'',ramt:'',note:S.notes[id]||''});
+      else if(A.open==='match')openSheet({kind:'match',ids:[id],sel:null,note:S.notes[id]||''});
+      else if(A.open==='create')openSheet({kind:'create',ids:[id],name:it.vendor==='Engineering review'?'Engineering and survey':'',cat:L(it.line).cat,amt:'0',note:S.notes[id]||''});
+      else resolveItems([{it,ops:A.ops,res:A.res}],`<b>${esc(it.vendor)}</b>: ${esc(A.res.charAt(0).toLowerCase()+A.res.slice(1))}.`);
+      break}
+    case 'snooze':parkItems([id],'snooze');break;
+    case 'ask':openSheet({kind:'ask',ids:[id],who:null,msg:`Can you check ${it.vendor}, ${it.tab} tab, ${RL(it)} (${m(it.total)})? ${it.why}`});break;
+    case 'askwho':S.sheet.who=b.dataset.who;S.sheet.msg=document.getElementById('askmsg').value;renderSheet();break;
+    case 'asksend':{const s=S.sheet;closeSheet();parkItems(s.ids,'ask',s.who,s.msg)}break;
+    case 'wake':{const entry=[{id,prev:snap(it)}];setState(it,{status:'open',res:null,until:null,ask:null});S.hist.push(entry);S.flashItem=id;render();toast(`<b>${esc(it.vendor)}</b> is back in To do.`,true);scrollToItem(id)}break;
+    case 'note':S.noteOpen.has(id)?S.noteOpen.delete(id):S.noteOpen.add(id);render();if(S.noteOpen.has(id))document.getElementById('n-'+id)?.focus({preventScroll:true});break;
+    case 'reopen':stageReopen(id);break;
+    case 'saveone':save([id]);break;
+    case 'discardone':discard([id]);break;
+    case 'saveall':save(pendingItems().map(i=>i.id));break;
+    case 'discardall':discard(pendingItems().map(i=>i.id));break;
+    case 'lv-back':S.leave=null;renderLeave();break;
+    case 'lv-discard':{const f=S.leave.fn;S.leave=null;discard(pendingItems().map(i=>i.id),true);toast('Unsaved resolutions discarded.',false);f()}break;
+    case 'lv-save':{const f=S.leave.fn;save(pendingItems().map(i=>i.id),()=>{S.leave=null;renderLeave();f()});renderLeave()}break;
+    case 'undo':undo();break;
+    case 'togres':S.showResolved=!S.showResolved;render();break;
+    case 'clearsel':S.sel.clear();render();break;
+    case 'bulkdo':{const items=[...S.sel].map(byId);const B=bulkDefs(items);const d=B.acts.find(x=>x.k===b.dataset.k);if(!d)return;
+      if(d.open==='picker'){openSheet({kind:'picker',mode:items[0].type==='nocat'?'assign':'move',ids:items.map(i=>i.id),q:'',sel:null,note:''});return}
+      resolveItems(d.list,`${items.length} items: <b>${esc(d.label.toLowerCase())}</b>.`)}break;
+    case 'bulksnooze':parkItems([...S.sel],'snooze');break;
+    case 'bulkask':{const ids=[...S.sel];openSheet({kind:'ask',ids,who:null,msg:`Can you check these ${ids.length} invoice rows? `+ids.map(i=>{const x=byId(i);return `${x.vendor} (${x.tab} row ${x.row}, ${m(x.total)})`}).join('; ')+'.'})}break;
+    case 'closesheet':closeSheet();break;
+    case 'pick':S.sheet.sel=b.dataset.line;renderSheet();break;
+    case 'mpick':S.sheet.sel=+b.dataset.k;renderSheet();break;
+    case 'repick':{const u=UNMATCHED[+b.dataset.k];Object.assign(S.sheet,{choice:+b.dataset.k,rinv:u.inv,rdate:u.date,ramt:u.total.toFixed(2)});renderSheet()}break;
+    case 'tocreate':{const s=S.sheet,it0=byId(s.ids[0]);openSheet({kind:'create',ids:s.ids,name:(s.q||'').trim(),cat:it0.type==='cat'&&it0.line==='Landscaping'?'Exterior and garage':L(it0.line)?.cat||CATS[0],amt:'0',note:s.note})}break;
+    case 'shconfirm':confirmSheet();break;
+    case 'splitadd':S.sheet.rows.push({line:'',amt:'0.00'});renderSheet();break;
+    case 'splitrm':S.sheet.rows.splice(+b.dataset.k,1);renderSheet();break;
+    case 'splitfill':{const it0=sheetItems()[0],rows=S.sheet.rows;const others=rows.slice(0,-1).reduce((a,r)=>a+(+r.amt||0),0);rows[rows.length-1].amt=(it0.total-others).toFixed(2);renderSheet()}break;
+  }
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.sel){t.checked?S.sel.add(t.dataset.sel):S.sel.delete(t.dataset.sel);render();return}
+  if(t.id==='selall'){const open=ITEMS.filter(i=>isOpen(i)&&!i.pending&&inFilter(i));open.forEach(i=>t.checked?S.sel.add(i.id):S.sel.delete(i.id));render();return}
+  if(t.id==='onlycheck'){S.onlyCheck=t.checked;render();return}
+  if(t.dataset.split!==undefined){S.sheet.rows[+t.dataset.split][t.dataset.f]=t.value;if(t.dataset.f==='line')refreshSheetFoot();return}
+  if(t.dataset.shf==='cat'){S.sheet.cat=t.value;refreshSheetFoot();return}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.edit){const id=t.dataset.id,it=byId(id);S.edits[id]={...(S.edits[id]||{}),[t.dataset.edit]:t.value};t.classList.toggle('changed',t.value!==it[t.dataset.edit]);
+    // live-update the preview on this card's buttons
+    actionsFor(it).forEach(a=>{const btn=document.querySelector(`[data-act=do][data-id="${id}"][data-k="${a.k}"]`);if(!btn)return;btn.disabled=!!a.dis;const sm=btn.querySelector('small');if(sm)sm.innerHTML=a.sub||''});return}
+  if(t.dataset.note){S.notes[t.dataset.note]=t.value;const b=document.querySelector(`[data-act=note][data-id="${t.dataset.note}"]`);if(b)b.textContent=t.value?'Note ✓':'Add note';return}
+  if(t.dataset.shf){S.sheet[t.dataset.shf]=t.value;
+    if(t.dataset.shf==='q'){document.getElementById('plist').innerHTML=renderPickerList();return}
+    if(t.dataset.shf==='name'){refreshSheetFoot();return}
+    if(['rinv','rdate','ramt'].includes(t.dataset.shf)&&S.sheet.choice!=null&&S.sheet.choice!=='manual'){S.sheet.choice='manual';document.querySelectorAll('[data-act=repick]').forEach(x=>x.setAttribute('aria-pressed','false'))}
+    refreshSheetFoot();return}
+  if(t.dataset.split!==undefined){S.sheet.rows[+t.dataset.split][t.dataset.f]=t.value;refreshSheetFoot();return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(S.leave&&!S.saving.size){S.leave=null;renderLeave()}else if(S.sheet)closeSheet()}});
+document.getElementById('leavebtn').addEventListener('click',()=>guard('reload the page',()=>{window.scrollTo(0,0);toast('Page reloaded (simulated). Nothing unsaved was left.',false)}));
+document.getElementById('scrim').addEventListener('click',closeSheet);
+document.getElementById('hwbtn').addEventListener('click',function(){const n=document.getElementById('notes');n.classList.toggle('open');this.setAttribute('aria-expanded',n.classList.contains('open'))});
+document.getElementById('resetbtn').addEventListener('click',()=>{closeSheet();reset();S.leave=null;render();toast('Reset to the starting list.',false)});
+
+reset();
+const qs=new URLSearchParams(location.search);if(qs.get('view'))S.view=qs.get('view');
+render();
+</script>
+</body>
+</html>

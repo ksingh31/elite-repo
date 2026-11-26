@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup: Upgrades on budget lines</title>
+<style>
+/* Same tokens as the real app (merged.html) */
+:root{color-scheme:light dark;--bg:light-dark(#f2f5f7,#0b131e);--card:light-dark(#fff,#121e2f);--ink:light-dark(#17212c,#e5ecf2);--mute:light-dark(#5a6774,#93a3b4);--line:light-dark(#dbe3e9,#23344a);--navy:#14263d;--teal:light-dark(#0d7a75,#41c4b9);--tealbg:light-dark(#e2f0ef,#103534);--alt:light-dark(#f4f7f9,#16253a);--red:light-dark(#b42318,#ff8f85);--field:light-dark(#fff,#0d1826);--up:light-dark(#b45309,#ffb35c);
+  --okbg:light-dark(#e3f4ee,#0f3a2f);--okfg:light-dark(#0d6b52,#6fe0bd);--duebg:light-dark(#fdecdc,#3a2a10);--duefg:light-dark(#a24a07,#ffc27a);--nobg:light-dark(#e8edf3,#1d2c40);--nofg:light-dark(#3b4b60,#a9b8c9);--upbox:light-dark(#f7fbfb,#0f1a29)}
+:root.force-light{color-scheme:light}:root.force-dark{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;margin:0;font-weight:800}
+h2{font-size:18px;margin:0 0 4px;color:var(--teal)}
+.lbl{font-size:13px;color:var(--mute)}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.down{color:var(--teal)}
+
+/* ---------- Mockup chrome (clearly not part of the app) ---------- */
+.mockbar{position:sticky;top:0;z-index:40;background:repeating-linear-gradient(135deg,#ffe7a8 0 14px,#ffdf8f 14px 28px);color:#3d2a00;border-bottom:2px solid #d9a521;padding:8px max(2.5vw,16px);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.mockbar b.mk{font-size:13px;letter-spacing:.04em;text-transform:uppercase;background:#3d2a00;color:#ffe7a8;border-radius:6px;padding:3px 8px}
+.mockbar .msg{font-weight:700;font-size:14px}
+.mockbar .sp{flex:1}
+.seg{display:inline-flex;border:1px solid rgba(61,42,0,.35);border-radius:8px;overflow:hidden;background:rgba(255,255,255,.55)}
+.seg button{border:0;background:transparent;padding:6px 11px;min-height:34px;font-size:13px;font-weight:700;cursor:pointer;color:#3d2a00}
+.seg button+button{border-left:1px solid rgba(61,42,0,.25)}
+.seg button[aria-pressed=true]{background:#3d2a00;color:#ffe7a8}
+.mockbar .hw{border:1px solid rgba(61,42,0,.45);background:rgba(255,255,255,.55);border-radius:8px;min-height:34px;padding:0 11px;font-weight:700;font-size:13px;cursor:pointer;color:#3d2a00}
+.notes{background:light-dark(#fffaf0,#1d1a10);border-bottom:1px solid light-dark(#ecd9a6,#4a3d14);padding:14px max(2.5vw,16px) 16px;display:none}
+.notes.open{display:block}
+.notes .in{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr;gap:18px 28px}
+.notes h3{margin:0 0 6px;font-size:15px}
+.notes ul{margin:0;padding-left:18px}.notes li{margin:3px 0;font-size:14px}
+.notes .pat{font-size:14px;margin:0 0 8px;color:var(--mute)}
+@media(max-width:820px){.notes .in{grid-template-columns:1fr}}
+
+/* ---------- App header (copied look) ---------- */
+.top{background:var(--navy);color:#fff;padding:18px max(2.5vw,16px) 0}
+.brand{font-size:12px;font-weight:700;color:#b9c9d8;letter-spacing:.02em;margin-bottom:4px}
+.toprow{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #3a5272;background:transparent;color:#fff;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn:hover{background:#21395a}.btn.pri{background:#2bb3a8;border-color:#2bb3a8;color:#06231f}
+.savestate{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:700;background:#1d3350;color:#c8d6e3}
+.savestate::before{content:"";width:7px;height:7px;border-radius:50%;background:#9fb3c6}
+.ctxbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.ctxbar .lbl{color:#b9c9d8;font-weight:700;font-size:13px}
+.top select{min-height:44px;border-radius:8px;border:1px solid #3a5272;background:#1d3350;color:#fff;padding:0 12px;font-weight:600;max-width:280px;font-size:16px}
+.tabs{display:flex;gap:4px;margin-top:10px;overflow-x:auto}
+.tabs a{flex:none;color:#c8d6e3;text-decoration:none;padding:12px 16px;border-radius:8px 8px 0 0;font-weight:600}
+.tabs a[aria-current=page]{background:var(--bg);color:var(--ink)}
+@media(max-width:560px){.top .hide-s{display:none}.tabs{flex-wrap:wrap}.tabs a{padding:10px 12px}}
+
+main{max-width:1600px;margin:0 auto;padding:24px max(2.5vw,16px) 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.ghost{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;color:var(--ink)}
+.ghost.sm{min-height:36px;font-size:14px}
+.pribtn{min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #2bb3a8;background:#2bb3a8;color:#06231f;cursor:pointer;font-weight:700}
+.add{min-height:40px;border-radius:8px;border:1px dashed var(--teal);background:transparent;color:var(--teal);font-weight:600;cursor:pointer;padding:0 14px}
+.add.sm{min-height:34px;font-size:14px;padding:0 10px}
+
+/* versions */
+.vrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.vcard{border:2px solid var(--teal);background:var(--tealbg);border-radius:10px;padding:8px 14px;min-width:220px}
+.vcard b{display:block}.vcard .v{color:var(--teal);font-weight:800}
+.vcard .u{font-size:13px;color:var(--mute)}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px}
+.tile{background:var(--tealbg);border-radius:10px;padding:14px 16px;position:relative}
+.tile .lbl{color:var(--mute);font-size:14px}
+.tile .v{font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums;line-height:1.2;white-space:nowrap}
+.tile .s{font-size:12px;color:var(--mute);margin-top:2px}
+.tile.new{box-shadow:inset 0 0 0 2px light-dark(#e8a33d,#c98a2a)}
+.newtag{position:absolute;top:-8px;right:10px;font-size:10px;font-weight:800;letter-spacing:.04em;background:#e8a33d;color:#2b1a00;border-radius:999px;padding:1px 7px}
+.buildnote{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--mute);margin:0 0 18px;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--card)}
+.buildnote b{color:var(--ink)}
+
+/* upgrades summary card */
+.usum{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.usum .chips{display:flex;flex-wrap:wrap;gap:8px}
+.schip{display:inline-flex;gap:8px;align-items:baseline;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;background:var(--card);cursor:pointer}
+.schip b{font-variant-numeric:tabular-nums}
+.schip[aria-pressed=true]{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;align-self:center}
+.dot.ok{background:var(--okfg)}.dot.due{background:var(--duefg)}.dot.no{background:var(--nofg)}
+
+/* table */
+.ihead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.switch{display:inline-flex;gap:8px;align-items:center;font-size:14px;cursor:pointer;user-select:none}
+.switch input{appearance:none;width:36px;height:20px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:.15s}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.switch input:checked{background:var(--teal)}.switch input:checked::after{left:18px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{background:var(--navy);color:#fff;text-align:right;padding:8px;font-weight:600;white-space:nowrap;font-size:14px}
+th.l{text-align:left}th.c{text-align:center}
+td{padding:6px 8px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;border-bottom:1px solid var(--line);vertical-align:middle}
+.btable{min-width:1140px;table-layout:fixed}
+.btable td.l{text-align:left}.btable td{overflow:hidden}.btable tr.uprow>td,.btable td:has(.tip){overflow:visible}.btable td.c{text-align:center}
+.btable tr.it:nth-of-type(even) td{background:var(--alt)}
+.btable td input,.btable td select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:var(--field);color:var(--ink);font-size:15px}
+.btable td.amt input{text-align:right;font-variant-numeric:tabular-nums}
+.btable .paybtn{min-width:0}
+.btable td.item select{text-overflow:ellipsis}
+.paybtn small{white-space:nowrap;line-height:1.35}
+.btable tr.cat td{background:var(--alt);font-weight:700;border-top:2px solid var(--line)}
+.catbtn{background:none;border:0;font-weight:800;color:var(--ink);cursor:pointer;min-height:40px;padding:0;text-align:left;font-size:15px}
+.btable td.catname{white-space:normal;padding-left:14px}
+.catbtn small{color:var(--mute);font-weight:700;font-size:13px}
+.catpct{color:var(--mute);font-size:13px}
+.paybtn{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;text-align:right;width:100%;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);min-height:44px;min-width:120px}
+.paybtn:hover{border-color:var(--teal)}
+.paybtn small{display:block;font-size:12px;font-weight:500;color:var(--mute)}
+.paybtn small .ok{color:var(--teal)}.paybtn small .ow{color:var(--up)}
+.xbtn{width:40px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--mute);font-size:16px}
+.ltot{font-weight:800}
+.ltot small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.pct{display:block;font-size:12px;font-weight:600;opacity:.85}
+.caption{display:block;font-size:12px;color:var(--mute);font-weight:500}
+
+/* Done toggle (new) */
+.done{width:30px;height:30px;border-radius:50%;border:1.5px dashed light-dark(#9aa8b5,#4d6380);background:transparent;cursor:pointer;display:inline-grid;place-items:center;padding:0;color:transparent}
+.done:hover{border-style:solid;border-color:var(--teal);color:light-dark(#9aa8b5,#4d6380)}
+.done[aria-pressed=true]{background:var(--teal);border:1.5px solid var(--teal);color:light-dark(#fff,#062420)}
+.done svg{width:16px;height:16px}
+
+th.donecol,td.donecol{padding-left:6px;padding-right:2px;text-align:center}
+
+/* tooltip */
+.tip{position:relative;display:inline-flex;align-items:center;gap:4px;cursor:help;outline:0}
+.tip .i{font-size:12px;opacity:.85;border:1px solid currentColor;border-radius:50%;width:15px;height:15px;display:inline-grid;place-items:center;font-weight:700;line-height:1}
+.tip .tt{position:absolute;left:-4px;top:calc(100% + 8px);width:260px;background:#0e1b2c;color:#e5ecf2;border:1px solid #2c4262;border-radius:8px;padding:9px 11px;font-size:13px;font-weight:500;line-height:1.4;white-space:normal;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;visibility:hidden;transition:.12s;z-index:20;pointer-events:none}
+.tip.r .tt{left:auto;right:-4px}
+.tip:hover .tt,.tip:focus .tt,.tip.show .tt{opacity:1;visibility:visible}
+
+/* Upgrades chip */
+.uchip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;min-height:34px;padding:0 10px 0 8px;cursor:pointer;font-weight:700;font-size:13.5px;white-space:nowrap;border:1px solid transparent;font-variant-numeric:tabular-nums}
+.uchip.has{background:var(--tealbg);color:var(--teal);border-color:light-dark(#b9dcd9,#1f5653)}
+.uchip.has .n{background:var(--teal);color:light-dark(#fff,#062420);border-radius:999px;font-size:11px;min-width:18px;height:18px;display:inline-grid;place-items:center;padding:0 5px}
+.uchip.has .z{color:var(--mute);font-weight:600}
+.uchip.none{border:1px dashed light-dark(#b8c4ce,#35506f);color:var(--mute);background:transparent;font-weight:600;opacity:.75}
+tr.it:hover .uchip.none,.mcard:hover .uchip.none,.uchip.none:focus{opacity:1;border-color:var(--teal);color:var(--teal)}
+.uchip .chev{transition:.15s;display:inline-block;font-size:11px}
+.uchip[aria-expanded=true] .chev{transform:rotate(90deg)}
+.uchip[aria-expanded=true]{box-shadow:0 0 0 2px var(--teal)}
+
+/* inline upgrades sub-row */
+tr.uprow>td{background:var(--upbox)!important;padding:0 8px 14px 54px;text-align:left;white-space:normal;border-bottom:2px solid var(--line)}
+.upbox{border-left:3px solid var(--teal);padding:10px 0 0 14px}
+.uphead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.uphead b{font-size:14px}
+.uphead .lbl{font-size:13px}
+.uplist{container-type:inline-size}
+.ugrid{display:grid;grid-template-columns:118px minmax(170px,2.2fr) 128px 116px 128px minmax(130px,1.6fr) 40px;gap:8px;align-items:center}
+.ugh{font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.03em;padding:0 2px 2px}
+.ug{padding:6px 0;border-top:1px solid var(--line)}
+.ug input,.ug select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:var(--field);color:var(--ink);font-size:15px}
+.ug .price{position:relative}.ug .price span{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mute);font-weight:700;font-size:14px}
+.ug .price input{padding-left:24px;text-align:right;font-variant-numeric:tabular-nums}
+.ug.off .nm input{color:var(--mute)}
+.ug.declined .nm input{text-decoration:line-through;color:var(--mute)}
+.ug.declined .price input{color:var(--mute);text-decoration:line-through}
+.ug.newrow{animation:flash 1.2s}
+@keyframes flash{from{background:light-dark(#fff3cd,#3a3214)}to{background:transparent}}
+.yn{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--field);height:38px}
+.yn button{border:0;background:transparent;min-width:52px;font-weight:700;font-size:14px;cursor:pointer;color:var(--mute)}
+.yn button+button{border-left:1px solid var(--line)}
+.yn button.y[aria-pressed=true]{background:var(--teal);color:light-dark(#fff,#062420)}
+.yn button.n[aria-pressed=true]{background:var(--nobg);color:var(--nofg)}
+select.st{font-weight:700;border-radius:999px!important;padding:0 10px!important;font-size:14px!important}
+select.st.Approved{background:var(--okbg)!important;color:var(--okfg)!important;border-color:transparent!important}
+select.st.Quoted{background:var(--duebg)!important;color:var(--duefg)!important;border-color:transparent!important}
+select.st.Declined{background:var(--nobg)!important;color:var(--nofg)!important;border-color:transparent!important}
+.rm{width:38px;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--mute)}
+.upfoot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--line)}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sugg .lbl{font-size:12px}
+.sg{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 10px;font-size:13px;cursor:pointer;color:var(--ink)}
+.sg:hover{border-color:var(--teal);color:var(--teal)}
+.math{font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+.math b{color:var(--ink)}
+.empty{color:var(--mute);font-size:14px;padding:6px 0 10px}
+@container (max-width:700px){
+  .ugrid{grid-template-columns:auto 1fr 40px;grid-template-areas:"nm nm rm" "yn price price" "by st st" "note note note"}
+  .ugh{display:none}.ugrid:has(.ugh){display:none}
+  .ug{padding:10px 0;row-gap:8px}
+  .ug .c-yn{grid-area:yn}.ug .c-nm{grid-area:nm}.ug .c-pr{grid-area:price}.ug .c-by{grid-area:by}.ug .c-st{grid-area:st}.ug .c-note{grid-area:note}.ug .c-rm{grid-area:rm}
+}
+
+/* register (pattern C) */
+.filt{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.regt{min-width:900px}
+.regt td{vertical-align:middle}
+.regt td.l{text-align:left;white-space:normal}
+.regt .itm{font-weight:700}.regt .itm small{display:block;color:var(--mute);font-weight:500;font-size:12px}
+.regt input,.regt select{min-height:36px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:var(--field);color:var(--ink);font-size:14px;width:100%}
+.regt tr.declined input.nm{text-decoration:line-through;color:var(--mute)}
+.regt tfoot td{font-weight:800;border-bottom:0}
+
+/* side panel (pattern B) */
+.scrim{position:fixed;inset:0;background:rgba(5,12,22,.45);z-index:50;opacity:0;visibility:hidden;transition:.18s}
+.scrim.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:51;border-left:1px solid var(--line);box-shadow:-12px 0 32px rgba(0,0,0,.2);transform:translateX(102%);transition:transform .2s,visibility 0s .2s;visibility:hidden;display:flex;flex-direction:column}
+.drawer.open{transform:none;visibility:visible;transition:transform .2s}
+.dhead{background:var(--navy);color:#fff;padding:16px 18px}
+.dhead .lbl{color:#b9c9d8}
+.dhead h2{color:#fff;margin:2px 0 0}
+.dhead .x{float:right;background:transparent;border:1px solid #3a5272;color:#fff;border-radius:8px;width:40px;height:40px;cursor:pointer;font-size:16px}
+.dfig{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.dfig div{background:var(--alt);border-radius:8px;padding:8px 10px}
+.dfig b{display:block;font-variant-numeric:tabular-nums;font-size:16px}
+.dbody{flex:1;overflow:auto;padding:6px 18px 18px}
+.dfoot{border-top:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+@media(max-width:600px){.drawer{top:auto;height:88vh;width:100%;border-radius:16px 16px 0 0;transform:translateY(102%)}.drawer.open{transform:none}.dhead{border-radius:16px 16px 0 0}}
+
+/* mobile cards */
+.mlist{display:none}
+@media(max-width:760px){
+  .desk{display:none}
+  .mlist{display:block}
+  .card{padding:16px 14px}
+  .tiles{grid-template-columns:1fr 1fr}
+}
+.mcat{background:var(--alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:14px 0 8px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.mcat .catbtn{min-height:0}
+.mcat .r{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+.mcat .r small{display:block;font-weight:600;color:var(--mute);font-size:12px}
+.mcard{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px;margin:0 0 10px}
+.mcard.isdone{border-color:light-dark(#b9dcd9,#1f5653)}
+.mtop{display:flex;gap:10px;align-items:center}
+.mtop .nm{flex:1;font-weight:700;min-width:0}
+.mtop .nm small{display:block;font-weight:500;color:var(--mute);font-size:12px}
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px;margin-top:10px;align-items:start}
+.mgrid .lbl{font-size:12px;display:block;margin-bottom:2px}
+.mgrid .fig{font-weight:700;font-variant-numeric:tabular-nums;display:block;line-height:38px}
+.mgrid input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:var(--field);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums;font-size:15px}
+.mgrid .paybtn{min-width:0;padding:5px 8px;font-size:14px}.mgrid .paybtn small{white-space:normal;font-size:11.5px}
+.mgrid .span2{grid-column:span 2}
+.mnote{margin-top:8px}
+.mnote input{width:100%;min-height:38px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:var(--field);color:var(--ink);font-size:15px}
+.mups{margin-top:10px;background:var(--upbox);border-radius:10px;border:1px solid var(--line);padding:4px 10px 10px}
+.mups .upfoot{border-top:0}
+.mcard .uchip{width:100%;justify-content:center;padding:0 6px;gap:4px;font-size:13px}.mcard .uchip .chev{display:none}
+
+/* ---------- Mobile card layout (phones) ---------- */
+.math .mob{display:none}
+@media(max-width:760px){
+  .mockbar{position:static}
+  .mcard{padding:12px 12px 14px}
+  .mtop{align-items:center;gap:10px;min-height:36px}
+  .mtop .nm{line-height:1.3;font-size:15px}
+  .mtop .nm small{margin-top:1px}
+  .mtop .done{flex:none;position:relative}
+  .mtop .done::before,.mtop .xbtn::before{content:"";position:absolute;inset:-7px}
+  .mtop .xbtn{flex:none;position:relative;width:32px;height:32px;font-size:12px;line-height:1;padding:0;display:grid;place-items:center;border-radius:8px}
+  .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px;margin-top:12px;align-items:stretch}
+  .mgrid .mc{display:flex;flex-direction:column;min-width:0}
+  .mgrid .mc.full{grid-column:1/-1}
+  .mgrid .lbl{font-size:12px;line-height:16px;height:16px;margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mgrid .mc.r{text-align:right}
+  .mgrid input,.mgrid .fig{height:44px;min-height:44px;line-height:42px;font-size:16px}
+  .mgrid .fig{display:block;border:1px solid transparent;padding:0 2px;font-weight:800;white-space:nowrap}
+  .mgrid .fig.tot{font-size:17px}
+  .mgrid .paybtn{flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-end;min-height:64px;padding:8px 10px;font-size:15px;line-height:1.3;white-space:nowrap;text-align:right}
+  .mgrid .paybtn small{font-size:12px;line-height:1.35;white-space:nowrap}
+  .mou{flex-direction:row!important;align-items:center;justify-content:space-between;gap:10px;min-height:40px;padding:0 6px 0 10px;border-radius:8px;background:var(--alt)}
+  .mou .lbl{margin:0;height:auto;overflow:visible;color:var(--mute);font-size:13px;font-weight:600}
+  .mou .lbl .sub{font-weight:500;opacity:.85}
+  .mou .badge{flex:none;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .mou .badge.up{background:var(--duebg);color:var(--duefg)}
+  .mou .badge.down{background:var(--okbg);color:var(--okfg)}
+  /* full-width upgrade toggle row */
+  .mup{width:100%;height:44px;display:flex;align-items:center;gap:10px;border-radius:8px;padding:0 12px;cursor:pointer;font-weight:700;font-size:14px;text-align:left;font-variant-numeric:tabular-nums}
+  .mup.none{border:1px dashed light-dark(#a9b8c4,#3d5878);background:transparent;color:var(--teal);justify-content:center}
+  .mup.has{border:1px solid light-dark(#b9dcd9,#1f5653);background:var(--tealbg);color:var(--teal)}
+  .mup .n{flex:none;background:var(--teal);color:light-dark(#fff,#062420);border-radius:999px;font-size:12px;min-width:22px;height:22px;display:inline-grid;place-items:center;padding:0 6px}
+  .mup .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mup.none .t{flex:none}
+  .mup .t small{font-weight:500;color:var(--mute);font-size:12px;margin-left:6px}
+  .mup .v{flex:none;font-weight:800}
+  .mup .chev{flex:none;font-size:11px;transition:transform .15s}
+  .mup[aria-expanded=true]{box-shadow:0 0 0 2px var(--teal)}
+  .mup[aria-expanded=true] .chev{transform:rotate(180deg)}
+  .mnote{margin-top:12px}
+  .mnote input{min-height:44px;font-size:16px}
+  /* upgrades panel inside the card */
+  .mups{margin-top:12px;padding:10px 12px 12px}
+  .mups .uphead{margin:0 0 4px;align-items:baseline}
+  .mups .upfoot,.drawer .upfoot{flex-direction:column;align-items:stretch;gap:10px}
+  .mups .sugg .add,.drawer .sugg .add{width:100%;min-height:44px;font-size:15px}
+  .sugg .sg{min-height:36px}
+  .math{display:grid;gap:2px;width:100%;padding-top:8px;border-top:1px solid var(--line)}
+  .math .mr{display:flex;justify-content:space-between;align-items:baseline;gap:12px;white-space:nowrap}
+  .math .mr:last-child{border-top:1px dashed var(--line);padding-top:4px;margin-top:2px;color:var(--ink);font-weight:700}
+  .math .mob{display:inline}
+  .empty{padding:6px 0 4px}
+  /* upgrade rows: name + remove / Yes-No + price / by + status / note */
+  .ugrid.ug{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;grid-template-areas:"nm nm rm" "yn price price" "by st st" "note note note";gap:8px;padding:12px 0}
+  .ug input,.ug select{min-height:44px;font-size:16px}
+  .ug .yn{display:flex;width:100%;height:auto}
+  .ug .yn button{flex:1;min-width:0;min-height:44px;font-size:15px}
+  .ug .rm{width:44px;height:44px}
+  .ug .price span{font-size:15px}
+  .ug .price input{padding-left:28px}
+  select.st{font-size:15px!important}
+  .dfig b{font-size:15px;white-space:nowrap}
+}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#0e1b2c;color:#e5ecf2;border:1px solid #2c4262;border-left:4px solid #2bb3a8;border-radius:10px;padding:10px 14px;font-size:14px;z-index:60;opacity:0;transition:.2s;max-width:min(520px,92vw)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.patnote{font-size:14px;color:var(--mute);margin:-4px 0 12px}
+.patnote b{color:var(--ink)}
+.flash td{animation:flash 1.4s}
+</style>
+</head>
+<body>
+
+<div class="mockbar" role="region" aria-label="Mockup controls">
+  <b class="mk">Mockup</b><span class="msg">Not connected to your data. Nothing here saves.</span>
+  <span class="sp"></span>
+  <span class="seg" id="patseg" role="group" aria-label="Pattern">
+    <button data-pat="A" aria-pressed="true">A · Inline rows</button><button data-pat="B" aria-pressed="false">B · Side panel</button><button data-pat="C" aria-pressed="false">C · Upgrades list</button>
+  </span>
+  <span class="seg" id="themeseg" role="group" aria-label="Theme">
+    <button data-th="auto" aria-pressed="true">Auto</button><button data-th="light" aria-pressed="false">Light</button><button data-th="dark" aria-pressed="false">Dark</button>
+  </span>
+  <button class="hw" id="hwbtn" aria-expanded="true">How it would work</button>
+</div>
+
+<section class="notes open" id="notes" aria-label="How it would work">
+  <div class="in">
+    <div>
+      <h3>How it would work</h3>
+      <p class="pat" id="patdesc"></p>
+      <ul>
+        <li><b>Upgrades live on a budget line.</b> Each line (e.g. Windows and doors) can have any number of upgrades: name, extra price, <b>Yes/No</b>, who asked (Buyer / Builder), status and a note.</li>
+        <li><b>Yes adds the price, No doesn’t.</b> Line total = base budget + upgrades set to Yes. Category totals, tiles and the build cost all use the line total. No upgrades are kept as a record but add $0.</li>
+        <li><b>Status is optional detail.</b> Switching to Yes marks a Quoted upgrade Approved; picking Declined switches it to No. Quoted + Yes is allowed (counts now, price may change).</li>
+        <li><b>Over / under compares invoices with the line total</b>, so an approved upgrade explains an overage instead of showing it as a cost overrun.</li>
+        <li><b>Per version.</b> Upgrades are saved in the version being edited. “New version” copies them; older versions keep theirs. Comparing versions shows upgrade changes.</li>
+        <li><b>Projected final cost</b> = per line, the larger of line total and invoices (Done lines use invoices).</li>
+        <li><b>Done marker</b> moves to its own narrow first column: one tap on the circle; hover “Done ⓘ” for what it means.</li>
+        <li><b>Show upgrades</b> switch: off gives today’s compact table, with the budget column showing the line total and “incl. +$ upgrades”.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Open questions for you</h3>
+      <ul>
+        <li>Should <b>declined</b> upgrades be kept (greyed, struck through) or deleted? Mockup keeps them.</li>
+        <li>Should a <b>Quoted</b> upgrade set to Yes count in the totals, or only Approved ones?</li>
+        <li>Are buyer upgrades <b>charged to the buyer</b>? If yes, should they raise the sale price on the project (Inputs tab) as well as the build cost, and show as a separate line in the investor report?</li>
+        <li>Do you need a printable <b>upgrade summary for the buyer</b> (change orders with sign-off date)?</li>
+        <li>Should invoices be linkable to a specific upgrade, or only to the line?</li>
+        <li>Is “Requested by: Buyer / Builder” enough, or do you want a markup % on buyer upgrades?</li>
+        <li>Which layout do you prefer: A (inline), B (side panel) or C (one list of all upgrades)? C can be added on top of A or B.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<header class="top">
+  <div class="brand">ELITECRAFT / REAL ESTATE</div>
+  <div class="toprow">
+    <h1>Project profit calculator</h1>
+    <div class="ctrl hide-s"><span class="savestate">All changes saved</span><button class="btn" data-mock>Export</button><button class="btn" data-mock>Import</button><button class="btn" data-mock>Backups</button><button class="btn pri" data-mock>Save for team</button></div>
+  </div>
+  <div class="ctxbar"><span class="lbl">Budget</span><select aria-label="Budget"><option>Maple Grove - North budget</option></select><button class="btn hide-s" data-mock>Rename budget</button><button class="btn hide-s" data-mock>New budget</button><button class="btn hide-s" data-mock>Duplicate budget</button></div>
+  <nav class="tabs"><a href="#" data-mock>Inputs</a><a href="#" data-mock>Builder + investor</a><a href="#" data-mock>Investor report</a><a href="#" data-mock>Builder report</a><a href="#" aria-current="page">Budget</a></nav>
+</header>
+
+<main>
+  <section class="card">
+    <div class="vrow">
+      <div><h2>Versions</h2><div class="lbl">Upgrades are saved with each version. <b>+ New version</b> copies the current upgrades so you can change them without touching v1.</div></div>
+      <div class="ctrl"><button class="pribtn" data-act="newver">+ New version</button><button class="ghost" data-mock>Manage item types</button></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <div class="vcard"><b>v1 · 2026-03-16</b><span class="u">Current · editable</span><div class="v num" id="vtot"></div><div class="u num" id="vsub"></div></div>
+    </div>
+  </section>
+
+  <div class="tiles" id="tiles"></div>
+  <div class="buildnote" id="buildnote"></div>
+
+  <section class="card" id="sumcard"></section>
+
+  <section class="card" id="regcard" hidden></section>
+
+  <section class="card">
+    <div class="ihead">
+      <h2 style="margin:0">Items</h2>
+      <div class="ctrl" style="gap:16px">
+        <label class="switch"><input type="checkbox" id="showups" checked> Show upgrades</label>
+        <label class="switch"><input type="checkbox" id="onlyups"> Only lines with upgrades</label>
+        <button class="ghost sm" data-act="expandall">Expand all upgrades</button>
+      </div>
+    </div>
+    <p class="patnote" id="patnote"></p>
+    <div class="scroll desk"><table class="btable" id="btable"></table></div>
+    <div class="mlist" id="mlist"></div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Upgrades panel" aria-hidden="true"></aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CATS=["Soft costs","Site and foundation","Structure and envelope","Mechanical and electrical","Interior finishes","Exterior and garage","Site operations"];
+// [cat index, name, budget v1, invoiced, paid, #invoices, #payments, note]  (Maple Grove - North budget, from the app's store)
+const RAW=[[0,"New home warranty",100,95,95,1,1,""],[0,"Construction insurance",4500,4740,4740,2,2,""],[0,"Permit fees",9000,8852.46,8852.46,5,5,""],[0,"Architecture and rendering",7000,6518.13,6518.13,4,4,""],[0,"Interior design",9000,8925,8925,1,1,""],[0,"Survey Arc",2600,1428,1428,4,4,""],[0,"P2P permit",8500,8360.9,8360.9,2,2,""],[0,"Engineering",0,0,0,0,0,""],[0,"Marketing (photo and video)",0,6067.5,420,3,1,"Willow Concrete Group reel shoot"],[0,"Engineering review",0,866.25,866.25,2,2,"Documentation tab rows 23–24"],
+[1,"Demolition + Excavation",32000,32550,32550,1,1,""],[1,"Foundation",46915.05,46915.05,46915.05,1,1,""],[1,"Weeping Tile + Basement + garage",32000,32004.79,32004.79,3,3,""],[1,"Services",30642.2,30642.2,30642.2,1,1,""],
+[2,"Lumber + truss package",60000,60252.54,50677.9,20,14,""],[2,"Framing",56000,55470,55470,2,2,""],[2,"Stairs",1600,1653.75,0,1,0,""],[2,"Windows and doors",50000,51296.05,51296.05,3,3,""],[2,"Roofing",13500,14200.94,13000.94,3,2,""],[2,"Metal roofing",0,0,0,0,0,""],[2,"Siding (stucco, etc.)",54000,54392.65,54392.65,4,4,"$1700 steel post added in siding / stucco"],[2,"Stone",37000,42248.63,42248.63,15,15,""],[2,"Insulation w material and spray",22135,21755.33,21755.33,1,1,""],
+[3,"Plumbing material",25000,25756.08,25756.08,2,2,""],[3,"Plumber",32000,37750.13,27723.99,7,5,"$5800 for water tank not in budget"],[3,"Electrician",40000,42738.48,29916.93,1,1,""],[3,"HVAC + AC",33000,32056.5,27826.05,3,2,"1 AC installed, 1 rough-in for basement"],[3,"Lighting",19500,24864.25,24864.25,7,7,""],[3,"Fireplace",5000,6588.75,6588.75,3,3,""],
+[4,"Drywall/ mudtape",34000,31814.68,29139.48,4,3,""],[4,"Paint",38000,35098.35,20133.35,2,1,"Paint includes exterior"],[4,"Kitchen cabinets",106000,106417.5,15000,1,1,""],[4,"Moulding store",15000,21052.79,7838.35,16,9,""],[4,"Carpenter Finishing",13000,11655,10000,1,1,""],[4,"Countertop",24780,25567.5,15000,1,1,""],[4,"Flooring",30000,30675.62,25661.5,3,2,""],[4,"Carpet/ additional flooring",2500,1514.1,0,1,0,""],[4,"Mantel",6900,8042.39,7042.39,4,3,""],[4,"Glass work",17000,18000,0,1,0,""],[4,"Tiles",10000,12409.35,12409.35,4,4,""],[4,"Tiles installation",14000,14475,0,1,0,""],[4,"Wallpaper/ plaster/ decorative",5500,7050.1,5950.1,4,3,""],[4,"Appliances",30000,30982.18,30982.18,2,2,""],
+[5,"Concrete steps",8000,8284.5,0,1,0,""],[5,"Outside railing",1000,472.5,0,1,0,""],[5,"Garage doors",3650,3774,0,1,0,""],[5,"Garage epoxy",3500,5670,0,1,0,""],[5,"Landscaping",18500,31971.4,23466.4,41,30,""],
+[6,"Pit stop",1000,1906.24,1906.24,8,8,""],[6,"Garbage truck",5800,6420.45,5720.45,7,6,""],[6,"Construction fence",1200,2102.63,2102.63,23,23,"Jordan to review"],[6,"Cleaning",3000,2000,0,1,0,""],[6,"Staging",8000,3937.5,0,1,0,""],[6,"Miscellaneous",10000,7528.97,7528.97,84,84,""],[6,"Site refreshments (coffee)",0,1023.49,1023.49,64,64,""]];
+const DONE=new Set(["New home warranty","Construction insurance","Permit fees","Architecture and rendering","Interior design","Survey Arc","P2P permit","Demolition + Excavation","Foundation","Weeping Tile + Basement + garage","Services","Framing","Windows and doors","Siding (stucco, etc.)","Stone","Insulation w material and spray","Plumbing material","Lighting","Fireplace","Tiles"]);
+let uid=1;const U=(name,price,inc,status,by,note)=>({id:'u'+(uid++),name,price,inc,status,by,note:note||''});
+const SEED={
+ "Windows and doors":[U("Black exterior frames",1200,true,"Approved","Buyer","Change order signed Apr 14"),U("Triple-pane glazing",6500,false,"Declined","Buyer","Buyer chose double-pane"),U("Oversized patio slider (12 ft)",3800,false,"Quoted","Buyer","Hillside Windows quote, valid to Dec 15")],
+ "Stone":[U("Full stone front elevation",4500,true,"Approved","Buyer","Was the $4,500 over budget")],
+ "Lighting":[U("Smart dimmer package",2100,true,"Approved","Builder","")],
+ "Kitchen cabinets":[U("Uppers to ceiling with crown",4200,true,"Approved","Buyer",""),U("Walnut island",2900,false,"Quoted","Buyer","Waiting on buyer")],
+ "Tiles":[U("Heated ensuite floor",1850,true,"Approved","Buyer","")],
+ "Appliances":[U("Panel-ready fridge",3400,true,"Approved","Buyer","")]
+};
+const SUGG={"Windows and doors":["Triple-pane glazing","Black exterior frames","Oversized patio slider","Upgraded front door"],"Kitchen cabinets":["Uppers to ceiling","Soft-close drawers","Walnut island","Pantry pull-outs"],"Flooring":["Wide-plank engineered oak","Herringbone pattern","Upgraded underlay"],"Appliances":["Panel-ready fridge","Gas range upgrade","Wine fridge"],"Lighting":["Smart dimmer package","Pot lights in bedrooms","Exterior soffit lights"],"Tiles":["Heated ensuite floor","Large-format tile","Full-height shower tile"],"Roofing":["Metal accent roof","Upgraded shingles"],"Stone":["Full stone front elevation"],"Countertop":["Quartz waterfall edge","Full-height backsplash"],"Fireplace":["Floor-to-ceiling tile surround"],"Garage doors":["Insulated glass panel doors"],"Landscaping":["Front irrigation","Rear deck"],"Siding (stucco, etc.)":["Wood-look accent panels"],"Glass work":["Frameless shower glass"],"Paint":["Accent wall colours"],"Mantel":["Custom floating mantel"]};
+const items=RAW.map((r,k)=>({id:'i'+k,cat:CATS[r[0]],name:r[1],amt:r[2],act:r[3],paid:r[4],ninv:r[5],npay:r[6],note:r[7],done:DONE.has(r[1]),ups:SEED[r[1]]||[]}));
+const S={pat:'A',open:new Set(['i17']),coll:new Set(["Soft costs","Site and foundation","Exterior and garage","Site operations"]),showUps:true,onlyUps:false,panel:null,regF:'all',fresh:null};
+
+const m=x=>'$'+Math.abs(x).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const m0=x=>(x<0?'−':'')+'$'+Math.round(Math.abs(x)).toLocaleString('en-US');
+const sg=x=>Math.abs(x)<0.005?'—':(x>0?'+':'−')+m(x);
+const ou=(d,b)=>Math.abs(d)<0.005?'—':sg(d)+(b?`<span class="pct">${d>0?'+':'−'}${Math.abs(d/b*100).toFixed(1)}%</span>`:'');
+const cl=x=>Math.abs(x)<0.005?'':x>0?'up':'down';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const upInc=i=>i.ups.reduce((s,u)=>s+(u.inc?+u.price||0:0),0);
+const lineTot=i=>i.amt+upInc(i);
+const proj=i=>i.done?i.act:Math.max(lineTot(i),i.act);
+const CHECK='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+const byId=id=>items.find(i=>i.id===id);
+const allUps=()=>items.flatMap(i=>i.ups.map(u=>({u,i})));
+
+function totals(list){const t={base:0,up:0,tot:0,act:0,paid:0,proj:0,n:list.length};list.forEach(i=>{t.base+=i.amt;t.up+=upInc(i);t.act+=i.act;t.paid+=i.paid;t.proj+=proj(i)});t.tot=t.base+t.up;return t}
+function stat(){const r={Approved:{n:0,s:0},Quoted:{n:0,s:0},Declined:{n:0,s:0},yes:{n:0,s:0}};allUps().forEach(({u})=>{r[u.status].n++;r[u.status].s+=+u.price||0;if(u.inc){r.yes.n++;r.yes.s+=+u.price||0}});return r}
+
+function tip(label,text,right){return `<span class="tip${right?' r':''}" tabindex="0">${label} <span class="i">i</span><span class="tt">${text}</span></span>`}
+
+function renderTop(){
+  const T=totals(items),st=stat();
+  document.getElementById('vtot').textContent=m0(T.tot);
+  document.getElementById('vsub').textContent=`${m0(T.base)} base + ${m0(T.up)} upgrades`;
+  const tl=[['Base budget (v1)',m0(T.base),'Before upgrades',1],['Upgrades included',(T.up?'+':'')+m0(T.up),`${st.yes.n} set to Yes`,1],['Total with upgrades',m0(T.tot),'Used as build cost',1],['Per sq ft, all floors',m0(T.tot/4500),'4,500 sq ft, with upgrades'],['Invoiced so far',m0(T.act)],['Paid so far',m0(T.paid)],['Still owed on invoices',m0(T.act-T.paid)],[tip('Projected final cost','Each line: line total (base + Yes upgrades), or invoices if higher. Done lines use invoices.',1),m0(T.proj),'Includes upgrades']];
+  document.getElementById('tiles').innerHTML=tl.map(t=>`<div class="tile${t[3]?' new':''}">${t[3]?'<span class="newtag">NEW</span>':''}<div class="lbl">${t[0]}</div><div class="v">${t[1]}</div>${t[2]?`<div class="s">${t[2]}</div>`:''}</div>`).join('');
+  document.getElementById('buildnote').innerHTML=`<span aria-hidden="true">ⓘ</span><span><b>Approved upgrades are added to the build cost.</b> Projects that use this budget take <b class="num">${m0(T.tot)}</b> (base ${m0(T.base)} + upgrades ${m0(T.up)}) as their build cost. Upgrades set to No are kept here but add nothing.</span>`;
+  document.getElementById('sumcard').innerHTML=`<div class="usum"><div><h2>Upgrades</h2><div class="lbl">${st.Approved.n+st.Quoted.n+st.Declined.n} upgrades on ${items.filter(i=>i.ups.length).length} lines in this version · click a status to list them</div></div>
+   <div class="chips">
+    <button class="schip" data-act="regf" data-f="Approved" aria-pressed="${S.pat==='C'&&S.regF==='Approved'}"><span class="dot ok"></span>${st.Approved.n} approved <b>+${m0(st.Approved.s)}</b></button>
+    <button class="schip" data-act="regf" data-f="Quoted" aria-pressed="${S.pat==='C'&&S.regF==='Quoted'}"><span class="dot due"></span>${st.Quoted.n} quoted <b>+${m0(st.Quoted.s)}</b></button>
+    <button class="schip" data-act="regf" data-f="Declined" aria-pressed="${S.pat==='C'&&S.regF==='Declined'}"><span class="dot no"></span>${st.Declined.n} declined <b>${m0(st.Declined.s)}</b></button>
+   </div>
+   <div class="num" style="text-align:right"><div class="lbl">In totals (Yes)</div><b style="font-size:20px;color:var(--teal)">+${m0(st.yes.s)}</b></div></div>`;
+}
+
+function chip(i,mode){
+  const n=i.ups.length,inc=upInc(i),y=i.ups.filter(u=>u.inc).length;
+  const exp=mode==='inline'?S.open.has(i.id):S.panel===i.id;
+  if(!n)return `<button class="uchip none" data-act="chip" data-id="${i.id}" aria-expanded="${exp}">+ Upgrade</button>`;
+  return `<button class="uchip has" data-act="chip" data-id="${i.id}" aria-expanded="${exp}" title="${y} of ${n} included"><span class="chev">▶</span><span class="n">${n}</span>${inc?'+'+m0(inc):'<span class="z">+$0</span>'}</button>`;
+}
+function mchip(i,mode){
+  const n=i.ups.length,inc=upInc(i),y=i.ups.filter(u=>u.inc).length;
+  const exp=mode==='inline'?S.open.has(i.id):S.panel===i.id;
+  if(!n)return `<button class="mup none" data-act="chip" data-id="${i.id}" aria-expanded="${exp}"><span class="t">+ Add upgrade</span></button>`;
+  return `<button class="mup has" data-act="chip" data-id="${i.id}" aria-expanded="${exp}"><span class="n">${n}</span><span class="t">upgrade${n>1?'s':''}<small>${y} of ${n} Yes</small></span><span class="v">+${m0(inc)}</span><span class="chev" aria-hidden="true">▾</span></button>`;
+}
+function doneBtn(i){return `<button class="done" data-act="done" data-id="${i.id}" aria-pressed="${i.done}" aria-label="Done: ${esc(i.name)}" title="${i.done?'Done: all invoices are in. Click to reopen.':'Mark done when all invoices are in'}">${CHECK}</button>`}
+function invBtn(i){return i.ninv?`<button class="paybtn" data-mock="Opens the existing invoices window (unchanged)">${m(i.act)}<small>${i.ninv} invoice${i.ninv>1?'s':''}</small></button>`:`<button class="paybtn" data-mock>${m(0)}<small>Add invoice</small></button>`}
+function payBtn(i){const ow=i.act-i.paid;return `<button class="paybtn" data-mock="Opens the existing payments window (unchanged)">${m(i.paid)}<small>${i.npay?i.npay+' payment'+(i.npay>1?'s':''):'Add payment'}${i.act?(ow<0.005?'<br><span class="ok">Paid in full</span>':'<br><span class="ow">'+m(ow)+' owed</span>'):''}</small></button>`}
+
+function upEditor(i){
+  const rows=i.ups.map(u=>`<div class="ugrid ug${u.inc?'':' off'}${u.status==='Declined'?' declined':''}${S.fresh===u.id?' newrow':''}" data-i="${i.id}" data-u="${u.id}">
+    <div class="c-yn"><span class="yn" role="group" aria-label="Included"><button class="n" data-act="yn" data-v="0" aria-pressed="${!u.inc}">No</button><button class="y" data-act="yn" data-v="1" aria-pressed="${u.inc}">Yes</button></span></div>
+    <div class="c-nm nm"><input data-f="name" value="${esc(u.name)}" placeholder="Upgrade, e.g. Triple-pane glazing" aria-label="Upgrade name"></div>
+    <div class="c-pr price"><span>+$</span><input data-f="price" inputmode="decimal" value="${u.price?(+u.price).toLocaleString('en-US'):''}" placeholder="0" aria-label="Extra price"></div>
+    <div class="c-by"><select data-f="by" aria-label="Requested by"><option${u.by==='Buyer'?' selected':''}>Buyer</option><option${u.by==='Builder'?' selected':''}>Builder</option></select></div>
+    <div class="c-st"><select data-f="status" class="st ${u.status}" aria-label="Status"><option${u.status==='Quoted'?' selected':''}>Quoted</option><option${u.status==='Approved'?' selected':''}>Approved</option><option${u.status==='Declined'?' selected':''}>Declined</option></select></div>
+    <div class="c-note"><input data-f="note" value="${esc(u.note)}" placeholder="Note (optional)" aria-label="Note"></div>
+    <div class="c-rm"><button class="rm" data-act="rmup" title="Remove upgrade" aria-label="Remove upgrade">✕</button></div>
+  </div>`).join('');
+  const used=new Set(i.ups.map(u=>u.name.toLowerCase()));
+  const sug=(SUGG[i.name]||[]).filter(s=>![...used].some(x=>x.startsWith(s.toLowerCase().slice(0,12)))).slice(0,3);
+  return `<div class="uplist">${i.ups.length?`<div class="ugrid"><div class="ugh">Included</div><div class="ugh">Upgrade</div><div class="ugh" style="text-align:right">Extra price</div><div class="ugh">Requested by</div><div class="ugh">Status</div><div class="ugh">Note</div><div></div></div>${rows}`:`<div class="empty">No upgrades on this line yet. Add one, set Yes to include its price.</div>`}</div>
+   <div class="upfoot"><div class="sugg"><button class="add sm" data-act="addup" data-id="${i.id}">+ Add upgrade</button>${sug.length?'<span class="lbl">Quick add:</span>'+sug.map(s=>`<button class="sg" data-act="sugg" data-id="${i.id}" data-s="${esc(s)}">+ ${esc(s)}</button>`).join(''):''}</div>
+   <div class="math"><span class="mr"><span>Base</span> <b>${m(i.amt)}</b></span> <span class="mr"><span>+ Yes upgrades</span> <b>${m(upInc(i))}</b></span> <span class="mr"><span>=<span class="mob"> Line total</span></span> <b>${m(lineTot(i))}</b></span></div></div>`;
+}
+
+function visibleItems(cat){return items.filter(i=>i.cat===cat&&(!S.onlyUps||i.ups.length))}
+
+function renderTable(){
+  const su=S.showUps,mode=S.pat==='B'?'panel':'inline';
+  const T=totals(items);
+  let h=`<colgroup><col style="width:62px"><col style="width:${su?204:250}px"><col style="width:${su?108:150}px">${su?'<col style="width:118px"><col style="width:120px">':''}<col style="width:126px"><col style="width:138px"><col style="width:142px"><col><col style="width:50px"></colgroup><thead><tr><th class="c donecol">${tip('Done','Tap the circle when <b>all invoices for this line are in</b>. Projected final cost then uses the invoiced amount instead of the budget. Tap again to reopen.')}</th><th class="l">Item</th><th>${su?'Base (v1)':'v1'}</th>${su?'<th class="l">Upgrades</th><th>Line total</th>':''}<th>Actual invoiced</th><th>${tip('Over / under','Invoiced minus line total (base + Yes upgrades).',1)}</th><th>Paid</th><th class="l">Notes</th><th></th></tr></thead><tbody>`;
+  CATS.forEach(c=>{
+    const all=items.filter(i=>i.cat===c),list=visibleItems(c);if(!list.length)return;
+    const t=totals(all),col=S.coll.has(c),nu=all.reduce((s,i)=>s+i.ups.length,0);
+    h+=`<tr class="cat"><td class="l catname" colspan="2"><button class="catbtn" data-act="cat" data-c="${esc(c)}">${col?'▸':'▾'} ${esc(c)} <small>${all.length} items</small></button></td>
+      <td>${m(su?t.base:t.tot)}${!su&&t.up?`<span class="caption">incl. +${m0(t.up)} upgrades</span>`:''}</td>${su?`<td class="l">${t.up?`<span class="down">+${m(t.up)}</span><span class="caption">${nu} upgrade${nu>1?'s':''}</span>`:'<span class="lbl">—</span>'}</td><td>${m(t.tot)}</td>`:''}
+      <td>${m(t.act)}</td><td class="${cl(t.act-t.tot)}">${ou(t.act-t.tot,t.tot)}</td><td>${m(t.paid)}${t.act-t.paid>0.005?`<span class="caption up">${m(t.act-t.paid)} owed</span>`:''}</td><td class="l catpct" colspan="2">${(t.tot/T.tot*100).toFixed(1)}% of budget</td></tr>`;
+    if(col)return;
+    list.forEach(i=>{
+      const lt=lineTot(i),d=i.act-lt;
+      h+=`<tr class="it${i.done?' isdone':''}" id="row-${i.id}"><td class="donecol">${doneBtn(i)}</td>
+        <td class="l item"><select aria-label="Item"><option>${esc(i.name)}</option></select></td>
+        <td class="amt">${su?`<input data-act="amt" data-id="${i.id}" value="${i.amt.toLocaleString('en-US',{maximumFractionDigits:2})}" aria-label="Base budget">`:`<b>${m(lt)}</b>${upInc(i)?`<span class="caption">incl. +${m0(upInc(i))} upgrades</span>`:''}`}</td>
+        ${su?`<td class="l" style="overflow:visible">${chip(i,mode)}</td><td class="ltot">${m(lt)}${upInc(i)?`<small>${m0(i.amt)} + ${m0(upInc(i))}</small>`:''}</td>`:''}
+        <td>${invBtn(i)}</td><td class="${i.act?cl(d):''}">${i.act?ou(d,lt):'—'}</td><td class="paycell">${payBtn(i)}</td>
+        <td class="l ncol"><input value="${esc(i.note)}" aria-label="Notes"></td><td><button class="xbtn" data-mock aria-label="Remove line">✕</button></td></tr>`;
+      if(su&&mode==='inline'&&S.open.has(i.id))h+=`<tr class="uprow"><td colspan="10"><div class="upbox"><div class="uphead"><b>Upgrades · ${esc(i.name)}</b><span class="lbl">Saved in v1 · Yes = price added to this line</span></div>${upEditor(i)}</div></td></tr>`;
+    });
+    h+=`<tr><td></td><td class="l" colspan="9"><button class="add" data-mock>+ Add item to ${esc(c)}</button></td></tr>`;
+  });
+  h+=`<tr class="cat"><td class="l catname" colspan="2"><b>Total</b></td><td>${m(su?T.base:T.tot)}</td>${su?`<td class="l"><span class="down">+${m(T.up)}</span></td><td>${m(T.tot)}</td>`:''}<td>${m(T.act)}</td><td class="${cl(T.act-T.tot)}">${ou(T.act-T.tot,T.tot)}</td><td>${m(T.paid)}</td><td colspan="2"></td></tr>`;
+  document.getElementById('btable').innerHTML=h+'</tbody>';
+}
+
+function renderCards(){
+  const su=S.showUps,mode=S.pat==='B'?'panel':'inline';let h='';
+  CATS.forEach(c=>{
+    const all=items.filter(i=>i.cat===c),list=visibleItems(c);if(!list.length)return;
+    const t=totals(all),col=S.coll.has(c);
+    h+=`<div class="mcat"><button class="catbtn" data-act="cat" data-c="${esc(c)}">${col?'▸':'▾'} ${esc(c)}<br><small>${all.length} items</small></button><div class="r">${m0(t.tot)}<small>${t.up?`${m0(t.base)} + ${m0(t.up)} upgrades`:'no upgrades'}</small><small class="${cl(t.act-t.tot)}">${sg(t.act-t.tot)} vs budget</small></div></div>`;
+    if(col)return;
+    list.forEach(i=>{const lt=lineTot(i),d=i.act-lt,open=mode==='inline'&&S.open.has(i.id);
+      h+=`<div class="mcard${i.done?' isdone':''}${su?'':' noups'}"><div class="mtop">${doneBtn(i)}<div class="nm">${esc(i.name)}<small>${i.done?'Done · uses invoiced amount':'Open'}</small></div><button class="xbtn" data-mock aria-label="Remove line">✕</button></div>
+       <div class="mgrid">
+        <div class="mc"><span class="lbl">${su?'Base (v1)':'Budget (v1)'}</span>${su?`<input data-act="amt" data-id="${i.id}" value="${i.amt.toLocaleString('en-US',{maximumFractionDigits:2})}" aria-label="Base budget" inputmode="decimal">`:`<span class="fig">${m0(lt)}</span>`}</div>
+        <div class="mc r"><span class="lbl">Line total</span><span class="fig tot">${m0(lt)}</span></div>
+        ${su?`<div class="mc full">${mchip(i,mode)}</div>`:''}
+        <div class="mc"><span class="lbl">Invoiced</span>${invBtn(i)}</div>
+        <div class="mc"><span class="lbl">Paid</span>${payBtn(i)}</div>
+        <div class="mc full mou"><span class="lbl">Over / under <span class="sub">vs line total</span></span><span class="badge ${i.act?cl(d):''}">${i.act?sg(d):'—'}</span></div>
+       </div>
+       <div class="mnote"><input value="${esc(i.note)}" placeholder="Notes" aria-label="Notes"></div>
+       ${open&&su?`<div class="mups"><div class="uphead"><b>Upgrades</b><span class="lbl">Yes = added to line</span></div>${upEditor(i)}</div>`:''}</div>`;});
+    h+=`<button class="add" data-mock style="margin:0 0 6px">+ Add item to ${esc(c)}</button>`;
+  });
+  document.getElementById('mlist').innerHTML=h;
+}
+
+function renderReg(){
+  const box=document.getElementById('regcard');box.hidden=S.pat!=='C';if(S.pat!=='C')return;
+  const st=stat(),f=S.regF;
+  const rows=allUps().filter(({u})=>f==='all'||u.status===f);
+  const fb=(k,l,n)=>`<button class="schip" data-act="regf" data-f="${k}" aria-pressed="${f===k}">${l} <b>${n}</b></button>`;
+  const tot=rows.reduce((s,{u})=>s+(u.inc?+u.price||0:0),0);
+  box.innerHTML=`<div class="ihead"><div><h2 style="margin:0">All upgrades · v1</h2><div class="lbl">One list for buyer meetings. Edits here and in the Items table are the same data.</div></div>
+    <div class="ctrl"><button class="ghost sm" data-mock="Would print a buyer summary of approved upgrades">Print buyer summary</button></div></div>
+    <div class="filt" style="margin-bottom:10px">${fb('all','All',st.Approved.n+st.Quoted.n+st.Declined.n)}${fb('Approved','Approved',st.Approved.n)}${fb('Quoted','Quoted',st.Quoted.n)}${fb('Declined','Declined',st.Declined.n)}</div>
+    <div class="scroll desk"><table class="regt"><thead><tr><th class="l">Included</th><th class="l">Upgrade</th><th class="l">Budget line</th><th class="l">Requested by</th><th class="l">Status</th><th>Extra price</th><th class="l">Note</th></tr></thead><tbody>
+    ${rows.map(({u,i})=>`<tr class="${u.status==='Declined'?'declined':''}" data-i="${i.id}" data-u="${u.id}"><td class="l"><span class="yn"><button class="n" data-act="yn" data-v="0" aria-pressed="${!u.inc}">No</button><button class="y" data-act="yn" data-v="1" aria-pressed="${u.inc}">Yes</button></span></td>
+      <td class="l"><input class="nm" data-f="name" value="${esc(u.name)}"></td><td class="l itm"><a href="#row-${i.id}" data-act="jump" data-id="${i.id}" style="color:inherit">${esc(i.name)}</a><small>${esc(i.cat)}</small></td>
+      <td class="l" style="width:120px"><select data-f="by"><option${u.by==='Buyer'?' selected':''}>Buyer</option><option${u.by==='Builder'?' selected':''}>Builder</option></select></td>
+      <td class="l" style="width:130px"><select data-f="status" class="st ${u.status}"><option${u.status==='Quoted'?' selected':''}>Quoted</option><option${u.status==='Approved'?' selected':''}>Approved</option><option${u.status==='Declined'?' selected':''}>Declined</option></select></td>
+      <td class="${u.inc?'':'lbl'}" style="${u.status==='Declined'?'text-decoration:line-through':''}">+${m(+u.price||0)}</td><td class="l"><input data-f="note" value="${esc(u.note)}"></td></tr>`).join('')||'<tr><td class="l" colspan="7"><span class="lbl">No upgrades with this status.</span></td></tr>'}
+    </tbody><tfoot><tr><td class="l" colspan="5">Included in totals (Yes)</td><td class="down">+${m(tot)}</td><td></td></tr></tfoot></table></div>
+    <div class="mlist">${rows.map(({u,i})=>`<div class="mcard"><div class="uplist"><div class="lbl" style="font-weight:700">${esc(i.name)} · <span style="font-weight:500">${esc(i.cat)}</span></div>${''}</div>${upEditorOne(i,u)}</div>`).join('')}<div class="math" style="text-align:right">Included (Yes): <b>+${m(tot)}</b></div></div>`;
+}
+function upEditorOne(i,u){const save=i.ups;i.ups=[u];const h=upEditor(i).split('<div class="upfoot">')[0];i.ups=save;return h.replace(/<div class="ugrid"><div class="ugh">.*?<div><\/div><\/div>/s,'')}
+
+function renderDrawer(){
+  const d=document.getElementById('drawer'),sc=document.getElementById('scrim');
+  const i=S.panel&&byId(S.panel);const open=!!i&&S.pat==='B';
+  d.classList.toggle('open',open);sc.classList.toggle('open',open);d.setAttribute('aria-hidden',!open);
+  if(!i)return;
+  d.innerHTML=`<div class="dhead"><button class="x" data-act="close" aria-label="Close">✕</button><div class="lbl">Upgrades · ${esc(i.cat)} · v1</div><h2>${esc(i.name)}</h2></div>
+   <div class="dfig"><div><span class="lbl">Base (v1)</span><b>${m0(i.amt)}</b></div><div><span class="lbl">Yes upgrades</span><b class="down">+${m0(upInc(i))}</b></div><div><span class="lbl">Line total</span><b>${m0(lineTot(i))}</b></div></div>
+   <div class="dbody">${upEditor(i)}</div>
+   <div class="dfoot"><span class="lbl">Invoiced ${m0(i.act)} · <span class="${cl(i.act-lineTot(i))}">${sg(i.act-lineTot(i))}</span> vs line total</span><button class="pribtn" data-act="close">Done</button></div>`;
+}
+
+const PAT={A:'<b>A · Inline rows (recommended).</b> Each line gets an Upgrades chip (count and +$). Clicking it opens the upgrades right under the line, so you see the base, the upgrades and the line total together. Nothing leaves the table.',
+B:'<b>B · Side panel.</b> The table stays compact; clicking the Upgrades chip opens a panel on the right (a bottom sheet on phones) for that line only. Good if lines get many upgrades.',
+C:'<b>C · Upgrades list.</b> Adds one list of every upgrade in the version above the table, filterable by status. Handy for buyer meetings; works together with A (shown here) or B.'};
+function render(){
+  renderTop();renderReg();renderTable();renderCards();renderDrawer();
+  document.getElementById('patdesc').innerHTML=PAT[S.pat];
+  document.getElementById('patnote').innerHTML=S.showUps?(S.pat==='B'?'Click an <b>Upgrades</b> chip to open the side panel. Toggle <b>No / Yes</b> to see totals change.':'Click an <b>Upgrades</b> chip to expand it under the line. Toggle <b>No / Yes</b> to see line, category and tile totals change.'):'Upgrades hidden: the budget column shows each line total with “incl. +$ upgrades”.';
+  document.querySelectorAll('#patseg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pat===S.pat));
+  S.fresh=null;
+}
+
+let tt;function toast(t){const e=document.getElementById('toast');e.innerHTML=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),2600)}
+function findUp(el){const r=el.closest('[data-u]');if(!r)return null;const i=byId(r.dataset.i);return {i,u:i.ups.find(x=>x.id===r.dataset.u)}}
+function addUp(i,name){const u=U(name||'',0,false,'Quoted','Buyer','');i.ups.push(u);S.fresh=u.id;if(S.pat!=='B')S.open.add(i.id);render();
+  const sel=`[data-u="${u.id}"] input[data-f="${name?'price':'name'}"]`;const el=[...document.querySelectorAll(sel)].find(e=>e.offsetParent);if(el)el.focus()}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act],[data-mock],[data-pat],[data-th]');if(!b)return;
+  if(b.dataset.pat){S.pat=b.dataset.pat;S.panel=null;render();return}
+  if(b.dataset.th){const r=document.documentElement;r.classList.remove('force-light','force-dark');if(b.dataset.th!=='auto')r.classList.add('force-'+b.dataset.th);document.querySelectorAll('#themeseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));return}
+  if(b.hasAttribute('data-mock')&&!b.dataset.act){e.preventDefault();toast(b.dataset.mock||'Not part of this mockup: works as today in the real app.');return}
+  const a=b.dataset.act,i=b.dataset.id&&byId(b.dataset.id);
+  if(a==='chip'){if(S.pat==='B'){S.panel=i.id}else{S.open.has(i.id)?S.open.delete(i.id):S.open.add(i.id);if(!i.ups.length&&S.open.has(i.id)){addUp(i);return}}render();return}
+  if(a==='close'){S.panel=null;render();return}
+  if(a==='done'){i.done=!i.done;render();toast(i.done?`<b>${esc(i.name)}</b> marked Done: projected cost now uses invoices.`:`<b>${esc(i.name)}</b> reopened.`);return}
+  if(a==='cat'){const c=b.dataset.c;S.coll.has(c)?S.coll.delete(c):S.coll.add(c);render();return}
+  if(a==='yn'){const x=findUp(b);if(!x)return;x.u.inc=b.dataset.v==='1';if(x.u.inc&&x.u.status!=='Approved')x.u.status=x.u.status==='Declined'?'Approved':x.u.status==='Quoted'?'Approved':x.u.status;if(!x.u.inc&&x.u.status==='Approved')x.u.status='Quoted';render();toast(`${esc(x.u.name||'Upgrade')}: <b>${x.u.inc?'Yes, +'+m0(+x.u.price||0)+' added':'No, not counted'}</b> · line total ${m0(lineTot(x.i))}`);return}
+  if(a==='rmup'){const x=findUp(b);x.i.ups=x.i.ups.filter(u=>u!==x.u);render();return}
+  if(a==='addup'){addUp(i);return}
+  if(a==='sugg'){addUp(i,b.dataset.s);return}
+  if(a==='expandall'){const all=items.filter(x=>x.ups.length);const any=all.some(x=>!S.open.has(x.id));all.forEach(x=>{any?S.open.add(x.id):S.open.delete(x.id);if(any)S.coll.delete(x.cat)});if(S.pat==='B')S.pat='A';render();b.textContent=any?'Collapse all upgrades':'Expand all upgrades';return}
+  if(a==='regf'){S.regF=S.regF===b.dataset.f&&S.pat==='C'?'all':b.dataset.f;S.pat='C';render();document.getElementById('regcard').scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(a==='jump'){e.preventDefault();S.coll.delete(i.cat);S.open.add(i.id);render();const r=document.getElementById('row-'+i.id);if(r&&r.offsetParent){r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash')}return}
+  if(a==='newver'){const n=allUps().length;toast(`In the real app: v2 would start as a copy of v1, <b>including its ${n} upgrades</b>. Changing them in v2 leaves v1 as it was.`);return}
+});
+document.addEventListener('change',e=>{
+  const el=e.target;
+  if(el.id==='showups'){S.showUps=el.checked;render();return}
+  if(el.id==='onlyups'){S.onlyUps=el.checked;if(el.checked)items.forEach(i=>{if(i.ups.length)S.coll.delete(i.cat)});render();return}
+  if(el.dataset.act==='amt'){const i=byId(el.dataset.id);i.amt=parseFloat(el.value.replace(/[^0-9.\-]/g,''))||0;softRender();return}
+  const f=el.dataset.f;if(!f)return;const x=findUp(el);if(!x)return;
+  if(f==='price')x.u.price=parseFloat(el.value.replace(/[^0-9.\-]/g,''))||0;
+  else if(f==='status'){x.u.status=el.value;if(el.value==='Declined')x.u.inc=false;if(el.value==='Approved')x.u.inc=true}
+  else x.u[f]=el.value;
+  softRender();
+});
+// Re-render after the browser has moved focus, then put focus back on the same field (so Tab / click to the next field keeps working)
+function keyOf(el){if(!el||!el.closest)return null;const r=el.closest('[data-u]');if(r&&el.dataset.f)return `[data-u="${r.dataset.u}"] [data-f="${el.dataset.f}"]`;if(el.dataset.act==='amt')return `[data-act="amt"][data-id="${el.dataset.id}"]`;return null}
+function softRender(){setTimeout(()=>{const a=document.activeElement,k=keyOf(a),inDrawer=a&&a.closest&&a.closest('#drawer');render();if(k){const c=[...document.querySelectorAll((inDrawer?'#drawer ':'')+k)].find(e=>e.offsetParent);if(c){c.focus();if(c.select&&c.tagName==='INPUT')c.select()}}},0)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.panel){S.panel=null;render()}});
+document.getElementById('scrim').onclick=()=>{S.panel=null;render()};
+document.getElementById('hwbtn').onclick=e=>{const n=document.getElementById('notes');n.classList.toggle('open');e.target.setAttribute('aria-expanded',n.classList.contains('open'))};
+if(innerWidth<760){document.getElementById('notes').classList.remove('open');document.getElementById('hwbtn').setAttribute('aria-expanded','false')}
+render();
+</script>
+</body>
+</html>
