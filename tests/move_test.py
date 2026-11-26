@@ -1,0 +1,117 @@
+import sys,os;sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from paths import *
+from playwright.sync_api import sync_playwright
+
+ok=[];bad=[]
+def chk(n,c):(ok if c else bad).append(n);print(('PASS ' if c else 'FAIL ')+n)
+J=lambda pg,s:pg.evaluate(s)
+ITEM="(id=>{const b=curBud();const v=b.versions[b.versions.length-1];return v.items.find(i=>i.id===id);})"
+with sync_playwright() as p:
+  b=p.chromium.launch();pg=b.new_page(viewport={'width':1300,'height':900});errs=[]
+  pg.on('pageerror',lambda e:errs.append(str(e)))
+  pg.add_init_script(INIT);pg.goto(APP_URL+'#budget');pg.wait_for_timeout(700)
+  if not pg.is_checked('#bact'): pg.click('#bact');pg.wait_for_timeout(200)
+  base=J(pg,"JSON.stringify(store.budgets)")
+  # ---- dry helper
+  r=J(pg,"moveEntry({fromItem:'i14',toItem:'i13',invId:"+ITEM+"('i14').invs[0].id,dry:true})")
+  amt=J(pg,ITEM+"('i14').invs[0].amt")
+  chk('dry run returns summary with amounts', r['ok'] and r['summary'].startswith('Framing −') and 'Lumber + truss package +' in r['summary'])
+  chk('dry run does not change data', J(pg,"JSON.stringify(store.budgets)")==base and not J(pg,"document.querySelector('#savestate').classList.contains('dirty')"))
+  chk('projected line present', any(l.startswith('Projected final cost') for l in r['lines']))
+  # ---- UI invoice move via pay modal
+  pg.click('[data-act="b-pay"][data-id="i14"] >> nth=0');pg.wait_for_timeout(200)
+  iv0=J(pg,ITEM+"('i14').invs[0]");lp=J(pg,"(()=>{const it="+ITEM+"('i14');return it.pays.filter(p=>p.inv===it.invs[0].id).map(p=>p.id)})()")
+  pg.click(f'[data-act="p-invmove"][data-id="{iv0["id"]}"]');pg.wait_for_timeout(200)
+  chk('move sheet opens', not J(pg,"document.querySelector('#mvmodal').hidden"))
+  chk('confirm disabled before pick', J(pg,"document.querySelector('#mv-ok').disabled"))
+  chk('current line disabled', J(pg,"document.querySelector('.mvopt[data-id=\"i14\"]').disabled"))
+  pg.fill('#mv-q','lumber');pg.wait_for_timeout(100)
+  chk('search filters list', 0<J(pg,"document.querySelectorAll('.mvopt').length")<5 and pg.locator('.mvopt[data-id="i13"]').count()==1)
+  pg.click('.mvopt[data-id="i13"]');pg.wait_for_timeout(100)
+  prev=pg.inner_text('#mv-prev');print(prev)
+  chk('preview shows both lines', 'Framing: invoiced $58,681.71 →' in prev and 'Lumber + truss package: invoiced $56,083.07 →' in prev)
+  pg.click('#mv-ok');pg.wait_for_timeout(200)
+  chk('invoice moved, id kept', J(pg,ITEM+"('i13').invs.some(x=>x.id==='"+iv0['id']+"')") and not J(pg,ITEM+"('i14').invs.some(x=>x.id==='"+iv0['id']+"')"))
+  chk('linked payments moved', all(J(pg,ITEM+"('i13').pays.some(x=>x.id==='"+x+"'&&x.inv==='"+iv0['id']+"')") for x in lp) and len(lp)>0)
+  chk('acts resynced', abs(J(pg,ITEM+"('i14').act")-(58681.71-iv0['amt']))<0.01)
+  chk('dirty + bar', J(pg,"document.querySelector('#savestate').classList.contains('dirty')") and not J(pg,"document.querySelector('#nbar').hidden"))
+  chg=J(pg,"curDiff().list.map(x=>x.t)");print(chg)
+  chk('See what changed in plain words', any('moved from Framing to Lumber + truss package' in t and 'Invoice' in t for t in chg) and not any('deleted' in t or 'new invoice' in t for t in chg))
+  pg.screenshot(path=OUT+'/mv_after_inv.png')
+  # ---- single linked payment move, link to invoice on new line
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100)
+  if J(pg,"!document.querySelector('#dmodal').hidden"): pg.click('#d-discard');pg.wait_for_timeout(100)
+  pg.click('[data-act="b-pay"][data-id="i23"] >> nth=0');pg.wait_for_timeout(200)
+  py=J(pg,"(()=>{const it="+ITEM+"('i23');return it.pays.find(p=>p.inv)})()")
+  pg.click(f'[data-act="p-paymove"][data-id="{py["id"]}"]');pg.wait_for_timeout(200)
+  pg.click('.mvopt[data-id="i22"]');pg.wait_for_timeout(100)
+  chk('link choice shown, default no invoice', J(pg,"document.querySelector('.mvseg[data-v=\"none\"]').classList.contains('on')"))
+  t=pg.inner_text('#mv-prev');chk('warn about invoice staying behind', 'stays on Plumber' in t)
+  pg.click('.mvseg[data-v="inv"]');pg.wait_for_timeout(100)
+  tgt=J(pg,"document.querySelector('#mv-inv').value")
+  t=pg.inner_text('#mv-prev');print(t);chk('preview shows both invoices paid changes', t.count('Invoice ')>=2 and 'on Plumbing material: paid' in t and 'on Plumber: paid' in t)
+  pg.screenshot(path=OUT+'/mv_pay_desk.png')
+  pg.click('#mv-ok');pg.wait_for_timeout(200)
+  chk('payment moved and relinked', J(pg,ITEM+"('i22').pays.some(x=>x.id==='"+py['id']+"'&&x.inv==='"+tgt+"')"))
+  chk('pay modal still open on source', not J(pg,"document.querySelector('#pmodal').hidden"))
+  chg=J(pg,"curDiff().list.map(x=>x.t)");print(chg[-1]);chk('payment move described', any('Payment' in t and 'moved from Plumber to Plumbing material, now for invoice' in t for t in chg))
+  # ---- Cancel edit restores
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100)
+  if J(pg,"!document.querySelector('#dmodal').hidden"): pg.click('#d-discard');pg.wait_for_timeout(100)
+  pg.click('[data-act="b-pay"][data-id="i16"] >> nth=0');pg.wait_for_timeout(200)
+  iv=J(pg,ITEM+"('i16').invs[0]");act0=J(pg,ITEM+"('i16').act")
+  pg.click(f'[data-act="p-invedit"][data-id="{iv["id"]}"]');pg.wait_for_timeout(100)
+  chk('edit shows Done, Cancel, Delete', pg.locator('#pbody .eacts [data-act="p-cancel"]').count()==1 and 'Delete invoice' in pg.inner_text('#pbody .eacts'))
+  pg.fill(f'[data-inv="{iv["id"]}:amt"]','999');pg.fill(f'[data-inv="{iv["id"]}:vendor"]','ZZZ')  # amt change event fires on vendor focus
+  pg.click('[data-act="p-cancel"]');pg.wait_for_timeout(150)
+  chk('Cancel restores invoice + act', J(pg,ITEM+"('i16').invs[0].amt")==iv['amt'] and J(pg,ITEM+"('i16').invs[0].vendor")==iv['vendor'] and J(pg,ITEM+"('i16').act")==act0)
+  chk('Cancel leaves edit mode', pg.locator('#pbody .edit').count()==0)
+  # Done keeps
+  pg.click(f'[data-act="p-invedit"][data-id="{iv["id"]}"]');pg.wait_for_timeout(100)
+  pg.fill(f'[data-inv="{iv["id"]}:no"]','NEWNO');pg.click('[data-act="p-done"]');pg.wait_for_timeout(150)
+  chk('Done keeps typed value (no blur first)', J(pg,ITEM+"('i16').invs[0].no")=='NEWNO')
+  # Escape cancels payment edit
+  pp=J(pg,ITEM+"('i16').pays[0]")
+  pg.click(f'[data-act="p-payedit"][data-id="{pp["id"]}"]');pg.wait_for_timeout(100)
+  pg.fill(f'[data-pay="{pp["id"]}:ref"]','CHANGED');pg.keyboard.press('Tab');pg.wait_for_timeout(100)
+  chk('payment value applied while editing', J(pg,ITEM+"('i16').pays[0].ref")=='CHANGED')
+  chk('payment delete has label', 'Delete' in pg.inner_text('#pbody .eacts .pdel'))
+  pg.screenshot(path=OUT+'/edit_desk.png')
+  pg.keyboard.press('Escape');pg.wait_for_timeout(150)
+  chk('Escape cancels payment edit', J(pg,ITEM+"('i16').pays[0].ref")==pp.get('ref') and pg.locator('#pbody .edit').count()==0 and not J(pg,"document.querySelector('#pmodal').hidden"))
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100)
+  if J(pg,"!document.querySelector('#dmodal').hidden"): pg.click('#d-discard');pg.wait_for_timeout(100)
+  # ---- line move
+  pg.click('[data-act="b-moveline"][data-id="i15"]');pg.wait_for_timeout(200)
+  pg.select_option('#mv-cat','Interior finishes');pg.wait_for_timeout(100)
+  t=pg.inner_text('#mv-prev');print(t);chk('line preview subtotals', 'Structure and envelope subtotal' in t and 'Interior finishes subtotal' in t)
+  pg.screenshot(path=OUT+'/mv_line_desk.png')
+  pg.click('#mv-ok');pg.wait_for_timeout(200)
+  chk('line moved', J(pg,ITEM+"('i15').cat")=='Interior finishes')
+  chk('line move in changes', any('moved from Structure and envelope to Interior finishes' in t for t in J(pg,"curDiff().list.map(x=>x.t)")))
+  # type change
+  pg.click('[data-act="b-moveline"][data-id="i15"]');pg.wait_for_timeout(200)
+  cats=J(pg,"[...document.querySelectorAll('#mv-cat option')].map(o=>o.value)")
+  for c in cats:
+    pg.select_option('#mv-cat',c);pg.wait_for_timeout(50)
+    opts=J(pg,"[...document.querySelectorAll('#mv-name option')].map(o=>o.value)")
+    if [o for o in opts if o and o!='Stairs']: break
+  print(c,opts[:5])
+  other=[o for o in opts if o!='Stairs'][0];pg.select_option('#mv-name',other);pg.wait_for_timeout(100)
+  pg.click('#mv-ok');pg.wait_for_timeout(200)
+  chk('item type changed', J(pg,ITEM+"('i15').name")==other and J(pg,ITEM+"('i15').cat")==c)
+  # cancel move sheet
+  pg.click('[data-act="b-moveline"][data-id="i14"]');pg.wait_for_timeout(100);pg.keyboard.press('Escape');pg.wait_for_timeout(100)
+  chk('Escape closes move sheet', J(pg,"document.querySelector('#mvmodal').hidden"))
+  # discard undoes everything
+  pg.click('#nbar [data-act="nb-discard"]');pg.wait_for_timeout(200)
+  pg.click('#qmok');
+  pg.wait_for_timeout(200)
+  chk('Discard undoes moves', J(pg,"JSON.stringify(store.budgets)")==base and not J(pg,"document.querySelector('#savestate').classList.contains('dirty')"))
+  # old version: no move buttons
+  pg.click('[data-act="b-newver"]');pg.wait_for_timeout(200);pg.click('[data-act="b-vcreate"]');pg.wait_for_timeout(300)
+  pg.click('.vcard >> nth=0');pg.wait_for_timeout(300)
+  print(pg.inner_text('.vcard.on'))
+  chk('no Move on locked version', pg.locator('[data-act="b-moveline"]').count()==0)
+  chk('no page errors', not errs);print(errs)
+  b.close()
+print(len(ok),'/',len(ok)+len(bad))

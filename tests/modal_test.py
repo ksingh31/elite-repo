@@ -1,0 +1,51 @@
+import sys,os;sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from paths import *
+from playwright.sync_api import sync_playwright
+
+res=[]
+def ok(n,c,d=''):res.append(c);print(('PASS ' if c else 'FAIL ')+n,'' if c else d)
+with sync_playwright() as p:
+  b=p.chromium.launch();pg=b.new_page(viewport={'width':1300,'height':900});errs=[]
+  pg.on('pageerror',lambda e:errs.append(str(e)))
+  pg.add_init_script(INIT)
+  pg.goto(APP_URL);pg.wait_for_timeout(600)
+  hid=lambda i:pg.evaluate(f"document.getElementById('{i}').hidden")
+  out=lambda:pg.mouse.click(8,8)
+  pg.click('[data-act="bk-open"]');pg.wait_for_timeout(200);out();pg.wait_for_timeout(150);ok('backups closes on outside click',hid('bkmodal'))
+  pg.click('.tabs a[href="#budget"]');pg.wait_for_timeout(200)
+  pg.click('[data-act="t-open"]');pg.wait_for_timeout(200);out();pg.wait_for_timeout(150);ok('types closes on outside click (nothing typed)',hid('tmodal'))
+  pg.click('[data-act="t-open"]');pg.wait_for_timeout(200);pg.fill('#tadd-0','Geotech');out();pg.wait_for_timeout(150)
+  ok('types asks before discarding typed text',not hid('dmodal') and not hid('tmodal'))
+  pg.click('[data-act="d-keep"]');pg.wait_for_timeout(100);ok('keep editing keeps text',pg.input_value('#tadd-0')=='Geotech' and hid('dmodal'))
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100);ok('escape also asks',not hid('dmodal'))
+  pg.click('[data-act="d-discard"]');pg.wait_for_timeout(100);ok('discard closes',hid('tmodal') and hid('dmodal'))
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200);out();pg.wait_for_timeout(150);ok('payments closes on outside click',hid('pmodal'))
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200);pg.click('[data-act="p-showinv"]');pg.fill('#in-amt','500')
+  pg.click('[data-act="p-close"]');pg.wait_for_timeout(150);ok('payments Close asks when form has text',not hid('dmodal') and not hid('pmodal'))
+  pg.click('[data-act="d-discard"]');pg.wait_for_timeout(150);ok('payments discarded',hid('pmodal'))
+  # click inside box should not close
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200);pg.click('#pbody h2');pg.wait_for_timeout(100);ok('click inside does not close',not hid('pmodal'))
+  # drag from inside to outside should not close (text selection)
+  bx=pg.locator('#pbody h2').bounding_box();pg.mouse.move(bx['x']+5,bx['y']+5);pg.mouse.down();pg.mouse.move(8,8);pg.mouse.up();pg.wait_for_timeout(100);ok('drag out does not close',not hid('pmodal'))
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100)
+  pg.click('[data-act="b-newver"]');pg.wait_for_timeout(150);out();pg.wait_for_timeout(100);ok('new version closes on outside',hid('vmodal'))
+  pg.click('[data-act="b-newver"]');pg.wait_for_timeout(150);pg.fill('#vm-note','test');out();pg.wait_for_timeout(100);ok('new version asks when note typed',not hid('dmodal'))
+  pg.click('[data-act="d-discard"]')
+  # delete confirm outside click cancels
+  pg.locator('[data-act="b-delitem"]').first.click();pg.wait_for_timeout(150);vis=not hid('cmodal');out();pg.wait_for_timeout(100);ok('delete confirm closes on outside, item kept',vis and hid('cmodal'))
+  # changes made then close -> keep/undo prompt
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200)
+  before=pg.locator('#pbody .tile .v').first.inner_text()
+  pg.locator('[data-act="p-invedit"]').first.click();pg.wait_for_timeout(100)
+  f=pg.locator('#pbody input[data-inv$=":amt"]').first;f.fill('99999');f.dispatch_event('change');pg.wait_for_timeout(150)
+  out();pg.wait_for_timeout(150);ok('changed -> asks keep/undo',not hid('dmodal') and pg.is_visible('#d-undo'),pg.inner_text('#dmt'))
+  pg.click('#d-undo');pg.wait_for_timeout(200)
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200)
+  ok('undo restores amount',pg.locator('#pbody .tile .v').first.inner_text()==before,pg.locator('#pbody .tile .v').first.inner_text())
+  pg.locator('[data-act="p-invedit"]').first.click();f=pg.locator('#pbody input[data-inv$=":amt"]').first;f.fill('12345');f.dispatch_event('change');pg.wait_for_timeout(150)
+  pg.click('[data-act="p-close"]');pg.wait_for_timeout(100);pg.click('#d-discard');pg.wait_for_timeout(150)
+  pg.locator('button.actbtn').first.click();pg.wait_for_timeout(200)
+  ok('keep keeps amount',pg.locator('#pbody .tile .v').first.inner_text()!=before)
+  pg.keyboard.press('Escape');pg.wait_for_timeout(100);ok('escape after no new changes closes',hid('pmodal'))
+  ok('no script errors',not errs,errs)
+  b.close()
+print(sum(res),'/',len(res))
