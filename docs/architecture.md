@@ -116,3 +116,6 @@ backup sheet + team copy.
 | AWS Budgets / SNS email / 2 alarms | 2 budgets free, 10 alarms free | $0 |
 | **Total** | | **≈ $0.05 – $1 / month** (no NAT, no RDS, no always-on compute) |
 Without the free tier the same usage stays under ~$1–2/month. The budget alarm (default $5) catches surprises.
+The estimate is per environment (a `dev` stack with the samconfig defaults costs about the same or less: no daily backup,
+7/14-day logs, 30-day store versions). All settings above (price class, retention, memory, schedule, budget) are template
+parameters: [operations.md](operations.md#parameters). Split the bill with the `App` / `Env` / `CostCenter` tags.

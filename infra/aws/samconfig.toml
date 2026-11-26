@@ -1,0 +1,75 @@
+# SAM CLI / deploy.sh configuration: one section per environment. Every key in parameter_overrides is a template
+# Parameter (full list with defaults: docs/operations.md "Parameters"). Anything not listed uses the template default.
+#
+#   make plan ENV=prod      preview the change set (nothing changes)
+#   make deploy ENV=prod    preview, confirm, apply, then upload the app
+#   cd infra/aws && sam deploy --config-env prod --parameter-overrides AlertEmail=ops@company.com ...   (infra only)
+#
+# This repo is PUBLIC: keep real emails / Google ids out of this file. deploy.sh takes them from environment variables
+# (ALERT_EMAIL, ADMIN_EMAIL, COGNITO_DOMAIN_PREFIX, ...) and config/private.json (gitignored).
+version = 0.1
+
+# ------------------------------------------------------------------ dev (default: `sam deploy` with no --config-env)
+[default.global.parameters]
+region = "ca-central-1"
+
+[default.deploy.parameters]
+stack_name = "elite-calc-dev"
+region = "ca-central-1"
+resolve_s3 = true
+s3_prefix = "elite-calc-dev"
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND"
+confirm_changeset = true
+fail_on_empty_changeset = false
+tags = "App=elite-calc Env=dev CostCenter=internal-tools"
+parameter_overrides = [
+  "AppName=elite-calc",
+  "Env=dev",
+  "CostCenter=internal-tools",
+  "AlertEmail=ops@example.com",
+  "CognitoDomainPrefix=change-me-elite-calc-dev",
+  "GoogleCredentialsParam=/elite-calc/dev/google-credentials",
+  "MonthlyBudgetUsd=3",
+  "DailyBackupEnabled=false",
+  "ApiLogRetentionDays=7",
+  "BackupLogRetentionDays=14",
+  "StoreVersionRetentionDays=30",
+  "CloudFrontPriceClass=PriceClass_100",
+]
+
+[default.validate.parameters]
+lint = true
+
+# ------------------------------------------------------------------ prod
+[prod.global.parameters]
+region = "ca-central-1"
+
+[prod.deploy.parameters]
+stack_name = "elite-calc-prod"
+region = "ca-central-1"
+resolve_s3 = true
+s3_prefix = "elite-calc-prod"
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND"
+confirm_changeset = true
+fail_on_empty_changeset = false
+tags = "App=elite-calc Env=prod CostCenter=internal-tools"
+parameter_overrides = [
+  "AppName=elite-calc",
+  "Env=prod",
+  "CostCenter=internal-tools",
+  "AlertEmail=ops@example.com",
+  "CognitoDomainPrefix=change-me-elite-calc",
+  "GoogleCredentialsParam=/elite-calc/prod/google-credentials",
+  "MonthlyBudgetUsd=5",
+  "DailyBackupEnabled=true",
+  "BackupHour=22",
+  "BackupMinute=37",
+  "BackupTimeZone=America/Edmonton",
+  "ApiLogRetentionDays=30",
+  "BackupLogRetentionDays=90",
+  "StoreVersionRetentionDays=365",
+  "CloudFrontPriceClass=PriceClass_100",
+]
+
+[prod.validate.parameters]
+lint = true

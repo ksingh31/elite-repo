@@ -1,9 +1,22 @@
 # Changelog
 
+## 2026-11-26 — AWS-only infrastructure as code
+* **Removed Azure / Bicep** (`infra/azure/`, `api/azure/`) and every mention of it: the team is on AWS and Bicep only
+  targets Azure.
+* IaC is AWS SAM / CloudFormation (decision D10): every tunable is a template parameter with a cheap default (env name,
+  cost center, custom domain + ACM cert, CloudFront price class, backup hour/minute/time zone, budget, log retention,
+  Lambda memory/timeout/runtime, API throttling, store version retention, write-guard ids); `infra/aws/samconfig.toml`
+  with `dev` and `prod`; every resource tagged `App` / `Env` / `CostCenter`; resource names include the env so dev and
+  prod can share an account.
+* `make plan` (change set preview, nothing changes) → `make deploy` (preview, confirm, apply with automatic rollback,
+  upload app), `make outputs`, `make drift`, `make events`, `make teardown` (asks for the stack name).
+* Fixed a circular dependency (HTTP API ↔ user pool client ↔ CloudFront) by declaring the HTTP API as plain
+  `AWS::ApiGatewayV2` resources; `make lint` also runs `sam validate --lint` when the SAM CLI is installed.
+
 ## 2026-11-26 — repository
 * Rebuildable repo: verbatim app (sample data, id placeholders), standalone AWS build + `platform.js` adapter and
   re-export script, Lambda API (S3 store with ETag concurrency, Google Sheets/Drive proxy with server-side write guard,
-  daily backup twin), SAM template + one-command deploy/teardown, optional Azure Bicep, JSON Schema + sample store,
+  daily backup twin), SAM template + one-command deploy/teardown, JSON Schema + sample store,
   logic docs per section, operations / decisions / rebuild runbook, AGENTS.md, CI.
 
 ## 2026-11-25/26 — features published to the live artifact (overnight session)

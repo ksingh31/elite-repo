@@ -1,32 +1,69 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >-
-  EliteCraft project profit calculator (internal). Cheapest viable stack: S3 + CloudFront (static app),
+  EliteCraft project profit calculator (internal). Every tunable is a Parameter (see docs/operations.md). Cheapest viable stack: S3 + CloudFront (static app),
   API Gateway HTTP API + Lambda (Node.js 20+ code, nodejs24.x runtime by default, arm64), store JSON in a versioned S3 bucket with ETag optimistic
   concurrency, Cognito user pool (hosted UI) for team sign-in, Google credentials in SSM Parameter Store
-  (SecureString, created by deploy.sh), EventBridge Scheduler daily backup at 22:37 America/Edmonton,
+  (SecureString, created by deploy.sh), EventBridge Scheduler daily backup (default 22:37 America/Edmonton),
   monthly cost budget + error alarms.
 
 Parameters:
+  # ------------------------------------------------------------ naming + cost tracking
   AppName:
     Type: String
     Default: elite-calc
     AllowedPattern: '^[a-z][a-z0-9-]{2,20}$'
-    Description: Short lowercase name used in resource names.
+    Description: Short lowercase name used in resource names and the App tag.
+  Env:
+    Type: String
+    Default: prod
+    AllowedValues: [dev, test, prod]
+    Description: Environment / stage name. Used in resource names (two envs can share one account + region) and the Env tag.
+  CostCenter:
+    Type: String
+    Default: internal-tools
+    Description: CostCenter tag on every resource (activate App / Env / CostCenter as cost allocation tags in Billing).
+  # ------------------------------------------------------------ people + alerts
   AlertEmail:
     Type: String
+    AllowedPattern: '^[^@\s]+@[^@\s]+$'
     Description: Email for cost budget and error alarm notifications (confirm the SNS subscription email).
   AdminEmail:
     Type: String
     Default: ''
     Description: Optional first team member; Cognito emails them a temporary password.
+  MonthlyBudgetUsd:
+    Type: Number
+    Default: 5
+    MinValue: 1
+    Description: Monthly cost budget (USD); alerts at 80% actual and 100% forecast.
+  # ------------------------------------------------------------ sign-in + optional custom domain
   CognitoDomainPrefix:
     Type: String
     Description: Globally unique prefix for the Cognito hosted sign-in page (https://PREFIX.auth.REGION.amazoncognito.com).
     AllowedPattern: '^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$'
+  WritersGroup:
+    Type: String
+    Default: ''
+    Description: Optional Cognito group required to save / write sheets. Empty = every signed-in user can save.
+  DomainName:
+    Type: String
+    Default: ''
+    Description: Optional custom host name for the app (e.g. calc.example.com). Needs CertificateArn. Empty = CloudFront domain.
+  CertificateArn:
+    Type: String
+    Default: ''
+    Description: ACM certificate ARN for DomainName; must be in us-east-1 (CloudFront requirement). Empty = no custom domain.
+  CloudFrontPriceClass:
+    Type: String
+    Default: PriceClass_100
+    AllowedValues: [PriceClass_100, PriceClass_200, PriceClass_All]
+    Description: PriceClass_100 (North America + Europe edges) is the cheapest.
+  # ------------------------------------------------------------ Google Sheets write guard
   GoogleCredentialsParam:
     Type: String
     Default: /elite-calc/google-credentials
+    AllowedPattern: '^/.*'
     Description: SSM SecureString parameter name holding the Google service account key (or OAuth refresh token) JSON.
   BackupFolderId:
     Type: String
@@ -40,34 +77,103 @@ Parameters:
     Type: CommaDelimitedList
     Default: ''
     Description: Sheet ids that must never be written (the team's invoice sheet, the retired master sheet, any original).
-  WritersGroup:
+  # ------------------------------------------------------------ daily backup schedule
+  DailyBackupEnabled:
     Type: String
-    Default: ''
-    Description: Optional Cognito group required to save / write sheets. Empty = every signed-in user can save.
-  MonthlyBudgetUsd:
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+  BackupHour:
     Type: Number
-    Default: 5
-    Description: Monthly cost budget; alerts at 80% actual and 100% forecast.
+    Default: 22
+    MinValue: 0
+    MaxValue: 23
+    Description: Hour of the daily backup in BackupTimeZone.
+  BackupMinute:
+    Type: Number
+    Default: 37
+    MinValue: 0
+    MaxValue: 59
+  BackupTimeZone:
+    Type: String
+    Default: America/Edmonton
+    Description: IANA time zone of the daily backup schedule (also used for backup timestamps).
+  # ------------------------------------------------------------ compute + API
   LambdaRuntime:
     Type: String
     Default: nodejs24.x
     AllowedValues: [nodejs20.x, nodejs22.x, nodejs24.x]
     Description: The code runs on Node 20+. nodejs20.x reached AWS end of support on 2026-04-30, so the default is nodejs24.x.
-  DailyBackupEnabled:
-    Type: String
-    Default: 'true'
-    AllowedValues: ['true', 'false']
+  ApiMemoryMb:
+    Type: Number
+    Default: 256
+    MinValue: 128
+    MaxValue: 3008
+  ApiTimeoutSeconds:
+    Type: Number
+    Default: 29
+    MinValue: 3
+    MaxValue: 30
+    Description: HTTP API integrations time out at 30 s, so higher values do not help.
+  BackupMemoryMb:
+    Type: Number
+    Default: 512
+    MinValue: 128
+    MaxValue: 3008
+  BackupTimeoutSeconds:
+    Type: Number
+    Default: 600
+    MinValue: 60
+    MaxValue: 900
+  ApiThrottleRate:
+    Type: Number
+    Default: 20
+    MinValue: 1
+    Description: Steady-state API requests per second (caps cost if a token leaks).
+  ApiThrottleBurst:
+    Type: Number
+    Default: 50
+    MinValue: 1
+  # ------------------------------------------------------------ retention
+  ApiLogRetentionDays:
+    Type: Number
+    Default: 30
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 3653]
+  BackupLogRetentionDays:
+    Type: Number
+    Default: 90
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 3653]
+  StoreVersionRetentionDays:
+    Type: Number
+    Default: 365
+    MinValue: 1
+    Description: Days old store versions (restore points in S3) are kept after being replaced.
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - { Label: { default: Naming and cost tracking }, Parameters: [AppName, Env, CostCenter] }
+      - { Label: { default: People and alerts }, Parameters: [AlertEmail, AdminEmail, MonthlyBudgetUsd] }
+      - { Label: { default: Sign-in and domain }, Parameters: [CognitoDomainPrefix, WritersGroup, DomainName, CertificateArn, CloudFrontPriceClass] }
+      - { Label: { default: Google Sheets write guard }, Parameters: [GoogleCredentialsParam, BackupFolderId, AllowSheetIds, DenySheetIds] }
+      - { Label: { default: Daily backup }, Parameters: [DailyBackupEnabled, BackupHour, BackupMinute, BackupTimeZone] }
+      - { Label: { default: Compute and API }, Parameters: [LambdaRuntime, ApiMemoryMb, ApiTimeoutSeconds, BackupMemoryMb, BackupTimeoutSeconds, ApiThrottleRate, ApiThrottleBurst] }
+      - { Label: { default: Retention }, Parameters: [ApiLogRetentionDays, BackupLogRetentionDays, StoreVersionRetentionDays] }
 
 Conditions:
   HasAdmin: !Not [!Equals [!Ref AdminEmail, '']]
   BackupOn: !Equals [!Ref DailyBackupEnabled, 'true']
+  HasDomain: !And [!Not [!Equals [!Ref DomainName, '']], !Not [!Equals [!Ref CertificateArn, '']]]
 
 Globals:
   Function:
     Runtime: !Ref LambdaRuntime
     Architectures: [arm64]
-    MemorySize: 256
+    MemorySize: !Ref ApiMemoryMb
     CodeUri: ../../api/
+    Tags:
+      App: !Ref AppName
+      Env: !Ref Env
+      CostCenter: !Ref CostCenter
     Environment:
       Variables:
         DATA_BUCKET: !Ref DataBucket
@@ -79,7 +185,7 @@ Globals:
         ALLOW_SHEET_IDS: !Join [',', !Ref AllowSheetIds]
         DENY_SHEET_IDS: !Join [',', !Ref DenySheetIds]
         WRITERS_GROUP: !Ref WritersGroup
-        BACKUP_TIME_ZONE: America/Edmonton
+        BACKUP_TIME_ZONE: !Ref BackupTimeZone
         NODE_OPTIONS: --enable-source-maps
 
 Resources:
@@ -95,11 +201,12 @@ Resources:
           - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
       PublicAccessBlockConfiguration: { BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true }
       OwnershipControls: { Rules: [{ ObjectOwnership: BucketOwnerEnforced }] }
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
       LifecycleConfiguration:
         Rules:
-          - Id: keep-old-versions-1-year
+          - Id: expire-old-store-versions
             Status: Enabled
-            NoncurrentVersionExpiration: { NoncurrentDays: 365 }
+            NoncurrentVersionExpiration: { NoncurrentDays: !Ref StoreVersionRetentionDays }
             AbortIncompleteMultipartUpload: { DaysAfterInitiation: 1 }
 
   DataBucketPolicy:
@@ -123,6 +230,7 @@ Resources:
           - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
       PublicAccessBlockConfiguration: { BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true }
       OwnershipControls: { Rules: [{ ObjectOwnership: BucketOwnerEnforced }] }
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
 
   SiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -147,7 +255,8 @@ Resources:
   UserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: !Sub '${AppName}-team'
+      UserPoolName: !Sub '${AppName}-${Env}-team'
+      UserPoolTags: { App: !Ref AppName, Env: !Ref Env, CostCenter: !Ref CostCenter }
       UserPoolTier: LITE
       AdminCreateUserConfig: { AllowAdminCreateUserOnly: true }   # internal app: no self sign-up
       UsernameAttributes: [email]
@@ -167,14 +276,14 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       UserPoolId: !Ref UserPool
-      ClientName: !Sub '${AppName}-web'
+      ClientName: !Sub '${AppName}-${Env}-web'
       GenerateSecret: false                      # browser app: authorization code + PKCE
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows: [code]
       AllowedOAuthScopes: [openid, email]
       SupportedIdentityProviders: [COGNITO]
-      CallbackURLs: [!Sub 'https://${Distribution.DomainName}/']
-      LogoutURLs: [!Sub 'https://${Distribution.DomainName}/']
+      CallbackURLs: !If [HasDomain, [!Sub 'https://${DomainName}/', !Sub 'https://${Distribution.DomainName}/'], [!Sub 'https://${Distribution.DomainName}/']]
+      LogoutURLs: !If [HasDomain, [!Sub 'https://${DomainName}/', !Sub 'https://${Distribution.DomainName}/'], [!Sub 'https://${Distribution.DomainName}/']]
       ExplicitAuthFlows: [ALLOW_REFRESH_TOKEN_AUTH, ALLOW_USER_SRP_AUTH]
       PreventUserExistenceErrors: ENABLED
       AccessTokenValidity: 1
@@ -194,25 +303,73 @@ Resources:
         - { Name: email_verified, Value: 'true' }
 
   # ---------------------------------------------------------------- API
+  # Plain ApiGatewayV2 resources (not AWS::Serverless::HttpApi): SAM embeds the JWT authorizer, and with it the user pool
+  # client, in the API definition, which makes API -> client -> CloudFront (callback URL) -> API a dependency cycle.
   HttpApi:
-    Type: AWS::Serverless::HttpApi
+    Type: AWS::ApiGatewayV2::Api
     Properties:
-      DefaultRouteSettings: { ThrottlingBurstLimit: 50, ThrottlingRateLimit: 20 }
-      Auth:
-        DefaultAuthorizer: Cognito
-        Authorizers:
-          Cognito:
-            IdentitySource: $request.header.Authorization
-            JwtConfiguration:
-              issuer: !Sub 'https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}'
-              audience: [!Ref UserPoolClient]
+      Name: !Sub '${AppName}-${Env}-api'
+      ProtocolType: HTTP
+      Tags: { App: !Ref AppName, Env: !Ref Env, CostCenter: !Ref CostCenter }
+
+  HttpApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: $default
+      AutoDeploy: true
+      DefaultRouteSettings: { ThrottlingBurstLimit: !Ref ApiThrottleBurst, ThrottlingRateLimit: !Ref ApiThrottleRate }
+      Tags: { App: !Ref AppName, Env: !Ref Env, CostCenter: !Ref CostCenter }
+
+  CognitoAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties:
+      ApiId: !Ref HttpApi
+      Name: cognito
+      AuthorizerType: JWT
+      IdentitySource: [$request.header.Authorization]
+      JwtConfiguration:
+        Issuer: !Sub 'https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}'
+        Audience: [!Ref UserPoolClient]
+
+  ApiIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt ApiFunction.Arn
+      PayloadFormatVersion: '2.0'
+
+  HealthRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: { ApiId: !Ref HttpApi, RouteKey: GET /api/health, AuthorizationType: NONE, Target: !Sub 'integrations/${ApiIntegration}' }
+  GetStoreRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: { ApiId: !Ref HttpApi, RouteKey: GET /api/store, AuthorizationType: JWT, AuthorizerId: !Ref CognitoAuthorizer, Target: !Sub 'integrations/${ApiIntegration}' }
+  PutStoreRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: { ApiId: !Ref HttpApi, RouteKey: PUT /api/store, AuthorizationType: JWT, AuthorizerId: !Ref CognitoAuthorizer, Target: !Sub 'integrations/${ApiIntegration}' }
+  HistoryRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: { ApiId: !Ref HttpApi, RouteKey: GET /api/store/history, AuthorizationType: JWT, AuthorizerId: !Ref CognitoAuthorizer, Target: !Sub 'integrations/${ApiIntegration}' }
+  McpRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties: { ApiId: !Ref HttpApi, RouteKey: POST /api/mcp, AuthorizationType: JWT, AuthorizerId: !Ref CognitoAuthorizer, Target: !Sub 'integrations/${ApiIntegration}' }
+
+  ApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ApiFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*'
 
   ApiFunction:
     Type: AWS::Serverless::Function
     Properties:
       Description: Calculator API (store load/save with optimistic concurrency, Google Sheets/Drive proxy with write guard)
       Handler: src/handler.handler
-      Timeout: 29
+      Timeout: !Ref ApiTimeoutSeconds
       Policies:
         - Statement:
             - Effect: Allow
@@ -229,24 +386,21 @@ Resources:
               Action: kms:Decrypt
               Resource: '*'
               Condition: { StringEquals: { 'kms:ViaService': !Sub 'ssm.${AWS::Region}.amazonaws.com' } }
-      Events:
-        Health: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/health, Method: GET, Auth: { Authorizer: NONE } } }
-        GetStore: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store, Method: GET } }
-        PutStore: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store, Method: PUT } }
-        History: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store/history, Method: GET } }
-        Mcp: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/mcp, Method: POST } }
 
   ApiFunctionLogs:
     Type: AWS::Logs::LogGroup
-    Properties: { LogGroupName: !Sub '/aws/lambda/${ApiFunction}', RetentionInDays: 30 }
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${ApiFunction}'
+      RetentionInDays: !Ref ApiLogRetentionDays
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
 
   DailyBackupFunction:
     Type: AWS::Serverless::Function
     Properties:
       Description: Daily backup of every budget to its Google Sheet (safe swap), same logic as the app's Back up now
       Handler: src/handler.dailyHandler
-      Timeout: 600
-      MemorySize: 512
+      Timeout: !Ref BackupTimeoutSeconds
+      MemorySize: !Ref BackupMemoryMb
       Policies:
         - Statement:
             - Effect: Allow
@@ -262,11 +416,15 @@ Resources:
 
   DailyBackupLogs:
     Type: AWS::Logs::LogGroup
-    Properties: { LogGroupName: !Sub '/aws/lambda/${DailyBackupFunction}', RetentionInDays: 90 }
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${DailyBackupFunction}'
+      RetentionInDays: !Ref BackupLogRetentionDays
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
 
   SchedulerRole:
     Type: AWS::IAM::Role
     Properties:
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -284,9 +442,10 @@ Resources:
   DailyBackupSchedule:
     Type: AWS::Scheduler::Schedule
     Properties:
-      Description: Daily calculator backup, 22:37 Edmonton time (same as the Claude scheduled task)
-      ScheduleExpression: cron(37 22 * * ? *)
-      ScheduleExpressionTimezone: America/Edmonton
+      Name: !Sub '${AppName}-${Env}-daily-backup'
+      Description: Daily calculator backup (default 22:37 Edmonton time, same as the Claude scheduled task)
+      ScheduleExpression: !Sub 'cron(${BackupMinute} ${BackupHour} * * ? *)'
+      ScheduleExpressionTimezone: !Ref BackupTimeZone
       FlexibleTimeWindow: { Mode: 'OFF' }
       State: !If [BackupOn, ENABLED, DISABLED]
       Target:
@@ -299,7 +458,7 @@ Resources:
     Type: AWS::CloudFront::OriginAccessControl
     Properties:
       OriginAccessControlConfig:
-        Name: !Sub '${AppName}-${AWS::Region}-oac'
+        Name: !Sub '${AppName}-${Env}-${AWS::Region}-oac'
         OriginAccessControlOriginType: s3
         SigningBehavior: always
         SigningProtocol: sigv4
@@ -308,7 +467,7 @@ Resources:
     Type: AWS::CloudFront::CachePolicy
     Properties:
       CachePolicyConfig:
-        Name: !Sub '${AppName}-${AWS::Region}-api-no-cache'
+        Name: !Sub '${AppName}-${Env}-${AWS::Region}-api-no-cache'
         Comment: Forwards Authorization; API responses are Cache-Control no-store, so nothing is cached
         DefaultTTL: 0
         MinTTL: 0
@@ -324,7 +483,7 @@ Resources:
     Type: AWS::CloudFront::ResponseHeadersPolicy
     Properties:
       ResponseHeadersPolicyConfig:
-        Name: !Sub '${AppName}-${AWS::Region}-security'
+        Name: !Sub '${AppName}-${Env}-${AWS::Region}-security'
         SecurityHeadersConfig:
           StrictTransportSecurity: { AccessControlMaxAgeSec: 31536000, IncludeSubdomains: true, Override: true }
           ContentTypeOptions: { Override: true }
@@ -334,10 +493,16 @@ Resources:
   Distribution:
     Type: AWS::CloudFront::Distribution
     Properties:
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
       DistributionConfig:
         Enabled: true
-        Comment: !Sub '${AppName} calculator'
-        PriceClass: PriceClass_100          # cheapest: North America + Europe edges
+        Comment: !Sub '${AppName} ${Env} calculator'
+        PriceClass: !Ref CloudFrontPriceClass   # PriceClass_100 = cheapest (North America + Europe edges)
+        Aliases: !If [HasDomain, [!Ref DomainName], !Ref AWS::NoValue]
+        ViewerCertificate: !If
+          - HasDomain
+          - { AcmCertificateArn: !Ref CertificateArn, SslSupportMethod: sni-only, MinimumProtocolVersion: TLSv1.2_2021 }
+          - !Ref AWS::NoValue
         HttpVersion: http2and3
         DefaultRootObject: index.html
         Origins:
@@ -370,12 +535,13 @@ Resources:
     Type: AWS::SNS::Topic
     Properties:
       Subscription: [{ Protocol: email, Endpoint: !Ref AlertEmail }]
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
 
   CostBudget:
     Type: AWS::Budgets::Budget
     Properties:
       Budget:
-        BudgetName: !Sub '${AppName}-monthly'
+        BudgetName: !Sub '${AppName}-${Env}-monthly'
         BudgetType: COST
         TimeUnit: MONTHLY
         BudgetLimit: { Amount: !Ref MonthlyBudgetUsd, Unit: USD }
@@ -398,6 +564,7 @@ Resources:
       Threshold: 3
       ComparisonOperator: GreaterThanOrEqualToThreshold
       TreatMissingData: notBreaching
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
       AlarmActions: [!Ref AlertTopic]
 
   DailyBackupFailedAlarm:
@@ -413,11 +580,16 @@ Resources:
       Threshold: 1
       ComparisonOperator: GreaterThanOrEqualToThreshold
       TreatMissingData: notBreaching
+      Tags: [{ Key: App, Value: !Ref AppName }, { Key: Env, Value: !Ref Env }, { Key: CostCenter, Value: !Ref CostCenter }]
       AlarmActions: [!Ref AlertTopic]
 
 Outputs:
   AppUrl:
+    Value: !If [HasDomain, !Sub 'https://${DomainName}/', !Sub 'https://${Distribution.DomainName}/']
+  CloudFrontUrl:
     Value: !Sub 'https://${Distribution.DomainName}/'
+  Environment:
+    Value: !Ref Env
   DistributionId:
     Value: !Ref Distribution
   SiteBucketName:
@@ -434,3 +606,5 @@ Outputs:
     Value: !Ref DailyBackupFunction
   ApiFunctionName:
     Value: !Ref ApiFunction
+  AlertTopicArn:
+    Value: !Ref AlertTopic

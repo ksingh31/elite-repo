@@ -48,6 +48,6 @@ and the section doc in `docs/logic/` before changing anything.
 
 ## Map
 `app/artifact/index.html` (the app) · `app/platform/platform.js` + `app/build/build_standalone.mjs` → `app/standalone/` ·
-`api/` (Lambda API, Google proxy + guard, daily backup) · `infra/aws/` (SAM template, deploy/teardown) · `infra/azure/`
-(optional Bicep) · `docs/` (architecture, data model, logic per section, operations, decisions, rebuild runbook) ·
+`api/` (Lambda API, Google proxy + guard, daily backup) · `infra/aws/` (SAM/CloudFormation template, samconfig dev/prod, deploy/ops/teardown) ·
+`docs/` (architecture, data model, logic per section, operations, decisions, rebuild runbook) ·
 `schemas/` · `samples/` · `tests/` · `tools/` · `mockups/` · `stories/`.

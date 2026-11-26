@@ -17,12 +17,13 @@ store differ).
 4. Claude artifact: create a new HTML artifact with `/tmp/live.html` (it uses `window.claude` artifact/downloads/mcp;
    connect Google Sheets + Google Drive connectors; share with the team). Re-create the daily task
    ([daily-backup-task.md](daily-backup-task.md)) with the new artifact slug.
-   **Or** AWS: `STORE_FILE=real-store.json IDS_FILE=config/private.json ... ./infra/aws/deploy.sh` (see README).
+   **Or** AWS: `STORE_FILE=real-store.json IDS_FILE=config/private.json ... make deploy ENV=prod` (see README).
 
 ## Level 2 — redeploy the infrastructure (≈ 15 minutes)
-`infra/aws/deploy.sh` is idempotent: creates/updates the stack, uploads the app built from `app/artifact/index.html`,
-uploads the store only if none exists. Then add users in Cognito and store the Google credentials (docs/config.md).
-Azure alternative: `infra/azure/README.md` (optional, not validated).
+`make plan ENV=prod` previews the CloudFormation change set; `make deploy ENV=prod` (`infra/aws/deploy.sh`) is
+idempotent: creates/updates the stack from `infra/aws/template.yaml` + `infra/aws/samconfig.toml`, uploads the app built
+from `app/artifact/index.html`, uploads the store only if none exists. Then add users in Cognito and store the Google
+credentials (docs/config.md). Parameters / rollback / drift: [operations.md](operations.md#aws-infrastructure).
 
 ## Level 3 — re-implement from the docs (AI agents)
 Use when the HTML itself must be rewritten (another stack, or the file is corrupt). The docs are written as a
@@ -61,6 +62,6 @@ specification; the tests are the acceptance criteria.
 > tests); all must pass. Report what changed and the test counts.
 
 ### Definition of done
-`python3 tests/run_all.py` → ALL PASSED, `cd api && npm test` → pass, `cfn-lint infra/aws/template.yaml` clean,
+`python3 tests/run_all.py` → ALL PASSED, `cd api && npm test` → pass, `make lint` clean (cfn-lint + `sam validate --lint`),
 numbers on every page equal the old app for the same store (load the real store into both and compare the Builder
 report PDFs / backup sheet values).

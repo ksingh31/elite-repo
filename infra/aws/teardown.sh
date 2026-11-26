@@ -2,11 +2,15 @@
 # Removes the stack. The team data bucket is RETAINED by default (DeletionPolicy: Retain) so data can't be lost by accident.
 #   ./infra/aws/teardown.sh                    delete the stack, keep the data bucket (a final store copy is downloaded first)
 #   DELETE_DATA=yes ./infra/aws/teardown.sh    also delete the data bucket and every saved version (irreversible)
+# ENV=dev|prod picks the stack from infra/aws/samconfig.toml (default dev). Asks for the stack name unless YES=1.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
-STACK=${STACK:-elite-calc}
-REGION=${REGION:-ca-central-1}
-export AWS_REGION=$REGION AWS_DEFAULT_REGION=$REGION
+# shellcheck source=infra/aws/env.sh
+source infra/aws/env.sh
+GOOGLE_PARAM=$(param GoogleCredentialsParam)
+if [ "${YES:-}" != 1 ]; then
+  read -r -p "Type the stack name to delete it ($STACK): " a; [ "$a" = "$STACK" ] || { echo "cancelled"; exit 1; }
+fi
 out() { aws cloudformation describe-stacks --stack-name "$STACK" --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text; }
 SITE=$(out SiteBucketName); DATA=$(out DataBucketName)
 mkdir -p backups
@@ -33,4 +37,4 @@ if [ "${DELETE_DATA:-no}" = yes ]; then
 else
   echo "data bucket kept: $DATA"
 fi
-echo "SSM parameter /$STACK/google-credentials is kept; remove with: aws ssm delete-parameter --name /$STACK/google-credentials"
+echo "SSM parameter $GOOGLE_PARAM is kept; remove with: aws ssm delete-parameter --name $GOOGLE_PARAM"

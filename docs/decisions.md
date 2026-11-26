@@ -53,9 +53,26 @@ made-up sample store (same shape, invented names/amounts) and placeholders (`YOU
 `tools/store_tool.py privatize` / `build_standalone.mjs --ids` replace from a gitignored `config/private.json`.
 Test expectations were recalibrated to the sample data (same checks, different numbers).
 
-## D10. Bicep = optional Azure alternative
-Bicep only targets Azure, so AWS is primary and `infra/azure/main.bicep` is a minimal equivalent (Static Web App Free +
-Functions consumption + Storage blob + Key Vault). Not deployed/validated here (no Azure CLI in the build environment).
+## D10. IaC choice: AWS SAM / CloudFormation
+The team runs on AWS only. `infra/aws/template.yaml` is a
+SAM template deployed by CloudFormation, with per-environment values in `infra/aws/samconfig.toml`.
+* **Why**: free (no charge for CloudFormation itself); AWS-native, every service used here is supported on day one;
+  **no state file to host or lock** (AWS keeps the stack state); **change sets** show exactly what will be added,
+  modified or replaced before anything happens (`make plan`); **automatic rollback** when an update fails; **drift
+  detection** for console edits (`make drift`); stack **outputs** feed the deploy script; stack tags propagate to every
+  resource (`App` / `Env` / `CostCenter` for cost tracking). Every tunable is a Parameter with a cheap default, so the
+  template never has to be edited to change a setting.
+* **Terraform / OpenTofu — not chosen**: needs a remote state backend (S3 bucket + DynamoDB lock table, or a paid
+  service) that itself has to be created, secured and backed up outside the code; provider version upgrades to track;
+  no server-side rollback.
+* **AWS CDK — not chosen**: synthesizes to the same CloudFormation, but adds a build step and a programming-language
+  toolchain (node_modules, `cdk bootstrap` stack) for a template of this size; the reviewed artifact is generated, not
+  written.
+* SAM CLI is optional: `deploy.sh` uses only the AWS CLI (`cloudformation package` / change sets); `sam deploy
+  --config-env prod` and `sam validate --lint` work with the same files.
+* The HTTP API is written as plain `AWS::ApiGatewayV2::*` resources rather than `AWS::Serverless::HttpApi`: SAM embeds
+  the JWT authorizer (and so the user pool client) in the API definition, which made API → client → CloudFront
+  (callback URL) → API a circular dependency (cfn-lint E3004).
 
 ## D11. Upgrades in the backup sheet as sub-rows
 Columns A–J keep their meaning (so restore/sync keep working); upgrades are extra rows marked in column J (`up:`, `sub:`)

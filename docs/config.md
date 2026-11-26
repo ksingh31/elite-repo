@@ -10,7 +10,7 @@ in places that are never committed:
 | Retired master sheet id | old combined backup sheet: never written | `config/private.json` → `MASTER_SHEET_ID` (same as above) |
 | Name hints | example names in the To check "Your name" field and note placeholder | `config/private.json` → `NAME_HINT`, `NOTE_HINT` (public copy says "e.g. Alex" / "Checked with Jordan") |
 | Budget backup sheet ids | e.g. the first budget's backup sheet | inside the team store (`budget.sheetId`), never in code |
-| Google credentials | service account key JSON (or OAuth refresh token JSON) | SSM Parameter Store SecureString (`/elite-calc/google-credentials`), uploaded by `deploy.sh` from `GOOGLE_CREDENTIALS_FILE`; local dev: env `GOOGLE_CREDENTIALS_FILE` |
+| Google credentials | service account key JSON (or OAuth refresh token JSON) | SSM Parameter Store SecureString (`/elite-calc/<env>/google-credentials`, parameter `GoogleCredentialsParam`), uploaded by `deploy.sh` from `GOOGLE_CREDENTIALS_FILE`; local dev: env `GOOGLE_CREDENTIALS_FILE` |
 | Team store | real projects, budgets, invoices | S3 data bucket (AWS) / the artifact page (Claude) / Google `Backup data` restore points |
 | Artifact slug | the live Claude artifact | team notes only |
 
@@ -34,7 +34,7 @@ Export), the S3 data bucket, or the app's **Export** (`elitecraft-projects.json`
    folder, or create each budget's sheet by hand in the folder (named `<budget name> – backup`) so the backend only edits
    it. Alternative: store an OAuth refresh token of a team Google account instead
    (`{"type":"authorized_user","client_id","client_secret","refresh_token"}`), then files are owned by that user.
-4. `GOOGLE_CREDENTIALS_FILE=key.json ./infra/aws/deploy.sh` (stored as SecureString; delete the local file after).
+4. `GOOGLE_CREDENTIALS_FILE=key.json make deploy ENV=prod` (stored as SecureString; delete the local file after).
 
 ## Lambda environment (set by the template)
 `DATA_BUCKET, STORE_KEY=store/store.json, SITE_BUCKET, APP_KEY=index.html, GOOGLE_CREDENTIALS_PARAM, BACKUP_FOLDER_ID,
