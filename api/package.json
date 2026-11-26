@@ -1,0 +1,12 @@
+{
+  "name": "elite-calculator-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lambda API + daily backup for the EliteCraft project profit calculator (no runtime dependencies; @aws-sdk v3 comes with the Lambda Node.js runtime)",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "start": "node local-server.mjs"
+  }
+}
