@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ksingh31/elite-repo/schemas/store.schema.json",
+  "title": "EliteCraft calculator store (v4)",
+  "description": "The whole team dataset. Embedded in the artifact as <script id=\"store\" type=\"application/json\">; in the AWS build it is the S3 object store/store.json. Derived from the app code (migrate(), blankVersion(), blank{}, calc(), buildSheets()). Additive changes only: old data must keep loading and calculating the same. See docs/data-model.md.",
+  "type": "object",
+  "required": ["v", "projects"],
+  "properties": {
+    "v": { "const": 4, "description": "Format version. The app ignores device drafts and restore points whose v is not 4." },
+    "savedAt": { "type": ["string", "null"], "description": "ISO time of the last Save for team (set by the app just before publishing). Drafts are only reloaded when their base equals this." },
+    "cur": { "type": "string", "description": "Project id selected when the store was saved (each device also remembers its own view in localStorage ec-view)." },
+    "curBudget": { "type": ["string", "null"], "description": "Budget id selected when saved." },
+    "company": { "$ref": "#/$defs/company", "description": "Company defaults; new projects copy them into project.co. migrate() fills ohMode:'calc', ohFlat:50000 when missing." },
+    "projects": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/project" } },
+    "budgets": { "type": "array", "items": { "$ref": "#/$defs/budget" }, "default": [] },
+    "catalog": {
+      "type": "array",
+      "description": "Item types (Manage item types): budget categories and the item names offered in each. migrate() builds it from the built-in template (7 categories) when missing and adds any category / item name used in a budget.",
+      "items": { "type": "object", "required": ["cat", "items"], "properties": { "cat": { "type": "string" }, "items": { "type": "array", "items": { "type": "string" } } }, "additionalProperties": false }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "money": { "type": "number" },
+    "rate": { "type": "number", "description": "Fraction: 0.05 = 5 %" },
+    "company": {
+      "type": "object",
+      "properties": {
+        "ohMode": { "enum": ["calc", "flat"], "description": "Overhead per project: calc = (salary*(1+raise)+office+misc)/projects; flat = ohFlat" },
+        "ohFlat": { "$ref": "#/$defs/money" },
+        "salary": { "$ref": "#/$defs/money" },
+        "raise": { "$ref": "#/$defs/rate", "description": "Payroll extra on salary" },
+        "office": { "$ref": "#/$defs/money" },
+        "misc": { "$ref": "#/$defs/money" },
+        "projects": { "type": "number", "description": "Projects per year (divides yearly overhead)" },
+        "gstRate": { "$ref": "#/$defs/rate" },
+        "taxRate": { "$ref": "#/$defs/rate", "description": "Yearly property tax rate" },
+        "lawyerUp": { "$ref": "#/$defs/rate", "description": "Share of the lawyer fee paid up front (adds to cash needed)" },
+        "tier": { "$ref": "#/$defs/money", "description": "Realtor first tier (per side)" },
+        "firstRate": { "$ref": "#/$defs/rate" },
+        "restRate": { "$ref": "#/$defs/rate" },
+        "hdFlat": { "$ref": "#/$defs/money", "description": "Honest Door flat fee" }
+      },
+      "additionalProperties": true
+    },
+    "loan": {
+      "type": "object",
+      "description": "Short private loan on top of the main financing. cost = amount*(rate*months/12 + fee)",
+      "properties": {
+        "label": { "type": "string" }, "amount": { "$ref": "#/$defs/money" }, "fee": { "$ref": "#/$defs/rate" },
+        "rate": { "$ref": "#/$defs/rate" }, "months": { "type": "number" }
+      }
+    },
+    "project": {
+      "type": "object",
+      "required": ["id", "name", "sell", "lot", "build", "sched", "use", "lotLoan", "ap", "priv", "extras", "investors"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "sell": { "$ref": "#/$defs/money", "description": "Sell price incl. GST" },
+        "lot": { "$ref": "#/$defs/money" },
+        "build": { "$ref": "#/$defs/money", "description": "Typed build cost (incl. GST when buildGst). Replaced by the linked budget's total when budget.use" },
+        "lawyer": { "$ref": "#/$defs/money" },
+        "buildGst": { "type": "boolean", "description": "Build cost includes GST (default true)" },
+        "sale": { "enum": ["hd", "both"], "description": "hd = Honest Door (flat fee + one side); both = outside realtors, both sides" },
+        "taxWait": { "type": "boolean", "description": "Add property tax on the finished home while it waits to close" },
+        "taxOv": { "type": ["number", "null"], "description": "Property tax typed by hand (null = calculated)" },
+        "ohOv": { "type": ["number", "null"], "description": "Overhead typed by hand (null = company rule)" },
+        "preBuild": { "type": "number", "description": "Months the lot is held before building (range low end)" },
+        "preBuildMax": { "type": ["number", "null"], "description": "Range high end ('to'); null/absent = single value" },
+        "buildMonths": { "type": "number" },
+        "buildMonthsMax": { "type": ["number", "null"] },
+        "close": { "type": "number", "description": "Months to close after built" },
+        "closeMax": { "type": ["number", "null"] },
+        "use": { "enum": ["lot", "ap", "priv", "cp", "cash"], "description": "Selected financing: lot = A Lender, ap = A Lender + Private, priv = Private, cp = Cash + Private, cash = All cash" },
+        "sched": {
+          "type": "object", "description": "A Lender + Private draw schedule",
+          "properties": { "before": { "type": "number", "description": "Draw loan starts this many months before the build is finished" }, "draws": { "type": "array", "items": { "type": "number" }, "description": "Share of the loan per draw (fractions)" } }
+        },
+        "lotLoan": { "type": "object", "properties": { "ltv": { "$ref": "#/$defs/rate" }, "rate": { "$ref": "#/$defs/rate" }, "months": { "type": "number" }, "loans": { "type": "array", "items": { "$ref": "#/$defs/loan" } } } },
+        "ap": { "type": "object", "properties": { "lotMonths": { "type": "number", "description": "Months from lot purchase to the first draw (lot mortgage interest period)" }, "ltv": { "$ref": "#/$defs/rate", "description": "% of lot + build" }, "fee": { "$ref": "#/$defs/rate" }, "rate": { "$ref": "#/$defs/rate" }, "loans": { "type": "array", "items": { "$ref": "#/$defs/loan" } } } },
+        "priv": { "type": "object", "properties": { "ltv": { "$ref": "#/$defs/rate" }, "fee": { "$ref": "#/$defs/rate" }, "rate": { "$ref": "#/$defs/rate" }, "first": { "$ref": "#/$defs/money", "description": "Extra in draw 1 on top of the rest of the lot price (default 200000)" }, "ms": { "type": "array", "items": { "type": "number" }, "description": "Completion points of the later draws (default [0.3,0.6,1])" }, "loans": { "type": "array", "items": { "$ref": "#/$defs/loan" } } } },
+        "cp": {
+          "type": "object", "description": "Cash + Private (added by migrate with defaults when missing)",
+          "properties": {
+            "base": { "enum": ["lb", "build"], "description": "Approval based on lot + build, or build only" },
+            "ltv": { "$ref": "#/$defs/rate" }, "fee": { "$ref": "#/$defs/rate", "description": "On the approved amount" }, "rate": { "$ref": "#/$defs/rate", "description": "On drawn amounts only" },
+            "mode": { "enum": ["pct", "amt"], "description": "Draws as % of the approval or fixed $ amounts" },
+            "draws": { "type": "array", "items": { "type": "object", "properties": { "at": { "type": "number", "description": "Months after build starts" }, "v": { "type": "number", "description": "Fraction (pct) or $ (amt)" } } } },
+            "loans": { "type": "array", "items": { "$ref": "#/$defs/loan" } }
+          }
+        },
+        "extras": { "type": "array", "items": { "type": "object", "properties": { "label": { "type": "string" }, "amount": { "$ref": "#/$defs/money" }, "up": { "$ref": "#/$defs/rate", "description": "Share paid up front" } } } },
+        "investors": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "amount": { "$ref": "#/$defs/money" } } } },
+        "co": { "$ref": "#/$defs/company", "description": "This project's own rates / overhead (copied from company)" },
+        "budget": {
+          "type": "object", "description": "Link to a budget as the build cost source",
+          "properties": {
+            "use": { "type": "boolean" }, "id": { "type": ["string", "null"] },
+            "ver": { "type": "string", "description": "'latest' or a version id (pinned)" },
+            "src": { "enum": ["proj", "budget", "inv", "manual"], "description": "Projected (default for new links) / Budget estimate / Invoiced so far / Entered by hand; absent = budget" },
+            "manual": { "type": ["number", "string", "null"] },
+            "cont": { "type": ["number", "null"], "description": "Contingency fraction on budget not yet invoiced (Projected only)" }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "budget": {
+      "type": "object",
+      "required": ["id", "name", "versions"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "sheetId": { "type": "string", "description": "Its own Google backup sheet (found or created by the first backup, then remembered)" },
+        "versions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/version" }, "description": "Oldest first; the last one is current/editable, older ones are locked" },
+        "toCheck": {
+          "type": "object", "description": "To check resolutions that changed the budget, by sheet row key ('r<row>'), so Reopen can reverse them",
+          "additionalProperties": { "type": "object", "properties": { "vendor": { "type": "string" }, "label": { "type": "string" }, "ops": { "type": "array" }, "by": { "type": "string" }, "at": { "type": "string" }, "py": { "type": "string" } } }
+        }
+      }
+    },
+    "version": {
+      "type": "object",
+      "required": ["id", "label", "items"],
+      "properties": {
+        "id": { "type": "string" }, "label": { "type": "string" }, "date": { "type": "string" }, "note": { "type": "string" },
+        "above": { "type": "number", "description": "Above-grade sq ft" },
+        "base": { "type": "number", "description": "Basement sq ft" },
+        "rate": { "type": "number", "description": "Basement $ per sq ft (default 120)" },
+        "cats": { "type": "array", "items": { "type": "string" }, "description": "Category order" },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "cat", "name"],
+      "properties": {
+        "id": { "type": "string" }, "cat": { "type": "string" }, "name": { "type": "string" },
+        "amt": { "$ref": "#/$defs/money", "description": "Base budget" },
+        "act": { "$ref": "#/$defs/money", "description": "Invoiced. When the line has invoices it is always round2(sum of invoice amounts); otherwise typed" },
+        "note": { "type": "string" },
+        "done": { "type": "boolean", "description": "Finished: Projected uses the invoiced amount instead of max(line total, invoiced)" },
+        "invs": { "type": "array", "items": { "$ref": "#/$defs/invoice" } },
+        "pays": { "type": "array", "items": { "$ref": "#/$defs/payment" } },
+        "ups": { "type": "array", "items": { "$ref": "#/$defs/upgrade" }, "description": "Optional; removed (not left empty) when the last upgrade is deleted" }
+      }
+    },
+    "invoice": {
+      "type": "object",
+      "required": ["id", "amt"],
+      "properties": {
+        "id": { "type": "string" }, "vendor": { "type": "string" }, "no": { "type": "string" }, "date": { "type": "string" },
+        "kind": { "enum": ["Trade", "Material", "Service", "Other"] },
+        "amt": { "$ref": "#/$defs/money", "description": "Negative for refunds / credits" },
+        "note": { "type": "string" },
+        "est": { "type": "boolean", "description": "Placeholder kept as an estimate (To check)" }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "required": ["id", "amt"],
+      "properties": {
+        "id": { "type": "string" }, "date": { "type": "string" },
+        "method": { "enum": ["Cheque", "E-transfer", "Visa", "Mastercard", "Amex", "Debit", "Cash", "Refund / credit", "Other", "Not recorded"] },
+        "amt": { "$ref": "#/$defs/money" }, "ref": { "type": "string" },
+        "inv": { "type": ["string", "null"], "description": "Invoice id it pays (null = not tied to an invoice)" },
+        "deposit": { "type": "boolean", "description": "Recorded as a deposit / prepayment (To check)" }
+      }
+    },
+    "upgrade": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" }, "name": { "type": "string" },
+        "amt": { "$ref": "#/$defs/money", "description": "Extra price" },
+        "yes": { "type": "boolean", "description": "Yes adds amt to the line total; No keeps it as a record ($0)" },
+        "by": { "enum": ["Buyer", "Builder", ""] },
+        "status": { "enum": ["Quoted", "Approved", "Declined", ""] },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

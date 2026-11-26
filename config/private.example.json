@@ -1,0 +1,8 @@
+{
+  "BACKUP_FOLDER_ID": "your-google-drive-backup-folder-id",
+  "INVOICE_SHEET_ID": "your-invoice-sheet-id-read-only",
+  "MASTER_SHEET_ID": "your-retired-master-sheet-id",
+  "EXTRA_DENY_SHEET_IDS": [],
+  "NAME_HINT": "Alex",
+  "NOTE_HINT": "Jordan"
+}

@@ -1,0 +1,7330 @@
+{
+ "v": 4,
+ "savedAt": "2026-11-26T06:30:00.000Z",
+ "cur": "maple",
+ "company": {
+  "ohMode": "flat",
+  "ohFlat": 45000,
+  "salary": 70000,
+  "raise": 0.035,
+  "office": 10000,
+  "misc": 6000,
+  "projects": 1.5,
+  "gstRate": 0.05,
+  "taxRate": 0.0068,
+  "lawyerUp": 0.5,
+  "tier": 100000,
+  "firstRate": 0.035,
+  "restRate": 0.015,
+  "hdFlat": 750
+ },
+ "projects": [
+  {
+   "id": "birch",
+   "name": "Birch Lane 1201",
+   "sell": 2555000,
+   "lot": 825000,
+   "build": 1110000,
+   "close": 2,
+   "lawyer": 3500,
+   "buildGst": true,
+   "sale": "hd",
+   "taxWait": false,
+   "taxOv": null,
+   "buildMonths": 10,
+   "sched": {
+    "before": 4,
+    "draws": [
+     0.3333,
+     0.3333,
+     0.3334
+    ]
+   },
+   "use": "ap",
+   "lotLoan": {
+    "ltv": 0.8,
+    "rate": 0.04,
+    "months": 18,
+    "loans": []
+   },
+   "ap": {
+    "lotMonths": 6,
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": [
+     {
+      "label": "Private loan (Lender B)",
+      "amount": 205000,
+      "rate": 0.1,
+      "months": 6
+     }
+    ]
+   },
+   "priv": {
+    "ltv": 0.65,
+    "fee": 0.04,
+    "rate": 0.0902,
+    "loans": [],
+    "first": 200000,
+    "ms": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "extras": [],
+   "investors": [],
+   "ohOv": null,
+   "co": {
+    "ohMode": "flat",
+    "ohFlat": 45000,
+    "salary": 70000,
+    "raise": 0.035,
+    "office": 10000,
+    "misc": 6000,
+    "projects": 1.5,
+    "gstRate": 0.05,
+    "taxRate": 0.0068,
+    "lawyerUp": 0.5,
+    "tier": 100000,
+    "firstRate": 0.035,
+    "restRate": 0.015,
+    "hdFlat": 750
+   },
+   "budget": {
+    "use": false,
+    "id": null,
+    "ver": "latest"
+   }
+  },
+  {
+   "id": "maple",
+   "name": "Maple Grove - North",
+   "sell": 2480000,
+   "lot": 845000,
+   "build": 955000,
+   "close": 3,
+   "lawyer": 3500,
+   "buildGst": true,
+   "sale": "both",
+   "taxWait": true,
+   "taxOv": null,
+   "buildMonths": 8,
+   "sched": {
+    "before": 4,
+    "draws": [
+     0.3333,
+     0.3333,
+     0.3334
+    ]
+   },
+   "use": "cash",
+   "lotLoan": {
+    "ltv": 0.8,
+    "rate": 0.04,
+    "months": 18,
+    "loans": []
+   },
+   "ap": {
+    "lotMonths": 6,
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": []
+   },
+   "priv": {
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": [],
+    "first": 200000,
+    "ms": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "extras": [],
+   "investors": [
+    {
+     "name": "Investor A",
+     "amount": 95000
+    },
+    {
+     "name": "Investor B",
+     "amount": 190000
+    }
+   ],
+   "ohOv": null,
+   "co": {
+    "ohMode": "flat",
+    "ohFlat": 55000,
+    "salary": 70000,
+    "raise": 0.035,
+    "office": 10000,
+    "misc": 6000,
+    "projects": 1.5,
+    "gstRate": 0.05,
+    "taxRate": 0.0068,
+    "lawyerUp": 0.5,
+    "tier": 100000,
+    "firstRate": 0.035,
+    "restRate": 0.015,
+    "hdFlat": 750
+   },
+   "budget": {
+    "use": false,
+    "id": "b-demo",
+    "ver": "latest"
+   },
+   "preBuild": 4,
+   "preBuildMax": 5,
+   "buildMonthsMax": 9,
+   "closeMax": null
+  },
+  {
+   "id": "cedar",
+   "name": "Cedar Court",
+   "sell": 3325000,
+   "lot": 910000,
+   "build": 1635000,
+   "close": 6,
+   "lawyer": 3500,
+   "buildGst": true,
+   "sale": "both",
+   "taxWait": true,
+   "taxOv": null,
+   "buildMonths": 10,
+   "sched": {
+    "before": 4,
+    "draws": [
+     0.3333,
+     0.3333,
+     0.3334
+    ]
+   },
+   "use": "cash",
+   "lotLoan": {
+    "ltv": 0.8,
+    "rate": 0.04,
+    "months": 24,
+    "loans": []
+   },
+   "ap": {
+    "lotMonths": 6,
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": []
+   },
+   "priv": {
+    "ltv": 0.65,
+    "fee": 0.04,
+    "rate": 0.0902,
+    "loans": [],
+    "first": 200000,
+    "ms": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "extras": [],
+   "investors": [],
+   "ohOv": null,
+   "co": {
+    "ohMode": "flat",
+    "ohFlat": 55000,
+    "salary": 70000,
+    "raise": 0.035,
+    "office": 10000,
+    "misc": 6000,
+    "projects": 1.5,
+    "gstRate": 0.05,
+    "taxRate": 0.0068,
+    "lawyerUp": 0.5,
+    "tier": 100000,
+    "firstRate": 0.035,
+    "restRate": 0.015,
+    "hdFlat": 750
+   },
+   "budget": {
+    "use": false,
+    "id": null,
+    "ver": "latest"
+   },
+   "preBuild": 24
+  },
+  {
+   "id": "p1795639960151",
+   "name": "New project",
+   "sell": 0,
+   "lot": 0,
+   "build": 0,
+   "close": 0,
+   "lawyer": 0,
+   "buildGst": true,
+   "sale": "hd",
+   "taxWait": false,
+   "taxOv": null,
+   "buildMonths": 10,
+   "sched": {
+    "before": 4,
+    "draws": [
+     0.3333,
+     0.3333,
+     0.3334
+    ]
+   },
+   "use": "lot",
+   "lotLoan": {
+    "ltv": 0.8,
+    "rate": 0.04,
+    "months": 18,
+    "loans": []
+   },
+   "ap": {
+    "lotMonths": 6,
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": []
+   },
+   "priv": {
+    "ltv": 0.65,
+    "fee": 0.04,
+    "rate": 0.0902,
+    "loans": [],
+    "first": 200000,
+    "ms": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "extras": [],
+   "investors": [],
+   "ohOv": null,
+   "co": {
+    "ohMode": "flat",
+    "ohFlat": 45000,
+    "salary": 70000,
+    "raise": 0.035,
+    "office": 10000,
+    "misc": 6000,
+    "projects": 1.5,
+    "gstRate": 0.05,
+    "taxRate": 0.0068,
+    "lawyerUp": 0.5,
+    "tier": 100000,
+    "firstRate": 0.035,
+    "restRate": 0.015,
+    "hdFlat": 750
+   },
+   "budget": {
+    "use": false,
+    "id": null,
+    "ver": "latest"
+   }
+  },
+  {
+   "id": "p1795641367331",
+   "name": "Maple Grove - South",
+   "sell": 2810000,
+   "lot": 955000,
+   "build": 1135000,
+   "close": 3,
+   "lawyer": 3500,
+   "buildGst": true,
+   "sale": "both",
+   "taxWait": true,
+   "taxOv": null,
+   "buildMonths": 16,
+   "sched": {
+    "before": 4,
+    "draws": [
+     0.3333,
+     0.3333,
+     0.3334
+    ]
+   },
+   "use": "priv",
+   "lotLoan": {
+    "ltv": 0.8,
+    "rate": 0.04,
+    "months": 18,
+    "loans": []
+   },
+   "ap": {
+    "lotMonths": 6,
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": []
+   },
+   "priv": {
+    "ltv": 0.65,
+    "fee": 0.03,
+    "rate": 0.0702,
+    "loans": [],
+    "first": 200000,
+    "ms": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "extras": [],
+   "investors": [
+    {
+     "name": "Investor A",
+     "amount": 110000
+    },
+    {
+     "name": "Investor B",
+     "amount": 325000
+    }
+   ],
+   "ohOv": null,
+   "co": {
+    "ohMode": "flat",
+    "ohFlat": 45000,
+    "salary": 70000,
+    "raise": 0.035,
+    "office": 10000,
+    "misc": 6000,
+    "projects": 1.5,
+    "gstRate": 0.05,
+    "taxRate": 0.0068,
+    "lawyerUp": 0.5,
+    "tier": 100000,
+    "firstRate": 0.035,
+    "restRate": 0.015,
+    "hdFlat": 750
+   },
+   "budget": {
+    "use": false,
+    "id": null,
+    "ver": "latest"
+   }
+  }
+ ],
+ "budgets": [
+  {
+   "id": "b-demo",
+   "name": "Maple Grove - North budget",
+   "versions": [
+    {
+     "id": "demo-v1",
+     "label": "v1",
+     "date": "2026-03-16",
+     "note": "Sample data: made-up budget for the public repo (same shape as a real budget, all names and amounts invented).",
+     "above": 3100,
+     "base": 1400,
+     "rate": 120,
+     "cats": [
+      "Soft costs",
+      "Site and foundation",
+      "Structure and envelope",
+      "Mechanical and electrical",
+      "Interior finishes",
+      "Exterior and garage",
+      "Site operations"
+     ],
+     "items": [
+      {
+       "id": "i01",
+       "cat": "Soft costs",
+       "name": "New home warranty",
+       "amt": 100.0,
+       "act": 90.32,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0592",
+         "date": "2026-02-17",
+         "method": "Not recorded",
+         "amt": 90.32,
+         "ref": "",
+         "inv": "v0591"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0591",
+         "vendor": "Bluebird Landscaping Inc.",
+         "no": "493131301",
+         "date": "2026-02-17",
+         "kind": "Service",
+         "amt": 90.32,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i02",
+       "cat": "Soft costs",
+       "name": "Construction insurance",
+       "amt": 4350.0,
+       "act": 4566.99,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0214",
+         "date": "2026-06-02",
+         "method": "Not recorded",
+         "amt": 4374.29,
+         "ref": "Touch-ups",
+         "inv": "v0213"
+        },
+        {
+         "id": "p0216",
+         "date": "2026-11-06",
+         "method": "Visa",
+         "amt": 192.7,
+         "ref": "Visa",
+         "inv": "v0215"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0213",
+         "vendor": "Pinecrest Insurance Ltd",
+         "no": "S03-653319-7857969718",
+         "date": "2026-06-02",
+         "kind": "Service",
+         "amt": 4374.29,
+         "note": "Touch-ups"
+        },
+        {
+         "id": "v0215",
+         "vendor": "Pinecrest Insurance Ltd",
+         "no": "S78-440089-5943024451",
+         "date": "2026-11-06",
+         "kind": "Service",
+         "amt": 192.7,
+         "note": "Visa"
+        }
+       ]
+      },
+      {
+       "id": "i03",
+       "cat": "Soft costs",
+       "name": "Permit fees",
+       "amt": 11000.0,
+       "act": 10819.48,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0603",
+         "date": "2026-05-20",
+         "method": "Not recorded",
+         "amt": 970.18,
+         "ref": "Deposit 75",
+         "inv": "v0602"
+        },
+        {
+         "id": "p0605",
+         "date": "2026-03-06",
+         "method": "Not recorded",
+         "amt": 7879.72,
+         "ref": "",
+         "inv": "v0604"
+        },
+        {
+         "id": "p0607",
+         "date": "2026-03-20",
+         "method": "Not recorded",
+         "amt": 686.88,
+         "ref": "",
+         "inv": "v0606"
+        },
+        {
+         "id": "p0609",
+         "date": "2026-05-11",
+         "method": "Visa",
+         "amt": 576.88,
+         "ref": "Framing materials",
+         "inv": "v0608"
+        },
+        {
+         "id": "p0611",
+         "date": "2026-06-02",
+         "method": "Not recorded",
+         "amt": 705.82,
+         "ref": "Touch-ups 75",
+         "inv": "v0610"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0602",
+         "vendor": "Yarrow Excavating Co.",
+         "no": "615018590524380860",
+         "date": "2026-05-20",
+         "kind": "Service",
+         "amt": 970.18,
+         "note": "Deposit 75"
+        },
+        {
+         "id": "v0604",
+         "vendor": "Prairie Hardware Group",
+         "no": "5944720",
+         "date": "2026-03-06",
+         "kind": "Service",
+         "amt": 7879.72,
+         "note": ""
+        },
+        {
+         "id": "v0606",
+         "vendor": "Prairie Hardware Group",
+         "no": "MX6592-6860",
+         "date": "2026-03-20",
+         "kind": "Service",
+         "amt": 686.88,
+         "note": ""
+        },
+        {
+         "id": "v0608",
+         "vendor": "Prairie Hardware Group",
+         "no": "9294226",
+         "date": "2026-05-11",
+         "kind": "Service",
+         "amt": 576.88,
+         "note": "Framing materials"
+        },
+        {
+         "id": "v0610",
+         "vendor": "Foothills Landscaping Co.",
+         "no": "7468",
+         "date": "2026-06-02",
+         "kind": "Service",
+         "amt": 705.82,
+         "note": "Touch-ups 75"
+        }
+       ]
+      },
+      {
+       "id": "i04",
+       "cat": "Soft costs",
+       "name": "Architecture and rendering",
+       "amt": 6650.0,
+       "act": 6214.39,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0161",
+         "date": "2026-03-06",
+         "method": "Cheque",
+         "amt": 3203.42,
+         "ref": "CHQ-184",
+         "inv": "v0160"
+        },
+        {
+         "id": "p0163",
+         "date": "2026-03-12",
+         "method": "Cheque",
+         "amt": 850.91,
+         "ref": "CHQ-185",
+         "inv": "v0162"
+        },
+        {
+         "id": "p0165",
+         "date": "2026-03-20",
+         "method": "Cheque",
+         "amt": 833.4,
+         "ref": "CHQ-186",
+         "inv": "v0164"
+        },
+        {
+         "id": "p0167",
+         "date": "2026-08-10",
+         "method": "Cheque",
+         "amt": 1326.66,
+         "ref": "Second visit 59",
+         "inv": "v0166"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0160",
+         "vendor": "Riverbend Builders Inc.",
+         "no": "8268",
+         "date": "2026-03-06",
+         "kind": "Service",
+         "amt": 3203.42,
+         "note": "CHQ-184"
+        },
+        {
+         "id": "v0162",
+         "vendor": "Riverbend Builders Inc.",
+         "no": "7318",
+         "date": "2026-03-12",
+         "kind": "Service",
+         "amt": 850.91,
+         "note": "CHQ-185"
+        },
+        {
+         "id": "v0164",
+         "vendor": "Riverbend Builders Inc.",
+         "no": "9761",
+         "date": "2026-03-20",
+         "kind": "Service",
+         "amt": 833.4,
+         "note": "CHQ-186"
+        },
+        {
+         "id": "v0166",
+         "vendor": "Riverbend Builders Inc.",
+         "no": "1589",
+         "date": "2026-08-10",
+         "kind": "Service",
+         "amt": 1326.66,
+         "note": "Second visit 59"
+        }
+       ]
+      },
+      {
+       "id": "i05",
+       "cat": "Soft costs",
+       "name": "Interior design",
+       "amt": 11750.0,
+       "act": 11660.51,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0266",
+         "date": "2026-05-05",
+         "method": "Cheque",
+         "amt": 11660.51,
+         "ref": "CHQ-0260",
+         "inv": "v0265"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0265",
+         "vendor": "Timberline Framing Co.",
+         "no": "11",
+         "date": "2026-05-05",
+         "kind": "Service",
+         "amt": 11660.51,
+         "note": "CHQ-0260"
+        }
+       ]
+      },
+      {
+       "id": "i06",
+       "cat": "Soft costs",
+       "name": "Survey Arc",
+       "amt": 1900.0,
+       "act": 1041.74,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0687",
+         "date": "2026-04-20",
+         "method": "Visa",
+         "amt": 459.59,
+         "ref": "Touch-ups 2",
+         "inv": "v0686"
+        },
+        {
+         "id": "p0689",
+         "date": "2026-05-12",
+         "method": "Visa",
+         "amt": 306.39,
+         "ref": "Progress payment",
+         "inv": "v0688"
+        },
+        {
+         "id": "p0691",
+         "date": "2026-07-05",
+         "method": "E-transfer",
+         "amt": 137.88,
+         "ref": "Warranty item",
+         "inv": "v0690"
+        },
+        {
+         "id": "p0693",
+         "date": "2026-07-07",
+         "method": "E-transfer",
+         "amt": 137.88,
+         "ref": "Touch-ups",
+         "inv": "v0692"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0686",
+         "vendor": "Larkspur Interiors Ltd",
+         "no": "28236",
+         "date": "2026-04-20",
+         "kind": "Service",
+         "amt": 459.59,
+         "note": "Touch-ups 2"
+        },
+        {
+         "id": "v0688",
+         "vendor": "Larkspur Interiors Ltd",
+         "no": "86162",
+         "date": "2026-05-12",
+         "kind": "Service",
+         "amt": 306.39,
+         "note": "Progress payment"
+        },
+        {
+         "id": "v0690",
+         "vendor": "Larkspur Interiors Ltd",
+         "no": "94256",
+         "date": "2026-07-05",
+         "kind": "Service",
+         "amt": 137.88,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0692",
+         "vendor": "Larkspur Interiors Ltd",
+         "no": "13617",
+         "date": "2026-07-07",
+         "kind": "Service",
+         "amt": 137.88,
+         "note": "Touch-ups"
+        }
+       ]
+      },
+      {
+       "id": "i07",
+       "cat": "Soft costs",
+       "name": "P2P permit",
+       "amt": 8750.0,
+       "act": 8627.61,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0595",
+         "date": "2026-09-03",
+         "method": "Visa",
+         "amt": 2446.63,
+         "ref": "Framing materials",
+         "inv": "v0594"
+        },
+        {
+         "id": "p0597",
+         "date": "2026-09-03",
+         "method": "Visa",
+         "amt": 6180.98,
+         "ref": "Framing materials",
+         "inv": "v0596"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0594",
+         "vendor": "Prairie Hardware Group",
+         "no": "125077079510-411",
+         "date": "2026-09-03",
+         "kind": "Service",
+         "amt": 2446.63,
+         "note": "Framing materials"
+        },
+        {
+         "id": "v0596",
+         "vendor": "Prairie Hardware Group",
+         "no": "993181272271-134",
+         "date": "2026-09-03",
+         "kind": "Service",
+         "amt": 6180.98,
+         "note": "Framing materials"
+        }
+       ]
+      },
+      {
+       "id": "i08",
+       "cat": "Soft costs",
+       "name": "Engineering",
+       "amt": 0,
+       "act": 0.0,
+       "note": "",
+       "pays": [],
+       "invs": []
+      },
+      {
+       "id": "i54",
+       "cat": "Soft costs",
+       "name": "Marketing (photo and video)",
+       "amt": 0,
+       "act": 7259.76,
+       "note": "Change order 18",
+       "pays": [
+        {
+         "id": "p0017",
+         "date": "2026-07-19",
+         "method": "Not recorded",
+         "amt": 502.53,
+         "ref": "Second visit 86",
+         "inv": "v0016"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0016",
+         "vendor": "Willow Concrete Group",
+         "no": "3539",
+         "date": "2026-07-19",
+         "kind": "Service",
+         "amt": 502.53,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0026",
+         "vendor": "Willow Concrete Group",
+         "no": "",
+         "date": "",
+         "kind": "Service",
+         "amt": 1794.75,
+         "note": "Deposit"
+        },
+        {
+         "id": "v0027",
+         "vendor": "Cobalt Lighting Group",
+         "no": "",
+         "date": "2026-09-23",
+         "kind": "Service",
+         "amt": 4962.48,
+         "note": "Deposit"
+        }
+       ]
+      },
+      {
+       "id": "i55",
+       "cat": "Soft costs",
+       "name": "Engineering review",
+       "amt": 0,
+       "act": 671.69,
+       "note": "Deposit",
+       "pays": [
+        {
+         "id": "p0023",
+         "date": "2026-09-12",
+         "method": "E-transfer",
+         "amt": 529.21,
+         "ref": "Etransfer",
+         "inv": "v0022"
+        },
+        {
+         "id": "p0025",
+         "date": "2026-10-13",
+         "method": "Visa",
+         "amt": 142.48,
+         "ref": "VISa",
+         "inv": "v0024"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0022",
+         "vendor": "Aspen Cabinets",
+         "no": "54425737",
+         "date": "2026-09-12",
+         "kind": "Service",
+         "amt": 529.21,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0024",
+         "vendor": "Aspen Cabinets",
+         "no": "25323007",
+         "date": "2026-10-13",
+         "kind": "Service",
+         "amt": 142.48,
+         "note": "Delivery"
+        }
+       ]
+      },
+      {
+       "id": "i09",
+       "cat": "Site and foundation",
+       "name": "Demolition + Excavation",
+       "amt": 32100.0,
+       "act": 32631.38,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0220",
+         "date": "2026-05-11",
+         "method": "Cheque",
+         "amt": 32631.38,
+         "ref": "Touch-ups 79",
+         "inv": "v0219"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0219",
+         "vendor": "Juniper Concrete Ltd",
+         "no": "6613",
+         "date": "2026-05-11",
+         "kind": "Trade",
+         "amt": 32631.38,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i10",
+       "cat": "Site and foundation",
+       "name": "Foundation",
+       "amt": 38400.0,
+       "act": 38409.35,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0240",
+         "date": "2026-05-19",
+         "method": "Cheque",
+         "amt": 38409.35,
+         "ref": "CHQ-0230",
+         "inv": "v0239"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0239",
+         "vendor": "Maple Leaf Hardware Co.",
+         "no": "635",
+         "date": "2026-05-19",
+         "kind": "Trade",
+         "amt": 38409.35,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i11",
+       "cat": "Site and foundation",
+       "name": "Weeping Tile + Basement + garage slab + delta wrap",
+       "amt": 33450.0,
+       "act": 33451.41,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0711",
+         "date": "2026-05-19",
+         "method": "Visa",
+         "amt": 5277.14,
+         "ref": "Visa",
+         "inv": "v0710"
+        },
+        {
+         "id": "p0713",
+         "date": "2026-06-30",
+         "method": "Visa",
+         "amt": 20511.79,
+         "ref": "Visa",
+         "inv": "v0712"
+        },
+        {
+         "id": "p0715",
+         "date": "2026-08-04",
+         "method": "Visa",
+         "amt": 7662.48,
+         "ref": "Visa",
+         "inv": "v0714"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0710",
+         "vendor": "Clearwater Trucking Group",
+         "no": "793",
+         "date": "2026-05-19",
+         "kind": "Trade",
+         "amt": 5277.14,
+         "note": "Warranty item 35"
+        },
+        {
+         "id": "v0712",
+         "vendor": "Clearwater Trucking Group",
+         "no": "1339",
+         "date": "2026-06-30",
+         "kind": "Trade",
+         "amt": 20511.79,
+         "note": "Site visit"
+        },
+        {
+         "id": "v0714",
+         "vendor": "Clearwater Trucking Group",
+         "no": "4032",
+         "date": "2026-08-04",
+         "kind": "Trade",
+         "amt": 7662.48,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i12",
+       "cat": "Site and foundation",
+       "name": "Services",
+       "amt": 26450.0,
+       "act": 26471.8,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0649",
+         "date": "2026-09-11",
+         "method": "Cheque",
+         "amt": 26471.8,
+         "ref": "CHQ-0256",
+         "inv": "v0648"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0648",
+         "vendor": "Evergreen Drywall Inc.",
+         "no": "18-296",
+         "date": "2026-09-11",
+         "kind": "Trade",
+         "amt": 26471.8,
+         "note": "Site visit 79"
+        }
+       ]
+      },
+      {
+       "id": "i13",
+       "cat": "Structure and envelope",
+       "name": "Lumber + truss package",
+       "amt": 55850.0,
+       "act": 56083.07,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0372",
+         "date": "2026-07-24",
+         "method": "Not recorded",
+         "amt": 414.29,
+         "ref": "Site visit",
+         "inv": "v0371"
+        },
+        {
+         "id": "p0374",
+         "date": "2026-07-24",
+         "method": "Not recorded",
+         "amt": 167.94,
+         "ref": "Site visit",
+         "inv": "v0373"
+        },
+        {
+         "id": "p0376",
+         "date": "2026-08-04",
+         "method": "Not recorded",
+         "amt": 689.62,
+         "ref": "",
+         "inv": "v0375"
+        },
+        {
+         "id": "p0378",
+         "date": "2026-08-06",
+         "method": "Not recorded",
+         "amt": 195.18,
+         "ref": "Change order",
+         "inv": "v0377"
+        },
+        {
+         "id": "p0380",
+         "date": "2026-08-05",
+         "method": "Not recorded",
+         "amt": 22.44,
+         "ref": "Framing materials",
+         "inv": "v0379"
+        },
+        {
+         "id": "p0382",
+         "date": "2026-08-19",
+         "method": "Not recorded",
+         "amt": 188.98,
+         "ref": "Extra order",
+         "inv": "v0381"
+        },
+        {
+         "id": "p0384",
+         "date": "2026-08-21",
+         "method": "Not recorded",
+         "amt": 26.85,
+         "ref": "Touch-ups 3",
+         "inv": "v0383"
+        },
+        {
+         "id": "p0386",
+         "date": "2026-08-22",
+         "method": "Not recorded",
+         "amt": 129.47,
+         "ref": "Final install",
+         "inv": "v0385"
+        },
+        {
+         "id": "p0388",
+         "date": "2026-08-24",
+         "method": "Not recorded",
+         "amt": 208.03,
+         "ref": "Touch-ups",
+         "inv": "v0387"
+        },
+        {
+         "id": "p0389",
+         "date": "2026-08-31",
+         "method": "Not recorded",
+         "amt": 9308.0,
+         "ref": "Meridian Tile Ltd.",
+         "inv": null
+        },
+        {
+         "id": "p0390",
+         "date": "2026-08-28",
+         "method": "Not recorded",
+         "amt": 27924.0,
+         "ref": "Meridian Tile Ltd.",
+         "inv": null
+        },
+        {
+         "id": "p0392",
+         "date": "2026-10-22",
+         "method": "Not recorded",
+         "amt": 7896.17,
+         "ref": "Samples",
+         "inv": null
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0361",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "9395-020748",
+         "date": "2026-05-11",
+         "kind": "Material",
+         "amt": 65.84,
+         "note": ""
+        },
+        {
+         "id": "v0362",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "6406-206495",
+         "date": "2026-05-28",
+         "kind": "Material",
+         "amt": 3098.64,
+         "note": ""
+        },
+        {
+         "id": "v0363",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "NZQ77-W264167",
+         "date": "2026-06-03",
+         "kind": "Material",
+         "amt": 4858.92,
+         "note": ""
+        },
+        {
+         "id": "v0364",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "QOZ66-H346674",
+         "date": "2026-06-03",
+         "kind": "Material",
+         "amt": 2092.34,
+         "note": ""
+        },
+        {
+         "id": "v0365",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "NBU10-P359450",
+         "date": "2026-06-03",
+         "kind": "Material",
+         "amt": 1911.56,
+         "note": ""
+        },
+        {
+         "id": "v0366",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "DSC14-Y991033",
+         "date": "2026-06-03",
+         "kind": "Material",
+         "amt": 37.18,
+         "note": ""
+        },
+        {
+         "id": "v0367",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "BQD23-K774807",
+         "date": "2026-06-06",
+         "kind": "Material",
+         "amt": 5003.62,
+         "note": ""
+        },
+        {
+         "id": "v0368",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "YJQ95-H580203",
+         "date": "2026-06-06",
+         "kind": "Material",
+         "amt": 6531.24,
+         "note": ""
+        },
+        {
+         "id": "v0369",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "ZKL76-P474221",
+         "date": "2026-06-30",
+         "kind": "Material",
+         "amt": 2479.75,
+         "note": ""
+        },
+        {
+         "id": "v0370",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "5559-416314",
+         "date": "2026-07-23",
+         "kind": "Material",
+         "amt": 37.18,
+         "note": ""
+        },
+        {
+         "id": "v0371",
+         "vendor": "Redstone Surveys Group",
+         "no": "181-97939044",
+         "date": "2026-07-24",
+         "kind": "Material",
+         "amt": 414.29,
+         "note": ""
+        },
+        {
+         "id": "v0373",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "29588828351",
+         "date": "2026-07-24",
+         "kind": "Material",
+         "amt": 167.94,
+         "note": ""
+        },
+        {
+         "id": "v0375",
+         "vendor": "Meridian Tile Ltd.",
+         "no": "9986-317244",
+         "date": "2026-08-04",
+         "kind": "Material",
+         "amt": 689.62,
+         "note": ""
+        },
+        {
+         "id": "v0377",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "35220636878",
+         "date": "2026-08-06",
+         "kind": "Material",
+         "amt": 195.18,
+         "note": ""
+        },
+        {
+         "id": "v0379",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "35240693959",
+         "date": "2026-08-05",
+         "kind": "Material",
+         "amt": 22.44,
+         "note": ""
+        },
+        {
+         "id": "v0381",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "95715233286",
+         "date": "2026-08-19",
+         "kind": "Material",
+         "amt": 188.98,
+         "note": ""
+        },
+        {
+         "id": "v0383",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "18376675007",
+         "date": "2026-08-21",
+         "kind": "Material",
+         "amt": 26.85,
+         "note": ""
+        },
+        {
+         "id": "v0385",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "66786657658",
+         "date": "2026-08-22",
+         "kind": "Material",
+         "amt": 129.47,
+         "note": ""
+        },
+        {
+         "id": "v0387",
+         "vendor": "Redstone Surveys Group",
+         "no": "",
+         "date": "2026-08-24",
+         "kind": "Material",
+         "amt": 208.03,
+         "note": ""
+        },
+        {
+         "id": "v0391",
+         "vendor": "Missing lumber (Added by Sam)",
+         "no": "",
+         "date": "",
+         "kind": "Material",
+         "amt": 27924.0,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i14",
+       "cat": "Structure and envelope",
+       "name": "Framing",
+       "amt": 59250.0,
+       "act": 58681.71,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0242",
+         "date": "2026-05-15",
+         "method": "Cheque",
+         "amt": 57126.6,
+         "ref": "CHQ-0243",
+         "inv": "v0241"
+        },
+        {
+         "id": "p0244",
+         "date": "2026-07-21",
+         "method": "Cheque",
+         "amt": 1555.11,
+         "ref": "CHQ-0240",
+         "inv": "v0243"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0241",
+         "vendor": "Foothills Flooring",
+         "no": "883",
+         "date": "2026-05-15",
+         "kind": "Trade",
+         "amt": 57126.6,
+         "note": ""
+        },
+        {
+         "id": "v0243",
+         "vendor": "Willow Doors Inc.",
+         "no": "559",
+         "date": "2026-07-21",
+         "kind": "Trade",
+         "amt": 1555.11,
+         "note": "Materials pickup 33"
+        }
+       ]
+      },
+      {
+       "id": "i15",
+       "cat": "Structure and envelope",
+       "name": "Stairs",
+       "amt": 2050.0,
+       "act": 2122.26,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0657",
+         "vendor": "Sagebrush Stoneworks Inc.",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 2122.26,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i16",
+       "cat": "Structure and envelope",
+       "name": "Windows and doors",
+       "amt": 64950.0,
+       "act": 66628.44,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0717",
+         "date": "2026-05-10",
+         "method": "Visa",
+         "amt": 65775.05,
+         "ref": "Visa",
+         "inv": "v0716"
+        },
+        {
+         "id": "p0719",
+         "date": "2026-05-27",
+         "method": "Visa",
+         "amt": 512.43,
+         "ref": "Visa",
+         "inv": "v0718"
+        },
+        {
+         "id": "p0721",
+         "date": "2026-11-12",
+         "method": "E-transfer",
+         "amt": 340.96,
+         "ref": "Etransfer",
+         "inv": "v0720"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0716",
+         "vendor": "Evergreen Lighting Group",
+         "no": "806583",
+         "date": "2026-05-10",
+         "kind": "Material",
+         "amt": 65775.05,
+         "note": ""
+        },
+        {
+         "id": "v0718",
+         "vendor": "Prairie Surveys Co.",
+         "no": "56775",
+         "date": "2026-05-27",
+         "kind": "Material",
+         "amt": 512.43,
+         "note": "Framing materials 8"
+        },
+        {
+         "id": "v0720",
+         "vendor": "Ironwood Tile Co.",
+         "no": "933",
+         "date": "2026-11-12",
+         "kind": "Trade",
+         "amt": 340.96,
+         "note": "Site visit 23"
+        }
+       ]
+      },
+      {
+       "id": "i17",
+       "cat": "Structure and envelope",
+       "name": "Roofing",
+       "amt": 13650.0,
+       "act": 14367.1,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0644",
+         "date": "2026-08-20",
+         "method": "Visa",
+         "amt": 86.95,
+         "ref": "visa",
+         "inv": "v0643"
+        },
+        {
+         "id": "p0646",
+         "date": "2026-09-29",
+         "method": "Cheque",
+         "amt": 13066.11,
+         "ref": "CHQ-0258",
+         "inv": "v0645"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0643",
+         "vendor": "Willow Roofing Co.",
+         "no": "t685522",
+         "date": "2026-08-20",
+         "kind": "Material",
+         "amt": 86.95,
+         "note": ""
+        },
+        {
+         "id": "v0645",
+         "vendor": "Oakridge Windows Ltd",
+         "no": "",
+         "date": "2026-09-29",
+         "kind": "Trade",
+         "amt": 13066.11,
+         "note": "Second visit"
+        },
+        {
+         "id": "v0647",
+         "vendor": "Oakridge Windows Ltd",
+         "no": "hmxpwltmn",
+         "date": "",
+         "kind": "Trade",
+         "amt": 1214.04,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i18",
+       "cat": "Structure and envelope",
+       "name": "Metal roofing",
+       "amt": 0,
+       "act": 0.0,
+       "note": "",
+       "pays": [],
+       "invs": []
+      },
+      {
+       "id": "i19",
+       "cat": "Structure and envelope",
+       "name": "Siding (stucco, etc.)",
+       "amt": 53800.0,
+       "act": 54175.08,
+       "note": "Balance",
+       "pays": [
+        {
+         "id": "p0019",
+         "date": "2026-07-17",
+         "method": "Visa",
+         "amt": 52.77,
+         "ref": "Visa",
+         "inv": "v0018"
+        },
+        {
+         "id": "p0651",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 1779.96,
+         "ref": "Visa",
+         "inv": "v0650"
+        },
+        {
+         "id": "p0653",
+         "date": "2026-08-04",
+         "method": "Visa",
+         "amt": 245.82,
+         "ref": "Visa",
+         "inv": "v0652"
+        },
+        {
+         "id": "p0655",
+         "date": "2026-08-26",
+         "method": "Cheque",
+         "amt": 52096.53,
+         "ref": "Change order 68",
+         "inv": "v0654"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0018",
+         "vendor": "Summit Plumbing",
+         "no": "623193",
+         "date": "2026-07-17",
+         "kind": "Material",
+         "amt": 52.77,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0650",
+         "vendor": "Prairie Surveys Co.",
+         "no": "6M00BRSWUMO7U",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": 1779.96,
+         "note": "Delivery 24"
+        },
+        {
+         "id": "v0652",
+         "vendor": "Sagebrush Surveys Co.",
+         "no": "3135-037679",
+         "date": "2026-08-04",
+         "kind": "Material",
+         "amt": 245.82,
+         "note": ""
+        },
+        {
+         "id": "v0654",
+         "vendor": "Oakridge Appliances Co.",
+         "no": "4",
+         "date": "2026-08-26",
+         "kind": "Trade",
+         "amt": 52096.53,
+         "note": "Rough-in"
+        }
+       ]
+      },
+      {
+       "id": "i20",
+       "cat": "Structure and envelope",
+       "name": "Stone",
+       "amt": 45900.0,
+       "act": 52388.3,
+       "note": "Second visit 19",
+       "pays": [
+        {
+         "id": "p0021",
+         "date": "2026-09-10",
+         "method": "Cheque",
+         "amt": 917.91,
+         "ref": "CHQ-0267",
+         "inv": "v0020"
+        },
+        {
+         "id": "p0659",
+         "date": "2026-09-03",
+         "method": "Visa",
+         "amt": 5034.09,
+         "ref": "VISA",
+         "inv": "v0658"
+        },
+        {
+         "id": "p0661",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 985.35,
+         "ref": "Visa",
+         "inv": "v0660"
+        },
+        {
+         "id": "p0663",
+         "date": "2026-11-10",
+         "method": "Visa",
+         "amt": 182.73,
+         "ref": "Visa",
+         "inv": "v0662"
+        },
+        {
+         "id": "p0665",
+         "date": "2026-11-09",
+         "method": "Visa",
+         "amt": 101.82,
+         "ref": "Visa",
+         "inv": "v0664"
+        },
+        {
+         "id": "p0667",
+         "date": "2026-11-09",
+         "method": "Visa",
+         "amt": 610.9,
+         "ref": "Visa",
+         "inv": "v0666"
+        },
+        {
+         "id": "p0669",
+         "date": "2026-09-21",
+         "method": "Not recorded",
+         "amt": 20.22,
+         "ref": "Progress payment",
+         "inv": "v0668"
+        },
+        {
+         "id": "p0671",
+         "date": "2026-10-27",
+         "method": "Not recorded",
+         "amt": 20.22,
+         "ref": "Extra order",
+         "inv": "v0670"
+        },
+        {
+         "id": "p0673",
+         "date": "2026-08-27",
+         "method": "Visa",
+         "amt": 19463.92,
+         "ref": "Samples 70",
+         "inv": "v0672"
+        },
+        {
+         "id": "p0675",
+         "date": "2026-09-16",
+         "method": "Visa",
+         "amt": 2351.41,
+         "ref": "Deposit 56",
+         "inv": "v0674"
+        },
+        {
+         "id": "p0677",
+         "date": "2026-09-16",
+         "method": "Visa",
+         "amt": 956.97,
+         "ref": "Site visit",
+         "inv": "v0676"
+        },
+        {
+         "id": "p0679",
+         "date": "2026-10-09",
+         "method": "Not recorded",
+         "amt": 2798.66,
+         "ref": "Deposit 23",
+         "inv": "v0678"
+        },
+        {
+         "id": "p0681",
+         "date": "2026-11-16",
+         "method": "Not recorded",
+         "amt": 1920.45,
+         "ref": "Framing materials",
+         "inv": "v0680"
+        },
+        {
+         "id": "p0683",
+         "date": "",
+         "method": "Not recorded",
+         "amt": 162.75,
+         "ref": "",
+         "inv": "v0682"
+        },
+        {
+         "id": "p0685",
+         "date": "2026-10-23",
+         "method": "Cheque",
+         "amt": 16860.9,
+         "ref": "Site visit",
+         "inv": "v0684"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0020",
+         "vendor": "Riverbend Drywall Inc.",
+         "no": "17928",
+         "date": "2026-09-10",
+         "kind": "Service",
+         "amt": 917.91,
+         "note": "Site visit 6"
+        },
+        {
+         "id": "v0658",
+         "vendor": "Highline Electric Ltd.",
+         "no": "YL-414876",
+         "date": "2026-09-03",
+         "kind": "Material",
+         "amt": 5034.09,
+         "note": "Deposit"
+        },
+        {
+         "id": "v0660",
+         "vendor": "Larkspur Consulting Ltd",
+         "no": "M5-12925",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": 985.35,
+         "note": "Site visit 85"
+        },
+        {
+         "id": "v0662",
+         "vendor": "Larkspur Consulting Ltd",
+         "no": "Ty-536399",
+         "date": "2026-11-10",
+         "kind": "Material",
+         "amt": 182.73,
+         "note": "Framing materials 7"
+        },
+        {
+         "id": "v0664",
+         "vendor": "Larkspur Consulting Ltd",
+         "no": "XB-806753",
+         "date": "2026-11-09",
+         "kind": "Material",
+         "amt": 101.82,
+         "note": "Balance"
+        },
+        {
+         "id": "v0666",
+         "vendor": "Larkspur Consulting Ltd",
+         "no": "TD-325701",
+         "date": "2026-11-09",
+         "kind": "Material",
+         "amt": 610.9,
+         "note": "Balance"
+        },
+        {
+         "id": "v0668",
+         "vendor": "Oakridge Trucking Inc.",
+         "no": "364375",
+         "date": "2026-09-21",
+         "kind": "Material",
+         "amt": 20.22,
+         "note": ""
+        },
+        {
+         "id": "v0670",
+         "vendor": "Oakridge Trucking Inc.",
+         "no": "489757",
+         "date": "2026-10-27",
+         "kind": "Material",
+         "amt": 20.22,
+         "note": ""
+        },
+        {
+         "id": "v0672",
+         "vendor": "Evergreen Landscaping Group",
+         "no": "2366",
+         "date": "2026-08-27",
+         "kind": "Material",
+         "amt": 19463.92,
+         "note": ""
+        },
+        {
+         "id": "v0674",
+         "vendor": "Evergreen Landscaping Group",
+         "no": "17426",
+         "date": "2026-09-16",
+         "kind": "Material",
+         "amt": 2351.41,
+         "note": "Final install"
+        },
+        {
+         "id": "v0676",
+         "vendor": "Evergreen Landscaping Group",
+         "no": "63535.94",
+         "date": "2026-09-16",
+         "kind": "Material",
+         "amt": 956.97,
+         "note": ""
+        },
+        {
+         "id": "v0678",
+         "vendor": "Evergreen Landscaping Group",
+         "no": "85115",
+         "date": "2026-10-09",
+         "kind": "Material",
+         "amt": 2798.66,
+         "note": ""
+        },
+        {
+         "id": "v0680",
+         "vendor": "Evergreen Landscaping Group",
+         "no": "65986",
+         "date": "2026-11-16",
+         "kind": "Material",
+         "amt": 1920.45,
+         "note": ""
+        },
+        {
+         "id": "v0682",
+         "vendor": "Meridian Appliances Group",
+         "no": "",
+         "date": "",
+         "kind": "Material",
+         "amt": 162.75,
+         "note": ""
+        },
+        {
+         "id": "v0684",
+         "vendor": "Maple Leaf Masonry",
+         "no": "4",
+         "date": "2026-10-23",
+         "kind": "Trade",
+         "amt": 16860.9,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i21",
+       "cat": "Structure and envelope",
+       "name": "Insulation w material and spray foam",
+       "amt": 24750.0,
+       "act": 24307.23,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0264",
+         "date": "2026-11-24",
+         "method": "Cheque",
+         "amt": 24307.23,
+         "ref": "CHQ-281",
+         "inv": "v0263"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0263",
+         "vendor": "Prairie Railings Ltd",
+         "no": "63817",
+         "date": "2026-11-24",
+         "kind": "Trade",
+         "amt": 24307.23,
+         "note": "Materials pickup"
+        }
+       ]
+      },
+      {
+       "id": "i22",
+       "cat": "Mechanical and electrical",
+       "name": "Plumbing material",
+       "amt": 30750.0,
+       "act": 31682.56,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0640",
+         "date": "2026-06-24",
+         "method": "Visa",
+         "amt": 30965.26,
+         "ref": "Materials pickup 81",
+         "inv": "v0639"
+        },
+        {
+         "id": "p0642",
+         "date": "2026-11-24",
+         "method": "Visa",
+         "amt": 717.3,
+         "ref": "visa",
+         "inv": "v0641"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0639",
+         "vendor": "Westgate Cabinets",
+         "no": "FI-X534043",
+         "date": "2026-06-24",
+         "kind": "Material",
+         "amt": 30965.26,
+         "note": ""
+        },
+        {
+         "id": "v0641",
+         "vendor": "Westgate Cabinets",
+         "no": "",
+         "date": "2026-11-24",
+         "kind": "Material",
+         "amt": 717.3,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i23",
+       "cat": "Mechanical and electrical",
+       "name": "Plumber",
+       "amt": 38050.0,
+       "act": 44881.12,
+       "note": "Framing materials",
+       "pays": [
+        {
+         "id": "p0629",
+         "date": "2026-07-23",
+         "method": "Cheque",
+         "amt": 16483.15,
+         "ref": "Second visit 46",
+         "inv": "v0628"
+        },
+        {
+         "id": "p0631",
+         "date": "2026-06-24",
+         "method": "Cheque",
+         "amt": 4939.7,
+         "ref": "CHQ-0231",
+         "inv": "v0630"
+        },
+        {
+         "id": "p0633",
+         "date": "2026-07-04",
+         "method": "Cheque",
+         "amt": 6593.26,
+         "ref": "CHQ-0226",
+         "inv": "v0632"
+        },
+        {
+         "id": "p0635",
+         "date": "2026-08-04",
+         "method": "Cheque",
+         "amt": 4944.94,
+         "ref": "CHQ-253",
+         "inv": "v0634"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0628",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "983037",
+         "date": "2026-07-23",
+         "kind": "Trade",
+         "amt": 16483.15,
+         "note": "Second visit 57"
+        },
+        {
+         "id": "v0630",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "5424630",
+         "date": "2026-06-24",
+         "kind": "Trade",
+         "amt": 4939.7,
+         "note": "Balance"
+        },
+        {
+         "id": "v0632",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "9439455",
+         "date": "2026-07-04",
+         "kind": "Trade",
+         "amt": 6593.26,
+         "note": "Extra order 90"
+        },
+        {
+         "id": "v0634",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "999684",
+         "date": "2026-08-04",
+         "kind": "Trade",
+         "amt": 4944.94,
+         "note": "Framing materials"
+        },
+        {
+         "id": "v0636",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 3296.63,
+         "note": ""
+        },
+        {
+         "id": "v0637",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 6975.13,
+         "note": "Materials pickup"
+        },
+        {
+         "id": "v0638",
+         "vendor": "Silver Creek Railings Ltd.",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 1648.31,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i24",
+       "cat": "Mechanical and electrical",
+       "name": "Electrician",
+       "amt": 34800.0,
+       "act": 37178.2,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0230",
+         "date": "2026-05-19",
+         "method": "Cheque",
+         "amt": 26024.74,
+         "ref": "Site cleanup 44",
+         "inv": "v0229"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0229",
+         "vendor": "Bluebird Painting Co.",
+         "no": "91680",
+         "date": "2026-05-19",
+         "kind": "Trade",
+         "amt": 37178.2,
+         "note": "Site visit"
+        }
+       ]
+      },
+      {
+       "id": "i25",
+       "cat": "Mechanical and electrical",
+       "name": "HVAC + AC",
+       "amt": 27600.0,
+       "act": 26808.85,
+       "note": "Samples",
+       "pays": [
+        {
+         "id": "p0260",
+         "date": "2026-05-19",
+         "method": "Cheque",
+         "amt": 23270.93,
+         "ref": "CHQ-0252",
+         "inv": "v0259"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0259",
+         "vendor": "Summit Flooring Group",
+         "no": "9456",
+         "date": "2026-05-19",
+         "kind": "Trade",
+         "amt": 26562.98,
+         "note": "Samples 7"
+        },
+        {
+         "id": "v0261",
+         "vendor": "Summit Flooring Group",
+         "no": "574488",
+         "date": "2026-09-17",
+         "kind": "Trade",
+         "amt": 70.25,
+         "note": "Change order"
+        },
+        {
+         "id": "v0262",
+         "vendor": "Summit Flooring Group",
+         "no": "696307",
+         "date": "2026-10-21",
+         "kind": "Trade",
+         "amt": 175.62,
+         "note": "Warranty item"
+        }
+       ]
+      },
+      {
+       "id": "i26",
+       "cat": "Mechanical and electrical",
+       "name": "Lighting",
+       "amt": 14850.0,
+       "act": 18929.15,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0348",
+         "date": "2026-08-24",
+         "method": "Visa",
+         "amt": 637.89,
+         "ref": "Visa",
+         "inv": "v0347"
+        },
+        {
+         "id": "p0350",
+         "date": "2026-08-24",
+         "method": "Visa",
+         "amt": 3403.53,
+         "ref": "Visa",
+         "inv": "v0349"
+        },
+        {
+         "id": "p0352",
+         "date": "2026-10-29",
+         "method": "Mastercard",
+         "amt": 541.97,
+         "ref": "Extra order 23",
+         "inv": "v0351"
+        },
+        {
+         "id": "p0354",
+         "date": "2026-11-13",
+         "method": "Refund / credit",
+         "amt": -541.97,
+         "ref": "Rough-in 58",
+         "inv": "v0353"
+        },
+        {
+         "id": "p0356",
+         "date": "2026-11-13",
+         "method": "Visa",
+         "amt": 1233.1,
+         "ref": "Visa",
+         "inv": "v0355"
+        },
+        {
+         "id": "p0358",
+         "date": "2026-11-18",
+         "method": "Not recorded",
+         "amt": 598.72,
+         "ref": "Warranty item",
+         "inv": "v0357"
+        },
+        {
+         "id": "p0360",
+         "date": "2026-08-17",
+         "method": "Visa",
+         "amt": 13055.91,
+         "ref": "Second visit",
+         "inv": "v0359"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0347",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "43232604157",
+         "date": "2026-08-24",
+         "kind": "Material",
+         "amt": 637.89,
+         "note": "Deposit 77"
+        },
+        {
+         "id": "v0349",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "72857700427",
+         "date": "2026-08-24",
+         "kind": "Material",
+         "amt": 3403.53,
+         "note": "Deposit 77"
+        },
+        {
+         "id": "v0351",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "70078453115",
+         "date": "2026-10-29",
+         "kind": "Material",
+         "amt": 541.97,
+         "note": ""
+        },
+        {
+         "id": "v0353",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "86110510992",
+         "date": "2026-11-13",
+         "kind": "Material",
+         "amt": -541.97,
+         "note": ""
+        },
+        {
+         "id": "v0355",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "91119023381",
+         "date": "2026-11-13",
+         "kind": "Material",
+         "amt": 1233.1,
+         "note": ""
+        },
+        {
+         "id": "v0357",
+         "vendor": "Yarrow Landscaping Group",
+         "no": "38034821062",
+         "date": "2026-11-18",
+         "kind": "Material",
+         "amt": 598.72,
+         "note": ""
+        },
+        {
+         "id": "v0359",
+         "vendor": "Westgate Flooring Inc.",
+         "no": "19186",
+         "date": "2026-08-17",
+         "kind": "Material",
+         "amt": 13055.91,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i27",
+       "cat": "Mechanical and electrical",
+       "name": "Fireplace",
+       "amt": 4900.0,
+       "act": 6457.63,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0232",
+         "date": "2026-06-18",
+         "method": "Visa",
+         "amt": 2893.84,
+         "ref": "Visa",
+         "inv": "v0231"
+        },
+        {
+         "id": "p0234",
+         "date": "2026-10-22",
+         "method": "Visa",
+         "amt": 3424.86,
+         "ref": "Final install 11",
+         "inv": "v0233"
+        },
+        {
+         "id": "p0236",
+         "date": "2026-08-24",
+         "method": "Visa",
+         "amt": 138.93,
+         "ref": "Visa",
+         "inv": "v0235"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0231",
+         "vendor": "Meridian Glass Inc.",
+         "no": "",
+         "date": "2026-06-18",
+         "kind": "Material",
+         "amt": 2893.84,
+         "note": "Framing materials 62"
+        },
+        {
+         "id": "v0233",
+         "vendor": "Meridian Glass Inc.",
+         "no": "315107658",
+         "date": "2026-10-22",
+         "kind": "Material",
+         "amt": 3424.86,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0235",
+         "vendor": "Meridian Glass Inc.",
+         "no": "",
+         "date": "2026-08-24",
+         "kind": "Material",
+         "amt": 138.93,
+         "note": "Extra order"
+        }
+       ]
+      },
+      {
+       "id": "i28",
+       "cat": "Interior finishes",
+       "name": "Drywall/ mudtape",
+       "amt": 30900.0,
+       "act": 28909.99,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0222",
+         "date": "2026-08-22",
+         "method": "Visa",
+         "amt": 1134.48,
+         "ref": "Visa",
+         "inv": "v0221"
+        },
+        {
+         "id": "p0224",
+         "date": "2026-08-11",
+         "method": "Visa",
+         "amt": 9797.07,
+         "ref": "Visa",
+         "inv": "v0223"
+        },
+        {
+         "id": "p0226",
+         "date": "2026-09-29",
+         "method": "Cheque",
+         "amt": 9995.7,
+         "ref": "CHQ-0263",
+         "inv": "v0225"
+        },
+        {
+         "id": "p0228",
+         "date": "",
+         "method": "Cheque",
+         "amt": 5551.79,
+         "ref": "CHQ-0264",
+         "inv": "v0227"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0221",
+         "vendor": "Clearwater Insurance Co.",
+         "no": "4764",
+         "date": "2026-08-22",
+         "kind": "Material",
+         "amt": 1134.48,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0223",
+         "vendor": "Sagebrush Surveys Co.",
+         "no": "1370-514555",
+         "date": "2026-08-11",
+         "kind": "Material",
+         "amt": 9797.07,
+         "note": "Change order"
+        },
+        {
+         "id": "v0225",
+         "vendor": "Quarry Doors Co.",
+         "no": "",
+         "date": "2026-09-29",
+         "kind": "Trade",
+         "amt": 12426.65,
+         "note": "Change order"
+        },
+        {
+         "id": "v0227",
+         "vendor": "Larkspur Stoneworks",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 5551.79,
+         "note": "Balance 57"
+        }
+       ]
+      },
+      {
+       "id": "i29",
+       "cat": "Interior finishes",
+       "name": "Paint",
+       "amt": 35850.0,
+       "act": 33118.8,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0599",
+         "date": "2026-10-16",
+         "method": "Not recorded",
+         "amt": 125.83,
+         "ref": "Framing materials",
+         "inv": "v0598"
+        },
+        {
+         "id": "p0601",
+         "date": "2026-09-21",
+         "method": "Cheque",
+         "amt": 18872.0,
+         "ref": "Touch-ups",
+         "inv": "v0600"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0598",
+         "vendor": "Rosewood Masonry Ltd",
+         "no": "5692866",
+         "date": "2026-10-16",
+         "kind": "Material",
+         "amt": 125.83,
+         "note": ""
+        },
+        {
+         "id": "v0600",
+         "vendor": "Sagebrush Tile Ltd",
+         "no": "6",
+         "date": "2026-09-21",
+         "kind": "Trade",
+         "amt": 32992.97,
+         "note": "Deposit 40"
+        }
+       ]
+      },
+      {
+       "id": "i30",
+       "cat": "Interior finishes",
+       "name": "Kitchen cabinets",
+       "amt": 130950.0,
+       "act": 131446.9,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0268",
+         "date": "2026-10-21",
+         "method": "Visa",
+         "amt": 18528.0,
+         "ref": "Balance",
+         "inv": "v0267"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0267",
+         "vendor": "Cobalt Landscaping Ltd",
+         "no": "905",
+         "date": "2026-10-21",
+         "kind": "Trade",
+         "amt": 131446.9,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i31",
+       "cat": "Interior finishes",
+       "name": "Moulding store",
+       "amt": 18500.0,
+       "act": 25949.67,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0577",
+         "date": "2026-10-14",
+         "method": "Refund / credit",
+         "amt": -618.73,
+         "ref": "Warranty item 46",
+         "inv": "v0576"
+        },
+        {
+         "id": "p0579",
+         "date": "2026-10-14",
+         "method": "Not recorded",
+         "amt": 324.14,
+         "ref": "",
+         "inv": "v0578"
+        },
+        {
+         "id": "p0581",
+         "date": "2026-10-23",
+         "method": "Not recorded",
+         "amt": 455.79,
+         "ref": "Site cleanup 35",
+         "inv": "v0580"
+        },
+        {
+         "id": "p0585",
+         "date": "2026-11-12",
+         "method": "Refund / credit",
+         "amt": -2213.42,
+         "ref": "",
+         "inv": "v0584"
+        },
+        {
+         "id": "p0589",
+         "date": "2026-11-12",
+         "method": "Refund / credit",
+         "amt": -612.23,
+         "ref": "",
+         "inv": "v0588"
+        },
+        {
+         "id": "p0590",
+         "date": "",
+         "method": "Visa",
+         "amt": 12326.0,
+         "ref": "Balance 66",
+         "inv": null
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0569",
+         "vendor": "Quarry Masonry",
+         "no": "FY0110",
+         "date": "2026-11-02",
+         "kind": "Material",
+         "amt": 82.62,
+         "note": ""
+        },
+        {
+         "id": "v0570",
+         "vendor": "Quarry Masonry",
+         "no": "ZX5627",
+         "date": "2026-08-06",
+         "kind": "Material",
+         "amt": 267.08,
+         "note": "Materials pickup 23"
+        },
+        {
+         "id": "v0571",
+         "vendor": "Quarry Masonry",
+         "no": "YT6605",
+         "date": "2026-09-15",
+         "kind": "Material",
+         "amt": 12170.14,
+         "note": ""
+        },
+        {
+         "id": "v0572",
+         "vendor": "Quarry Masonry",
+         "no": "RA7747",
+         "date": "2026-09-15",
+         "kind": "Material",
+         "amt": 2775.84,
+         "note": ""
+        },
+        {
+         "id": "v0573",
+         "vendor": "Quarry Masonry",
+         "no": "YB6800",
+         "date": "2026-09-15",
+         "kind": "Material",
+         "amt": 5243.52,
+         "note": ""
+        },
+        {
+         "id": "v0574",
+         "vendor": "Quarry Masonry",
+         "no": "QL4807",
+         "date": "2026-09-16",
+         "kind": "Material",
+         "amt": 39.64,
+         "note": ""
+        },
+        {
+         "id": "v0575",
+         "vendor": "Quarry Masonry",
+         "no": "CS5501",
+         "date": "2026-09-21",
+         "kind": "Material",
+         "amt": 439.41,
+         "note": ""
+        },
+        {
+         "id": "v0576",
+         "vendor": "Quarry Masonry",
+         "no": "QQ4195",
+         "date": "2026-10-14",
+         "kind": "Material",
+         "amt": -618.73,
+         "note": ""
+        },
+        {
+         "id": "v0578",
+         "vendor": "Quarry Masonry",
+         "no": "EQ7673",
+         "date": "2026-10-14",
+         "kind": "Material",
+         "amt": 324.14,
+         "note": ""
+        },
+        {
+         "id": "v0580",
+         "vendor": "Quarry Masonry",
+         "no": "AZ9650",
+         "date": "2026-10-23",
+         "kind": "Material",
+         "amt": 455.79,
+         "note": ""
+        },
+        {
+         "id": "v0582",
+         "vendor": "Quarry Masonry",
+         "no": "LD7861",
+         "date": "2026-11-04",
+         "kind": "Material",
+         "amt": 5922.74,
+         "note": ""
+        },
+        {
+         "id": "v0583",
+         "vendor": "Quarry Masonry",
+         "no": "GF6182",
+         "date": "2026-11-10",
+         "kind": "Material",
+         "amt": 952.47,
+         "note": ""
+        },
+        {
+         "id": "v0584",
+         "vendor": "Quarry Masonry",
+         "no": "PD4566",
+         "date": "2026-11-12",
+         "kind": "Material",
+         "amt": -2213.42,
+         "note": ""
+        },
+        {
+         "id": "v0586",
+         "vendor": "Quarry Masonry",
+         "no": "ES8746",
+         "date": "2026-11-12",
+         "kind": "Material",
+         "amt": 31.12,
+         "note": ""
+        },
+        {
+         "id": "v0587",
+         "vendor": "Quarry Masonry",
+         "no": "UE0227",
+         "date": "2026-11-12",
+         "kind": "Material",
+         "amt": 689.54,
+         "note": ""
+        },
+        {
+         "id": "v0588",
+         "vendor": "Quarry Masonry",
+         "no": "IP4906",
+         "date": "2026-11-12",
+         "kind": "Material",
+         "amt": -612.23,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i32",
+       "cat": "Interior finishes",
+       "name": "Carpenter Finishing",
+       "amt": 11250.0,
+       "act": 10085.07,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0169",
+         "date": "2026-08-26",
+         "method": "Cheque",
+         "amt": 8653.0,
+         "ref": "CHQ-0265",
+         "inv": "v0168"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0168",
+         "vendor": "Sagebrush Electric Co.",
+         "no": "8638",
+         "date": "2026-08-26",
+         "kind": "Trade",
+         "amt": 10085.07,
+         "note": "Delivery 66"
+        }
+       ]
+      },
+      {
+       "id": "i33",
+       "cat": "Interior finishes",
+       "name": "Countertop",
+       "amt": 29600.0,
+       "act": 30545.49,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0218",
+         "date": "2026-11-12",
+         "method": "Cheque",
+         "amt": 17920.5,
+         "ref": "CHQ-0285",
+         "inv": "v0217"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0217",
+         "vendor": "Redstone Roofing Ltd.",
+         "no": "2994",
+         "date": "2026-11-12",
+         "kind": "Trade",
+         "amt": 30545.49,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i34",
+       "cat": "Interior finishes",
+       "name": "Flooring",
+       "amt": 24500.0,
+       "act": 25040.51,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0002",
+         "date": "2026-10-26",
+         "method": "Not recorded",
+         "amt": 299.99,
+         "ref": "Rough-in 3",
+         "inv": "v0001"
+        },
+        {
+         "id": "p0004",
+         "date": "2026-10-29",
+         "method": "Not recorded",
+         "amt": 239.99,
+         "ref": "Second visit 86",
+         "inv": "v0003"
+        },
+        {
+         "id": "p0238",
+         "date": "2026-08-27",
+         "method": "Cheque",
+         "amt": 20407.5,
+         "ref": "Site cleanup 33",
+         "inv": "v0237"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0001",
+         "vendor": "Clearwater Glass Co.",
+         "no": "4",
+         "date": "2026-10-26",
+         "kind": "Material",
+         "amt": 299.99,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0003",
+         "vendor": "Clearwater Glass Co.",
+         "no": "676",
+         "date": "2026-10-29",
+         "kind": "Material",
+         "amt": 239.99,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0237",
+         "vendor": "Granite Peak Concrete",
+         "no": "2520",
+         "date": "2026-08-27",
+         "kind": "Trade",
+         "amt": 24500.53,
+         "note": "Progress payment 28"
+        }
+       ]
+      },
+      {
+       "id": "i35",
+       "cat": "Interior finishes",
+       "name": "Carpet/ additional flooring",
+       "amt": 3000.0,
+       "act": 1805.41,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0170",
+         "vendor": "Clearwater Flooring Co.",
+         "no": "",
+         "date": "2026-11-24",
+         "kind": "Trade",
+         "amt": 1805.41,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i36",
+       "cat": "Interior finishes",
+       "name": "Mantel",
+       "amt": 6350.0,
+       "act": 7390.95,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0394",
+         "date": "2026-11-13",
+         "method": "E-transfer",
+         "amt": 769.66,
+         "ref": "Site visit 60",
+         "inv": "v0393"
+        },
+        {
+         "id": "p0396",
+         "date": "2026-08-20",
+         "method": "Not recorded",
+         "amt": 62.72,
+         "ref": "",
+         "inv": "v0395"
+        },
+        {
+         "id": "p0398",
+         "date": "2026-09-01",
+         "method": "Visa",
+         "amt": 4896.78,
+         "ref": "Extra order",
+         "inv": "v0397"
+        },
+        {
+         "id": "p0400",
+         "date": "2026-11-02",
+         "method": "E-transfer",
+         "amt": 742.79,
+         "ref": "Framing materials 46",
+         "inv": "v0399"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0393",
+         "vendor": "Cobalt Insurance Group",
+         "no": "554",
+         "date": "2026-11-13",
+         "kind": "Material",
+         "amt": 1688.66,
+         "note": ""
+        },
+        {
+         "id": "v0395",
+         "vendor": "Maple Leaf Plumbing Ltd",
+         "no": "727",
+         "date": "2026-08-20",
+         "kind": "Material",
+         "amt": 62.72,
+         "note": ""
+        },
+        {
+         "id": "v0397",
+         "vendor": "Redstone Supply Ltd",
+         "no": "768",
+         "date": "2026-09-01",
+         "kind": "Material",
+         "amt": 4896.78,
+         "note": ""
+        },
+        {
+         "id": "v0399",
+         "vendor": "Willow Stoneworks Inc.",
+         "no": "185958260",
+         "date": "2026-11-02",
+         "kind": "Material",
+         "amt": 742.79,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i37",
+       "cat": "Interior finishes",
+       "name": "Glass work",
+       "amt": 19250.0,
+       "act": 20374.2,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0258",
+         "vendor": "Missing Invoice",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 20374.2,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i38",
+       "cat": "Interior finishes",
+       "name": "Tiles",
+       "amt": 11250.0,
+       "act": 13958.03,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0695",
+         "date": "2026-09-10",
+         "method": "Visa",
+         "amt": 1926.51,
+         "ref": "VISA",
+         "inv": "v0694"
+        },
+        {
+         "id": "p0697",
+         "date": "2026-09-15",
+         "method": "Visa",
+         "amt": 2662.55,
+         "ref": "Deposit",
+         "inv": "v0696"
+        },
+        {
+         "id": "p0699",
+         "date": "2026-08-24",
+         "method": "Visa",
+         "amt": 9014.66,
+         "ref": "Visa",
+         "inv": "v0698"
+        },
+        {
+         "id": "p0701",
+         "date": "2026-11-07",
+         "method": "Visa",
+         "amt": 354.31,
+         "ref": "Visa",
+         "inv": "v0700"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0694",
+         "vendor": "Prairie Surveys Group",
+         "no": "8358829",
+         "date": "2026-09-10",
+         "kind": "Material",
+         "amt": 1926.51,
+         "note": ""
+        },
+        {
+         "id": "v0696",
+         "vendor": "Prairie Surveys Group",
+         "no": "2842006",
+         "date": "2026-09-15",
+         "kind": "Material",
+         "amt": 2662.55,
+         "note": ""
+        },
+        {
+         "id": "v0698",
+         "vendor": "Maple Leaf Doors Inc.",
+         "no": "D220774",
+         "date": "2026-08-24",
+         "kind": "Material",
+         "amt": 9014.66,
+         "note": "Rough-in"
+        },
+        {
+         "id": "v0700",
+         "vendor": "Oakridge Flooring Ltd.",
+         "no": "1340420",
+         "date": "2026-11-07",
+         "kind": "Material",
+         "amt": 354.31,
+         "note": "Samples 32"
+        }
+       ]
+      },
+      {
+       "id": "i39",
+       "cat": "Interior finishes",
+       "name": "Tiles installation",
+       "amt": 13500.0,
+       "act": 13943.77,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0702",
+         "vendor": "Highline Design Inc.",
+         "no": "15304603",
+         "date": "2026-08-12",
+         "kind": "Trade",
+         "amt": 13943.77,
+         "note": "Deposit"
+        }
+       ]
+      },
+      {
+       "id": "i40",
+       "cat": "Interior finishes",
+       "name": "Wallpaper/ plaster/ decorative materials",
+       "amt": 5500.0,
+       "act": 7042.34,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0704",
+         "date": "2026-08-06",
+         "method": "Cheque",
+         "amt": 3938.41,
+         "ref": "CHQ-0246",
+         "inv": "v0703"
+        },
+        {
+         "id": "p0706",
+         "date": "2026-11-20",
+         "method": "E-transfer",
+         "amt": 199.28,
+         "ref": "etransfer",
+         "inv": "v0705"
+        },
+        {
+         "id": "p0709",
+         "date": "2026-11-10",
+         "method": "Visa",
+         "amt": 1805.86,
+         "ref": "Visa",
+         "inv": "v0708"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0703",
+         "vendor": "Willow Consulting Ltd",
+         "no": "1836",
+         "date": "2026-08-06",
+         "kind": "Material",
+         "amt": 3938.41,
+         "note": ""
+        },
+        {
+         "id": "v0705",
+         "vendor": "Willow Consulting Ltd",
+         "no": "9632",
+         "date": "2026-11-20",
+         "kind": "Material",
+         "amt": 199.28,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0707",
+         "vendor": "Missing Invoice - wallpaper installation",
+         "no": "",
+         "date": "",
+         "kind": "Material",
+         "amt": 1098.79,
+         "note": ""
+        },
+        {
+         "id": "v0708",
+         "vendor": "Highline Trucking Ltd",
+         "no": "342904",
+         "date": "2026-11-10",
+         "kind": "Material",
+         "amt": 1805.86,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i41",
+       "cat": "Interior finishes",
+       "name": "Appliances",
+       "amt": 32000.0,
+       "act": 33061.08,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0157",
+         "date": "2026-06-25",
+         "method": "Visa",
+         "amt": 32954.37,
+         "ref": "Visa",
+         "inv": "v0156"
+        },
+        {
+         "id": "p0159",
+         "date": "2026-12-01",
+         "method": "E-transfer",
+         "amt": 106.71,
+         "ref": "Etransfer",
+         "inv": "v0158"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0156",
+         "vendor": "Timberline Trucking",
+         "no": "LCI7785888",
+         "date": "2026-06-25",
+         "kind": "Material",
+         "amt": 32954.37,
+         "note": "Deposit 27"
+        },
+        {
+         "id": "v0158",
+         "vendor": "Rosewood Lighting Ltd.",
+         "no": "",
+         "date": "2026-12-01",
+         "kind": "Trade",
+         "amt": 106.71,
+         "note": "Samples"
+        }
+       ]
+      },
+      {
+       "id": "i42",
+       "cat": "Exterior and garage",
+       "name": "Concrete steps",
+       "amt": 10250.0,
+       "act": 10600.85,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0172",
+         "vendor": "Riverbend Appliances Co.",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 10600.85,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i43",
+       "cat": "Exterior and garage",
+       "name": "Outside railing",
+       "amt": 750.0,
+       "act": 354.23,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0593",
+         "vendor": "Prairie Excavating Ltd",
+         "no": "657",
+         "date": "2026-12-01",
+         "kind": "Trade",
+         "amt": 354.23,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i44",
+       "cat": "Exterior and garage",
+       "name": "Garage doors",
+       "amt": 4350.0,
+       "act": 4473.7,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0245",
+         "vendor": "Larkspur Tile Ltd",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 4473.7,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i45",
+       "cat": "Exterior and garage",
+       "name": "Garage epoxy",
+       "amt": 2900.0,
+       "act": 4712.34,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0246",
+         "vendor": "Missing Invoice",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 4712.34,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i46",
+       "cat": "Exterior and garage",
+       "name": "Landscaping",
+       "amt": 19000.0,
+       "act": 32857.03,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0008",
+         "date": "2026-10-13",
+         "method": "Visa",
+         "amt": 7942.19,
+         "ref": "Rough-in 72",
+         "inv": "v0007"
+        },
+        {
+         "id": "p0270",
+         "date": "2026-10-02",
+         "method": "E-transfer",
+         "amt": 457.33,
+         "ref": "Site visit",
+         "inv": "v0269"
+        },
+        {
+         "id": "p0272",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 50.76,
+         "ref": "Visa",
+         "inv": "v0271"
+        },
+        {
+         "id": "p0274",
+         "date": "2026-08-28",
+         "method": "Visa",
+         "amt": 153.84,
+         "ref": "Visa",
+         "inv": "v0273"
+        },
+        {
+         "id": "p0276",
+         "date": "2026-08-31",
+         "method": "Visa",
+         "amt": 35.91,
+         "ref": "Visa",
+         "inv": "v0275"
+        },
+        {
+         "id": "p0278",
+         "date": "2026-09-18",
+         "method": "Not recorded",
+         "amt": 73.36,
+         "ref": "",
+         "inv": "v0277"
+        },
+        {
+         "id": "p0280",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 107.87,
+         "ref": "Visa",
+         "inv": "v0279"
+        },
+        {
+         "id": "p0282",
+         "date": "2026-11-04",
+         "method": "Visa",
+         "amt": 257.07,
+         "ref": "Visa",
+         "inv": "v0281"
+        },
+        {
+         "id": "p0284",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 120.0,
+         "ref": "VISA",
+         "inv": "v0283"
+        },
+        {
+         "id": "p0286",
+         "date": "2026-10-07",
+         "method": "Not recorded",
+         "amt": 661.58,
+         "ref": "Second visit 60",
+         "inv": "v0285"
+        },
+        {
+         "id": "p0288",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 261.99,
+         "ref": "Visa",
+         "inv": "v0287"
+        },
+        {
+         "id": "p0290",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 62.61,
+         "ref": "Visa",
+         "inv": "v0289"
+        },
+        {
+         "id": "p0292",
+         "date": "2026-08-31",
+         "method": "Visa",
+         "amt": 209.61,
+         "ref": "Visa",
+         "inv": "v0291"
+        },
+        {
+         "id": "p0294",
+         "date": "2026-09-18",
+         "method": "Not recorded",
+         "amt": 142.21,
+         "ref": "",
+         "inv": "v0293"
+        },
+        {
+         "id": "p0296",
+         "date": "2026-09-18",
+         "method": "Not recorded",
+         "amt": 23.68,
+         "ref": "",
+         "inv": "v0295"
+        },
+        {
+         "id": "p0298",
+         "date": "2026-09-18",
+         "method": "Not recorded",
+         "amt": 95.82,
+         "ref": "",
+         "inv": "v0297"
+        },
+        {
+         "id": "p0300",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 174.32,
+         "ref": "Visa",
+         "inv": "v0299"
+        },
+        {
+         "id": "p0302",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 10.24,
+         "ref": "Visa",
+         "inv": "v0301"
+        },
+        {
+         "id": "p0304",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 130.75,
+         "ref": "Visa",
+         "inv": "v0303"
+        },
+        {
+         "id": "p0306",
+         "date": "2026-09-29",
+         "method": "Refund / credit",
+         "amt": -27.66,
+         "ref": "Visa",
+         "inv": "v0305"
+        },
+        {
+         "id": "p0308",
+         "date": "",
+         "method": "Visa",
+         "amt": 12.09,
+         "ref": "Visa",
+         "inv": "v0307"
+        },
+        {
+         "id": "p0310",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 34.59,
+         "ref": "Visa",
+         "inv": "v0309"
+        },
+        {
+         "id": "p0312",
+         "date": "2026-10-01",
+         "method": "Not recorded",
+         "amt": 384.8,
+         "ref": "Delivery 36",
+         "inv": "v0311"
+        },
+        {
+         "id": "p0314",
+         "date": "2026-10-02",
+         "method": "Not recorded",
+         "amt": 23.68,
+         "ref": "Site visit",
+         "inv": "v0313"
+        },
+        {
+         "id": "p0316",
+         "date": "2026-10-04",
+         "method": "Not recorded",
+         "amt": 25.45,
+         "ref": "Framing materials",
+         "inv": "v0315"
+        },
+        {
+         "id": "p0318",
+         "date": "2026-10-04",
+         "method": "Not recorded",
+         "amt": 38.06,
+         "ref": "Deposit 13",
+         "inv": "v0317"
+        },
+        {
+         "id": "p0320",
+         "date": "2026-10-06",
+         "method": "Refund / credit",
+         "amt": -47.91,
+         "ref": "refund",
+         "inv": "v0319"
+        },
+        {
+         "id": "p0322",
+         "date": "2026-11-03",
+         "method": "Visa",
+         "amt": 24.51,
+         "ref": "Visa",
+         "inv": "v0321"
+        },
+        {
+         "id": "p0324",
+         "date": "2026-11-03",
+         "method": "Visa",
+         "amt": 160.94,
+         "ref": "Visa",
+         "inv": "v0323"
+        },
+        {
+         "id": "p0326",
+         "date": "2026-11-03",
+         "method": "Visa",
+         "amt": 451.66,
+         "ref": "Visa",
+         "inv": "v0325"
+        },
+        {
+         "id": "p0328",
+         "date": "2026-11-23",
+         "method": "Visa",
+         "amt": 164.93,
+         "ref": "VISA",
+         "inv": "v0327"
+        },
+        {
+         "id": "p0330",
+         "date": "2026-10-14",
+         "method": "Refund / credit",
+         "amt": -64.75,
+         "ref": "Second visit",
+         "inv": "v0329"
+        },
+        {
+         "id": "p0332",
+         "date": "2026-09-17",
+         "method": "Visa",
+         "amt": 2592.43,
+         "ref": "Framing materials",
+         "inv": "v0331"
+        },
+        {
+         "id": "p0334",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 47.25,
+         "ref": "Visa",
+         "inv": "v0333"
+        },
+        {
+         "id": "p0336",
+         "date": "2026-10-01",
+         "method": "Refund / credit",
+         "amt": -102.51,
+         "ref": "",
+         "inv": "v0335"
+        },
+        {
+         "id": "p0338",
+         "date": "2026-10-04",
+         "method": "Not recorded",
+         "amt": 73.44,
+         "ref": "Framing materials",
+         "inv": "v0337"
+        },
+        {
+         "id": "p0340",
+         "date": "2026-10-26",
+         "method": "Not recorded",
+         "amt": 536.83,
+         "ref": "Extra order 12",
+         "inv": "v0339"
+        },
+        {
+         "id": "p0342",
+         "date": "2026-10-05",
+         "method": "Not recorded",
+         "amt": 2476.76,
+         "ref": "Site cleanup",
+         "inv": "v0341"
+        },
+        {
+         "id": "p0344",
+         "date": "2026-09-30",
+         "method": "Visa",
+         "amt": 890.25,
+         "ref": "VISA",
+         "inv": "v0343"
+        },
+        {
+         "id": "p0346",
+         "date": "2026-11-21",
+         "method": "Cheque",
+         "amt": 5450.46,
+         "ref": "CHQ-0278",
+         "inv": "v0345"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0007",
+         "vendor": "Redstone Surveys Group",
+         "no": "J953585063620",
+         "date": "2026-10-13",
+         "kind": "Material",
+         "amt": 7942.19,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0009",
+         "vendor": "Willow Doors Inc.",
+         "no": "",
+         "date": "2026-11-24",
+         "kind": "Trade",
+         "amt": 8740.59,
+         "note": "Warranty item 79"
+        },
+        {
+         "id": "v0269",
+         "vendor": "Summit Doors",
+         "no": "4",
+         "date": "2026-10-02",
+         "kind": "Material",
+         "amt": 457.33,
+         "note": ""
+        },
+        {
+         "id": "v0271",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "80574966133",
+         "date": "2026-08-23",
+         "kind": "Material",
+         "amt": 50.76,
+         "note": "Framing materials 7"
+        },
+        {
+         "id": "v0273",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "33596461255",
+         "date": "2026-08-28",
+         "kind": "Material",
+         "amt": 153.84,
+         "note": ""
+        },
+        {
+         "id": "v0275",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "84198806001",
+         "date": "2026-08-31",
+         "kind": "Material",
+         "amt": 35.91,
+         "note": ""
+        },
+        {
+         "id": "v0277",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "175989",
+         "date": "2026-09-18",
+         "kind": "Material",
+         "amt": 73.36,
+         "note": ""
+        },
+        {
+         "id": "v0279",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "61051687996",
+         "date": "2026-09-28",
+         "kind": "Material",
+         "amt": 107.87,
+         "note": ""
+        },
+        {
+         "id": "v0281",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "89006900930",
+         "date": "2026-11-04",
+         "kind": "Material",
+         "amt": 257.07,
+         "note": "Materials pickup 59"
+        },
+        {
+         "id": "v0283",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "18727719230",
+         "date": "2026-09-28",
+         "kind": "Material",
+         "amt": 120.0,
+         "note": ""
+        },
+        {
+         "id": "v0285",
+         "vendor": "Badlands Doors Co.",
+         "no": "9395",
+         "date": "2026-10-07",
+         "kind": "Material",
+         "amt": 661.58,
+         "note": ""
+        },
+        {
+         "id": "v0287",
+         "vendor": "Redstone Surveys Group",
+         "no": "c350248590984",
+         "date": "2026-08-23",
+         "kind": "Material",
+         "amt": 261.99,
+         "note": "Deposit"
+        },
+        {
+         "id": "v0289",
+         "vendor": "Redstone Surveys Group",
+         "no": "19861152",
+         "date": "2026-08-23",
+         "kind": "Material",
+         "amt": 62.61,
+         "note": "Deposit"
+        },
+        {
+         "id": "v0291",
+         "vendor": "Redstone Surveys Group",
+         "no": "27549w",
+         "date": "2026-08-31",
+         "kind": "Material",
+         "amt": 209.61,
+         "note": ""
+        },
+        {
+         "id": "v0293",
+         "vendor": "Redstone Surveys Group",
+         "no": "g071476277126",
+         "date": "2026-09-18",
+         "kind": "Material",
+         "amt": 142.21,
+         "note": ""
+        },
+        {
+         "id": "v0295",
+         "vendor": "Redstone Surveys Group",
+         "no": "a4467794844474",
+         "date": "2026-09-18",
+         "kind": "Material",
+         "amt": 23.68,
+         "note": ""
+        },
+        {
+         "id": "v0297",
+         "vendor": "Redstone Surveys Group",
+         "no": "v62675631482",
+         "date": "2026-09-18",
+         "kind": "Material",
+         "amt": 95.82,
+         "note": ""
+        },
+        {
+         "id": "v0299",
+         "vendor": "Redstone Surveys Group",
+         "no": "H56101579313",
+         "date": "2026-09-28",
+         "kind": "Material",
+         "amt": 174.32,
+         "note": ""
+        },
+        {
+         "id": "v0301",
+         "vendor": "Redstone Surveys Group",
+         "no": "M304095394066",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": 10.24,
+         "note": ""
+        },
+        {
+         "id": "v0303",
+         "vendor": "Redstone Surveys Group",
+         "no": "Z461319560111",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": 130.75,
+         "note": ""
+        },
+        {
+         "id": "v0305",
+         "vendor": "Redstone Surveys Group",
+         "no": "5573",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": -27.66,
+         "note": ""
+        },
+        {
+         "id": "v0307",
+         "vendor": "Redstone Surveys Group",
+         "no": "",
+         "date": "",
+         "kind": "Material",
+         "amt": 12.09,
+         "note": ""
+        },
+        {
+         "id": "v0309",
+         "vendor": "Redstone Surveys Group",
+         "no": "X168744203856",
+         "date": "2026-09-29",
+         "kind": "Material",
+         "amt": 34.59,
+         "note": ""
+        },
+        {
+         "id": "v0311",
+         "vendor": "Redstone Surveys Group",
+         "no": "V651465411904",
+         "date": "2026-10-01",
+         "kind": "Material",
+         "amt": 384.8,
+         "note": ""
+        },
+        {
+         "id": "v0313",
+         "vendor": "Redstone Surveys Group",
+         "no": "z191986498459",
+         "date": "2026-10-02",
+         "kind": "Material",
+         "amt": 23.68,
+         "note": ""
+        },
+        {
+         "id": "v0315",
+         "vendor": "Redstone Surveys Group",
+         "no": "U609389385773",
+         "date": "2026-10-04",
+         "kind": "Material",
+         "amt": 25.45,
+         "note": ""
+        },
+        {
+         "id": "v0317",
+         "vendor": "Redstone Surveys Group",
+         "no": "J573566035756",
+         "date": "2026-10-04",
+         "kind": "Material",
+         "amt": 38.06,
+         "note": ""
+        },
+        {
+         "id": "v0319",
+         "vendor": "Redstone Surveys Group",
+         "no": "Y839386040257",
+         "date": "2026-10-06",
+         "kind": "Material",
+         "amt": -47.91,
+         "note": ""
+        },
+        {
+         "id": "v0321",
+         "vendor": "Redstone Surveys Group",
+         "no": "I014492126592",
+         "date": "2026-11-03",
+         "kind": "Material",
+         "amt": 24.51,
+         "note": "Extra order"
+        },
+        {
+         "id": "v0323",
+         "vendor": "Redstone Surveys Group",
+         "no": "565-05756733",
+         "date": "2026-11-03",
+         "kind": "Material",
+         "amt": 160.94,
+         "note": "Site visit 64"
+        },
+        {
+         "id": "v0325",
+         "vendor": "Redstone Surveys Group",
+         "no": "L17358763599",
+         "date": "2026-11-03",
+         "kind": "Material",
+         "amt": 451.66,
+         "note": "Rough-in 48"
+        },
+        {
+         "id": "v0327",
+         "vendor": "Redstone Surveys Group",
+         "no": "S661986944682",
+         "date": "2026-11-23",
+         "kind": "Material",
+         "amt": 164.93,
+         "note": "Extra order 31"
+        },
+        {
+         "id": "v0329",
+         "vendor": "Summit Design Ltd",
+         "no": "266251916",
+         "date": "2026-10-14",
+         "kind": "Material",
+         "amt": -64.75,
+         "note": ""
+        },
+        {
+         "id": "v0331",
+         "vendor": "Westgate Lighting Co.",
+         "no": "E1388",
+         "date": "2026-09-17",
+         "kind": "Material",
+         "amt": 2592.43,
+         "note": "Framing materials"
+        },
+        {
+         "id": "v0333",
+         "vendor": "Westgate Lighting Co.",
+         "no": "112164455",
+         "date": "2026-09-28",
+         "kind": "Material",
+         "amt": 47.25,
+         "note": ""
+        },
+        {
+         "id": "v0335",
+         "vendor": "Westgate Lighting Co.",
+         "no": "363609839",
+         "date": "2026-10-01",
+         "kind": "Material",
+         "amt": -102.51,
+         "note": ""
+        },
+        {
+         "id": "v0337",
+         "vendor": "Westgate Lighting Co.",
+         "no": "215459858",
+         "date": "2026-10-04",
+         "kind": "Material",
+         "amt": 73.44,
+         "note": ""
+        },
+        {
+         "id": "v0339",
+         "vendor": "Prairie Cabinets",
+         "no": "3055-261328",
+         "date": "2026-10-26",
+         "kind": "Material",
+         "amt": 536.83,
+         "note": ""
+        },
+        {
+         "id": "v0341",
+         "vendor": "Willow Lighting Inc.",
+         "no": "4",
+         "date": "2026-10-05",
+         "kind": "Trade",
+         "amt": 2476.76,
+         "note": ""
+        },
+        {
+         "id": "v0343",
+         "vendor": "Summit Doors Co.",
+         "no": "# INE-391931",
+         "date": "2026-09-30",
+         "kind": "Trade",
+         "amt": 890.25,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0345",
+         "vendor": "Summit Doors Co.",
+         "no": "TAA-501830",
+         "date": "2026-11-21",
+         "kind": "Trade",
+         "amt": 5450.46,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i47",
+       "cat": "Site operations",
+       "name": "Pit stop",
+       "amt": 850.0,
+       "act": 1594.39,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0613",
+         "date": "2026-11-24",
+         "method": "Visa",
+         "amt": 380.97,
+         "ref": "VISA",
+         "inv": "v0612"
+        },
+        {
+         "id": "p0615",
+         "date": "2026-05-13",
+         "method": "Visa",
+         "amt": 237.34,
+         "ref": "VISA",
+         "inv": "v0614"
+        },
+        {
+         "id": "p0617",
+         "date": "2026-06-23",
+         "method": "Visa",
+         "amt": 146.45,
+         "ref": "VISA",
+         "inv": "v0616"
+        },
+        {
+         "id": "p0619",
+         "date": "2026-06-30",
+         "method": "Visa",
+         "amt": 146.45,
+         "ref": "VISA",
+         "inv": "v0618"
+        },
+        {
+         "id": "p0621",
+         "date": "2026-07-27",
+         "method": "Visa",
+         "amt": 151.54,
+         "ref": "VISA",
+         "inv": "v0620"
+        },
+        {
+         "id": "p0623",
+         "date": "2026-08-27",
+         "method": "Visa",
+         "amt": 151.54,
+         "ref": "VISA",
+         "inv": "v0622"
+        },
+        {
+         "id": "p0625",
+         "date": "2026-10-09",
+         "method": "Visa",
+         "amt": 151.54,
+         "ref": "VISA",
+         "inv": "v0624"
+        },
+        {
+         "id": "p0627",
+         "date": "2026-10-28",
+         "method": "Visa",
+         "amt": 228.56,
+         "ref": "VISA",
+         "inv": "v0626"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0612",
+         "vendor": "Evergreen Interiors Ltd.",
+         "no": "",
+         "date": "2026-11-24",
+         "kind": "Service",
+         "amt": 380.97,
+         "note": ""
+        },
+        {
+         "id": "v0614",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "W47708",
+         "date": "2026-05-13",
+         "kind": "Service",
+         "amt": 237.34,
+         "note": ""
+        },
+        {
+         "id": "v0616",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "608788887442",
+         "date": "2026-06-23",
+         "kind": "Service",
+         "amt": 146.45,
+         "note": ""
+        },
+        {
+         "id": "v0618",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "186772037877",
+         "date": "2026-06-30",
+         "kind": "Service",
+         "amt": 146.45,
+         "note": ""
+        },
+        {
+         "id": "v0620",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "Q89022",
+         "date": "2026-07-27",
+         "kind": "Service",
+         "amt": 151.54,
+         "note": ""
+        },
+        {
+         "id": "v0622",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "",
+         "date": "2026-08-27",
+         "kind": "Service",
+         "amt": 151.54,
+         "note": ""
+        },
+        {
+         "id": "v0624",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "K41373",
+         "date": "2026-10-09",
+         "kind": "Service",
+         "amt": 151.54,
+         "note": ""
+        },
+        {
+         "id": "v0626",
+         "vendor": "Granite Peak Flooring Group",
+         "no": "838490863506",
+         "date": "2026-10-28",
+         "kind": "Service",
+         "amt": 228.56,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i48",
+       "cat": "Site operations",
+       "name": "Garbage truck",
+       "amt": 7300.0,
+       "act": 8069.85,
+       "note": "Samples 88",
+       "pays": [
+        {
+         "id": "p0006",
+         "date": "2026-06-30",
+         "method": "Cheque",
+         "amt": 452.67,
+         "ref": "Cheque",
+         "inv": "v0005"
+        },
+        {
+         "id": "p0248",
+         "date": "2026-07-13",
+         "method": "Cheque",
+         "amt": 452.67,
+         "ref": "Cheque",
+         "inv": "v0247"
+        },
+        {
+         "id": "p0250",
+         "date": "2026-07-13",
+         "method": "Cheque",
+         "amt": 452.67,
+         "ref": "Cheque",
+         "inv": "v0249"
+        },
+        {
+         "id": "p0252",
+         "date": "2026-08-31",
+         "method": "Visa",
+         "amt": 1860.21,
+         "ref": "VISA",
+         "inv": "v0251"
+        },
+        {
+         "id": "p0254",
+         "date": "2026-10-13",
+         "method": "Visa",
+         "amt": 1709.38,
+         "ref": "VISA",
+         "inv": "v0253"
+        },
+        {
+         "id": "p0256",
+         "date": "2026-11-16",
+         "method": "Visa",
+         "amt": 2262.42,
+         "ref": "VISA",
+         "inv": "v0255"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0005",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "938",
+         "date": "2026-06-30",
+         "kind": "Service",
+         "amt": 452.67,
+         "note": "Second visit 32"
+        },
+        {
+         "id": "v0247",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "938",
+         "date": "2026-07-13",
+         "kind": "Service",
+         "amt": 452.67,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0249",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "629",
+         "date": "2026-07-13",
+         "kind": "Service",
+         "amt": 452.67,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0251",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "U2OFBQ9A-8600",
+         "date": "2026-08-31",
+         "kind": "Service",
+         "amt": 1860.21,
+         "note": ""
+        },
+        {
+         "id": "v0253",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "E7FEMH1G-3684",
+         "date": "2026-10-13",
+         "kind": "Service",
+         "amt": 1709.38,
+         "note": ""
+        },
+        {
+         "id": "v0255",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "113",
+         "date": "2026-11-16",
+         "kind": "Service",
+         "amt": 2262.42,
+         "note": ""
+        },
+        {
+         "id": "v0257",
+         "vendor": "Redstone Windows Ltd.",
+         "no": "",
+         "date": "",
+         "kind": "Service",
+         "amt": 879.83,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i49",
+       "cat": "Site operations",
+       "name": "Construction fence",
+       "amt": 1200.0,
+       "act": 2074.89,
+       "note": "Touch-ups 37",
+       "pays": [
+        {
+         "id": "p0011",
+         "date": "2026-04-02",
+         "method": "Not recorded",
+         "amt": 62.17,
+         "ref": "",
+         "inv": "v0010"
+        },
+        {
+         "id": "p0013",
+         "date": "2026-09-17",
+         "method": "Refund / credit",
+         "amt": -77.71,
+         "ref": "VISA",
+         "inv": "v0012"
+        },
+        {
+         "id": "p0015",
+         "date": "2026-09-17",
+         "method": "Not recorded",
+         "amt": 103.61,
+         "ref": "",
+         "inv": "v0014"
+        },
+        {
+         "id": "p0174",
+         "date": "2026-03-11",
+         "method": "Visa",
+         "amt": 207.23,
+         "ref": "VISA",
+         "inv": "v0173"
+        },
+        {
+         "id": "p0176",
+         "date": "2026-03-30",
+         "method": "Visa",
+         "amt": 142.47,
+         "ref": "VISA",
+         "inv": "v0175"
+        },
+        {
+         "id": "p0178",
+         "date": "2026-04-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0177"
+        },
+        {
+         "id": "p0180",
+         "date": "2026-04-27",
+         "method": "Visa",
+         "amt": 77.71,
+         "ref": "VISA",
+         "inv": "v0179"
+        },
+        {
+         "id": "p0182",
+         "date": "2026-05-01",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0181"
+        },
+        {
+         "id": "p0184",
+         "date": "2026-05-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0183"
+        },
+        {
+         "id": "p0186",
+         "date": "2026-05-25",
+         "method": "Visa",
+         "amt": 103.61,
+         "ref": "VISA",
+         "inv": "v0185"
+        },
+        {
+         "id": "p0188",
+         "date": "2026-06-02",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0187"
+        },
+        {
+         "id": "p0190",
+         "date": "2026-06-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0189"
+        },
+        {
+         "id": "p0192",
+         "date": "2026-07-02",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0191"
+        },
+        {
+         "id": "p0194",
+         "date": "2026-07-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0193"
+        },
+        {
+         "id": "p0196",
+         "date": "2026-08-02",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0195"
+        },
+        {
+         "id": "p0198",
+         "date": "2026-08-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0197"
+        },
+        {
+         "id": "p0200",
+         "date": "2026-09-02",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0199"
+        },
+        {
+         "id": "p0202",
+         "date": "2026-09-17",
+         "method": "Visa",
+         "amt": 139.88,
+         "ref": "VISA",
+         "inv": "v0201"
+        },
+        {
+         "id": "p0204",
+         "date": "2026-10-02",
+         "method": "Refund / credit",
+         "amt": -77.71,
+         "ref": "VISA",
+         "inv": "v0203"
+        },
+        {
+         "id": "p0206",
+         "date": "2026-10-02",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0205"
+        },
+        {
+         "id": "p0208",
+         "date": "2026-10-18",
+         "method": "Visa",
+         "amt": 62.17,
+         "ref": "VISA",
+         "inv": "v0207"
+        },
+        {
+         "id": "p0210",
+         "date": "2026-11-24",
+         "method": "Visa",
+         "amt": 196.87,
+         "ref": "VISA",
+         "inv": "v0209"
+        },
+        {
+         "id": "p0212",
+         "date": "2026-11-02",
+         "method": "Not recorded",
+         "amt": 62.17,
+         "ref": "",
+         "inv": "v0211"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0010",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "ARW-878661",
+         "date": "2026-04-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": "Change order 43"
+        },
+        {
+         "id": "v0012",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "4572-1335",
+         "date": "2026-09-17",
+         "kind": "Service",
+         "amt": -77.71,
+         "note": "Progress payment 90"
+        },
+        {
+         "id": "v0014",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "IUS-989779",
+         "date": "2026-09-17",
+         "kind": "Service",
+         "amt": 103.61,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0173",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "330",
+         "date": "2026-03-11",
+         "kind": "Service",
+         "amt": 207.23,
+         "note": "Site visit 34"
+        },
+        {
+         "id": "v0175",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "CYY-215636",
+         "date": "2026-03-30",
+         "kind": "Service",
+         "amt": 142.47,
+         "note": "Site cleanup 6"
+        },
+        {
+         "id": "v0177",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "CAX-601101",
+         "date": "2026-04-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": "Rough-in"
+        },
+        {
+         "id": "v0179",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "Qigcctu# VZR-313048",
+         "date": "2026-04-27",
+         "kind": "Service",
+         "amt": 77.71,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0181",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# BOB-676843",
+         "date": "2026-05-01",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": "Second visit"
+        },
+        {
+         "id": "v0183",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# FIC-344420",
+         "date": "2026-05-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": "Second visit"
+        },
+        {
+         "id": "v0185",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "ONY-497696",
+         "date": "2026-05-25",
+         "kind": "Service",
+         "amt": 103.61,
+         "note": "Balance 96"
+        },
+        {
+         "id": "v0187",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "OVQ-597124",
+         "date": "2026-06-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0189",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "RUE-976883",
+         "date": "2026-06-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": ""
+        },
+        {
+         "id": "v0191",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "PDJ-735266",
+         "date": "2026-07-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0193",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "YEF-663094",
+         "date": "2026-07-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": ""
+        },
+        {
+         "id": "v0195",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# BFX-539346",
+         "date": "2026-08-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0197",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "OBA-217773",
+         "date": "2026-08-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": ""
+        },
+        {
+         "id": "v0199",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "AKF-169046",
+         "date": "2026-09-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0201",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# KTR-870505",
+         "date": "2026-09-17",
+         "kind": "Service",
+         "amt": 139.88,
+         "note": ""
+        },
+        {
+         "id": "v0203",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "",
+         "date": "2026-10-02",
+         "kind": "Service",
+         "amt": -77.71,
+         "note": ""
+        },
+        {
+         "id": "v0205",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# JLR-603882",
+         "date": "2026-10-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0207",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# LDS-463201",
+         "date": "2026-10-18",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        },
+        {
+         "id": "v0209",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "KOS-554961",
+         "date": "2026-11-24",
+         "kind": "Service",
+         "amt": 196.87,
+         "note": "Extra order 22"
+        },
+        {
+         "id": "v0211",
+         "vendor": "Maple Leaf Framing Co.",
+         "no": "# RHU-672543",
+         "date": "2026-11-02",
+         "kind": "Service",
+         "amt": 62.17,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i50",
+       "cat": "Site operations",
+       "name": "Cleaning",
+       "amt": 2250.0,
+       "act": 1492.8,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0171",
+         "vendor": "Missing Invoice",
+         "no": "",
+         "date": "",
+         "kind": "Trade",
+         "amt": 1492.8,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i51",
+       "cat": "Site operations",
+       "name": "Staging",
+       "amt": 8700.0,
+       "act": 4292.66,
+       "note": "",
+       "pays": [],
+       "invs": [
+        {
+         "id": "v0656",
+         "vendor": "Sagebrush Landscaping Ltd.",
+         "no": "8321",
+         "date": "2026-11-16",
+         "kind": "Material",
+         "amt": 4292.66,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i52",
+       "cat": "Site operations",
+       "name": "Miscellaneous",
+       "amt": 9600.0,
+       "act": 7242.14,
+       "note": "",
+       "pays": [
+        {
+         "id": "p0402",
+         "date": "",
+         "method": "Visa",
+         "amt": 60.6,
+         "ref": "VISA",
+         "inv": "v0401"
+        },
+        {
+         "id": "p0404",
+         "date": "2026-08-05",
+         "method": "Not recorded",
+         "amt": 60.8,
+         "ref": "",
+         "inv": "v0403"
+        },
+        {
+         "id": "p0406",
+         "date": "2026-10-09",
+         "method": "Debit",
+         "amt": 243.98,
+         "ref": "Second visit",
+         "inv": "v0405"
+        },
+        {
+         "id": "p0408",
+         "date": "2026-11-09",
+         "method": "Visa",
+         "amt": 232.08,
+         "ref": "VISA",
+         "inv": "v0407"
+        },
+        {
+         "id": "p0410",
+         "date": "2026-09-08",
+         "method": "Debit",
+         "amt": 76.95,
+         "ref": "Second visit",
+         "inv": "v0409"
+        },
+        {
+         "id": "p0412",
+         "date": "2026-05-14",
+         "method": "Visa",
+         "amt": 28.36,
+         "ref": "Visa",
+         "inv": "v0411"
+        },
+        {
+         "id": "p0414",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 46.54,
+         "ref": "Visa",
+         "inv": "v0413"
+        },
+        {
+         "id": "p0416",
+         "date": "2026-07-08",
+         "method": "Visa",
+         "amt": 190.29,
+         "ref": "Visa",
+         "inv": "v0415"
+        },
+        {
+         "id": "p0418",
+         "date": "2026-09-02",
+         "method": "Visa",
+         "amt": 132.01,
+         "ref": "Visa",
+         "inv": "v0417"
+        },
+        {
+         "id": "p0420",
+         "date": "2026-06-05",
+         "method": "Visa",
+         "amt": 114.99,
+         "ref": "Visa",
+         "inv": "v0419"
+        },
+        {
+         "id": "p0422",
+         "date": "2026-06-12",
+         "method": "Visa",
+         "amt": 47.62,
+         "ref": "Visa",
+         "inv": "v0421"
+        },
+        {
+         "id": "p0424",
+         "date": "2026-07-03",
+         "method": "Visa",
+         "amt": 25.23,
+         "ref": "Visa",
+         "inv": "v0423"
+        },
+        {
+         "id": "p0426",
+         "date": "2026-07-10",
+         "method": "Visa",
+         "amt": 67.68,
+         "ref": "Visa",
+         "inv": "v0425"
+        },
+        {
+         "id": "p0428",
+         "date": "2026-07-08",
+         "method": "Visa",
+         "amt": 76.69,
+         "ref": "Visa",
+         "inv": "v0427"
+        },
+        {
+         "id": "p0430",
+         "date": "2026-08-06",
+         "method": "Visa",
+         "amt": 53.48,
+         "ref": "Visa",
+         "inv": "v0429"
+        },
+        {
+         "id": "p0432",
+         "date": "2026-07-29",
+         "method": "Visa",
+         "amt": 38.76,
+         "ref": "Visa",
+         "inv": "v0431"
+        },
+        {
+         "id": "p0434",
+         "date": "2026-07-28",
+         "method": "Visa",
+         "amt": 42.38,
+         "ref": "Visa",
+         "inv": "v0433"
+        },
+        {
+         "id": "p0436",
+         "date": "",
+         "method": "Visa",
+         "amt": 14.08,
+         "ref": "Visa",
+         "inv": "v0435"
+        },
+        {
+         "id": "p0438",
+         "date": "2026-07-28",
+         "method": "Visa",
+         "amt": 110.93,
+         "ref": "Visa",
+         "inv": "v0437"
+        },
+        {
+         "id": "p0440",
+         "date": "2026-08-21",
+         "method": "Visa",
+         "amt": 37.35,
+         "ref": "Visa",
+         "inv": "v0439"
+        },
+        {
+         "id": "p0442",
+         "date": "2026-08-22",
+         "method": "Visa",
+         "amt": 6.38,
+         "ref": "Visa",
+         "inv": "v0441"
+        },
+        {
+         "id": "p0444",
+         "date": "2026-08-25",
+         "method": "Visa",
+         "amt": 12.8,
+         "ref": "Visa",
+         "inv": "v0443"
+        },
+        {
+         "id": "p0446",
+         "date": "2026-09-10",
+         "method": "Visa",
+         "amt": 18.97,
+         "ref": "Visa",
+         "inv": "v0445"
+        },
+        {
+         "id": "p0448",
+         "date": "2026-09-10",
+         "method": "Visa",
+         "amt": 32.98,
+         "ref": "Visa",
+         "inv": "v0447"
+        },
+        {
+         "id": "p0450",
+         "date": "2026-08-27",
+         "method": "Visa",
+         "amt": 4.49,
+         "ref": "Visa",
+         "inv": "v0449"
+        },
+        {
+         "id": "p0452",
+         "date": "2026-06-26",
+         "method": "Visa",
+         "amt": 27.87,
+         "ref": "Visa",
+         "inv": "v0451"
+        },
+        {
+         "id": "p0454",
+         "date": "2026-07-03",
+         "method": "Visa",
+         "amt": 21.08,
+         "ref": "Visa",
+         "inv": "v0453"
+        },
+        {
+         "id": "p0456",
+         "date": "2026-07-20",
+         "method": "Visa",
+         "amt": 18.25,
+         "ref": "Visa",
+         "inv": "v0455"
+        },
+        {
+         "id": "p0458",
+         "date": "2026-08-04",
+         "method": "Visa",
+         "amt": 24.92,
+         "ref": "Visa",
+         "inv": "v0457"
+        },
+        {
+         "id": "p0460",
+         "date": "2026-07-17",
+         "method": "Visa",
+         "amt": 25.55,
+         "ref": "Visa",
+         "inv": "v0459"
+        },
+        {
+         "id": "p0462",
+         "date": "2026-07-16",
+         "method": "Visa",
+         "amt": 18.25,
+         "ref": "Visa",
+         "inv": "v0461"
+        },
+        {
+         "id": "p0464",
+         "date": "2026-08-27",
+         "method": "Visa",
+         "amt": 22.06,
+         "ref": "Visa",
+         "inv": "v0463"
+        },
+        {
+         "id": "p0466",
+         "date": "2026-08-25",
+         "method": "Visa",
+         "amt": 26.87,
+         "ref": "Visa",
+         "inv": "v0465"
+        },
+        {
+         "id": "p0468",
+         "date": "2026-06-16",
+         "method": "Visa",
+         "amt": 180.98,
+         "ref": "Visa",
+         "inv": "v0467"
+        },
+        {
+         "id": "p0470",
+         "date": "2026-06-16",
+         "method": "Visa",
+         "amt": 133.32,
+         "ref": "Visa",
+         "inv": "v0469"
+        },
+        {
+         "id": "p0472",
+         "date": "2026-03-06",
+         "method": "Visa",
+         "amt": 269.67,
+         "ref": "Visa",
+         "inv": "v0471"
+        },
+        {
+         "id": "p0474",
+         "date": "2026-03-06",
+         "method": "Visa",
+         "amt": 5.87,
+         "ref": "Visa",
+         "inv": "v0473"
+        },
+        {
+         "id": "p0476",
+         "date": "2026-06-03",
+         "method": "Visa",
+         "amt": 21.74,
+         "ref": "Visa",
+         "inv": "v0475"
+        },
+        {
+         "id": "p0478",
+         "date": "",
+         "method": "Visa",
+         "amt": 8.27,
+         "ref": "Visa",
+         "inv": "v0477"
+        },
+        {
+         "id": "p0480",
+         "date": "",
+         "method": "Visa",
+         "amt": 37.75,
+         "ref": "Visa",
+         "inv": "v0479"
+        },
+        {
+         "id": "p0482",
+         "date": "",
+         "method": "Visa",
+         "amt": 7.17,
+         "ref": "Visa",
+         "inv": "v0481"
+        },
+        {
+         "id": "p0484",
+         "date": "2026-09-21",
+         "method": "Cash",
+         "amt": 480.95,
+         "ref": "Second visit",
+         "inv": "v0483"
+        },
+        {
+         "id": "p0486",
+         "date": "2026-09-22",
+         "method": "Cash",
+         "amt": 67.33,
+         "ref": "Second visit",
+         "inv": "v0485"
+        },
+        {
+         "id": "p0488",
+         "date": "2026-09-22",
+         "method": "E-transfer",
+         "amt": 707.0,
+         "ref": "Etransfer",
+         "inv": "v0487"
+        },
+        {
+         "id": "p0490",
+         "date": "2026-09-24",
+         "method": "Visa",
+         "amt": 153.42,
+         "ref": "VISA",
+         "inv": "v0489"
+        },
+        {
+         "id": "p0492",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 23.07,
+         "ref": "Visa",
+         "inv": "v0491"
+        },
+        {
+         "id": "p0494",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 24.02,
+         "ref": "Visa",
+         "inv": "v0493"
+        },
+        {
+         "id": "p0496",
+         "date": "2026-09-18",
+         "method": "Visa",
+         "amt": 25.88,
+         "ref": "Visa",
+         "inv": "v0495"
+        },
+        {
+         "id": "p0498",
+         "date": "2026-09-16",
+         "method": "Visa",
+         "amt": 17.26,
+         "ref": "Visa",
+         "inv": "v0497"
+        },
+        {
+         "id": "p0500",
+         "date": "2026-09-11",
+         "method": "Visa",
+         "amt": 24.92,
+         "ref": "Visa",
+         "inv": "v0499"
+        },
+        {
+         "id": "p0502",
+         "date": "2026-09-10",
+         "method": "Visa",
+         "amt": 17.29,
+         "ref": "Visa",
+         "inv": "v0501"
+        },
+        {
+         "id": "p0504",
+         "date": "2026-10-01",
+         "method": "Visa",
+         "amt": 15.0,
+         "ref": "Visa",
+         "inv": "v0503"
+        },
+        {
+         "id": "p0506",
+         "date": "2026-10-02",
+         "method": "E-transfer",
+         "amt": 173.14,
+         "ref": "Etransfer",
+         "inv": "v0505"
+        },
+        {
+         "id": "p0508",
+         "date": "2026-10-05",
+         "method": "Not recorded",
+         "amt": 85.81,
+         "ref": "Warranty item 97",
+         "inv": "v0507"
+        },
+        {
+         "id": "p0510",
+         "date": "2026-10-05",
+         "method": "Not recorded",
+         "amt": 29.28,
+         "ref": "Framing materials 56",
+         "inv": "v0509"
+        },
+        {
+         "id": "p0512",
+         "date": "2026-10-06",
+         "method": "Not recorded",
+         "amt": 209.23,
+         "ref": "Balance 28",
+         "inv": "v0511"
+        },
+        {
+         "id": "p0514",
+         "date": "2026-10-14",
+         "method": "Not recorded",
+         "amt": 58.84,
+         "ref": "Warranty item",
+         "inv": "v0513"
+        },
+        {
+         "id": "p0516",
+         "date": "2026-10-15",
+         "method": "Not recorded",
+         "amt": 59.57,
+         "ref": "Progress payment",
+         "inv": "v0515"
+        },
+        {
+         "id": "p0518",
+         "date": "2026-10-18",
+         "method": "Not recorded",
+         "amt": 37.71,
+         "ref": "Rough-in",
+         "inv": "v0517"
+        },
+        {
+         "id": "p0520",
+         "date": "2026-10-15",
+         "method": "Not recorded",
+         "amt": 45.44,
+         "ref": "Second visit 99",
+         "inv": "v0519"
+        },
+        {
+         "id": "p0522",
+         "date": "2026-10-19",
+         "method": "Not recorded",
+         "amt": 68.77,
+         "ref": "Rough-in 40",
+         "inv": "v0521"
+        },
+        {
+         "id": "p0524",
+         "date": "2026-10-22",
+         "method": "Not recorded",
+         "amt": 192.38,
+         "ref": "Progress payment",
+         "inv": "v0523"
+        },
+        {
+         "id": "p0526",
+         "date": "2026-10-21",
+         "method": "Not recorded",
+         "amt": 24.99,
+         "ref": "Samples 65",
+         "inv": "v0525"
+        },
+        {
+         "id": "p0528",
+         "date": "2026-10-23",
+         "method": "Not recorded",
+         "amt": 105.02,
+         "ref": "Progress payment",
+         "inv": "v0527"
+        },
+        {
+         "id": "p0530",
+         "date": "2026-10-29",
+         "method": "Not recorded",
+         "amt": 192.38,
+         "ref": "",
+         "inv": "v0529"
+        },
+        {
+         "id": "p0532",
+         "date": "2026-10-29",
+         "method": "Not recorded",
+         "amt": 61.56,
+         "ref": "Final install",
+         "inv": "v0531"
+        },
+        {
+         "id": "p0534",
+         "date": "2026-10-27",
+         "method": "Not recorded",
+         "amt": 40.39,
+         "ref": "Framing materials",
+         "inv": "v0533"
+        },
+        {
+         "id": "p0536",
+         "date": "2026-11-02",
+         "method": "Not recorded",
+         "amt": 60.08,
+         "ref": "Balance 72",
+         "inv": "v0535"
+        },
+        {
+         "id": "p0538",
+         "date": "2026-11-03",
+         "method": "E-transfer",
+         "amt": 261.64,
+         "ref": "Deposit 71",
+         "inv": "v0537"
+        },
+        {
+         "id": "p0540",
+         "date": "2026-11-07",
+         "method": "E-transfer",
+         "amt": 384.76,
+         "ref": "Etransfer",
+         "inv": "v0539"
+        },
+        {
+         "id": "p0542",
+         "date": "2026-11-09",
+         "method": "Cash",
+         "amt": 432.86,
+         "ref": "Cash",
+         "inv": "v0541"
+        },
+        {
+         "id": "p0544",
+         "date": "2026-11-09",
+         "method": "Not recorded",
+         "amt": 48.4,
+         "ref": "Site visit 96",
+         "inv": "v0543"
+        },
+        {
+         "id": "p0546",
+         "date": "2026-11-06",
+         "method": "Not recorded",
+         "amt": 27.4,
+         "ref": "Deposit 6",
+         "inv": "v0545"
+        },
+        {
+         "id": "p0548",
+         "date": "2026-11-05",
+         "method": "Not recorded",
+         "amt": 94.16,
+         "ref": "Materials pickup",
+         "inv": "v0547"
+        },
+        {
+         "id": "p0550",
+         "date": "2026-11-16",
+         "method": "Not recorded",
+         "amt": 20.97,
+         "ref": "",
+         "inv": "v0549"
+        },
+        {
+         "id": "p0552",
+         "date": "2026-11-15",
+         "method": "Not recorded",
+         "amt": 132.98,
+         "ref": "Site visit 53",
+         "inv": "v0551"
+        },
+        {
+         "id": "p0554",
+         "date": "2026-11-15",
+         "method": "Not recorded",
+         "amt": 36.51,
+         "ref": "Site cleanup",
+         "inv": "v0553"
+        },
+        {
+         "id": "p0556",
+         "date": "2026-11-21",
+         "method": "Not recorded",
+         "amt": 35.86,
+         "ref": "",
+         "inv": "v0555"
+        },
+        {
+         "id": "p0558",
+         "date": "2026-11-20",
+         "method": "Not recorded",
+         "amt": 25.03,
+         "ref": "Touch-ups",
+         "inv": "v0557"
+        },
+        {
+         "id": "p0560",
+         "date": "2026-11-18",
+         "method": "Not recorded",
+         "amt": 32.19,
+         "ref": "Second visit",
+         "inv": "v0559"
+        },
+        {
+         "id": "p0562",
+         "date": "2026-11-18",
+         "method": "Not recorded",
+         "amt": 23.22,
+         "ref": "Change order",
+         "inv": "v0561"
+        },
+        {
+         "id": "p0564",
+         "date": "2026-11-17",
+         "method": "Not recorded",
+         "amt": 6.84,
+         "ref": "",
+         "inv": "v0563"
+        },
+        {
+         "id": "p0566",
+         "date": "2026-11-17",
+         "method": "Not recorded",
+         "amt": 31.58,
+         "ref": "Samples",
+         "inv": "v0565"
+        },
+        {
+         "id": "p0568",
+         "date": "2026-11-16",
+         "method": "Not recorded",
+         "amt": 20.97,
+         "ref": "Samples",
+         "inv": "v0567"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0401",
+         "vendor": "Northwind Masonry Inc.",
+         "no": "",
+         "date": "",
+         "kind": "Service",
+         "amt": 60.6,
+         "note": ""
+        },
+        {
+         "id": "v0403",
+         "vendor": "Northwind Masonry Inc.",
+         "no": "",
+         "date": "2026-08-05",
+         "kind": "Service",
+         "amt": 60.8,
+         "note": ""
+        },
+        {
+         "id": "v0405",
+         "vendor": "Northwind Masonry Inc.",
+         "no": "",
+         "date": "2026-10-09",
+         "kind": "Service",
+         "amt": 243.98,
+         "note": ""
+        },
+        {
+         "id": "v0407",
+         "vendor": "Northwind Masonry Inc.",
+         "no": "759574679",
+         "date": "2026-11-09",
+         "kind": "Service",
+         "amt": 232.08,
+         "note": ""
+        },
+        {
+         "id": "v0409",
+         "vendor": "Northwind Masonry Inc.",
+         "no": "",
+         "date": "2026-09-08",
+         "kind": "Service",
+         "amt": 76.95,
+         "note": ""
+        },
+        {
+         "id": "v0411",
+         "vendor": "Foothills Roofing Ltd.",
+         "no": "822371",
+         "date": "2026-05-14",
+         "kind": "Other",
+         "amt": 28.36,
+         "note": "Change order 84"
+        },
+        {
+         "id": "v0413",
+         "vendor": "Foothills Roofing Ltd.",
+         "no": "7125891",
+         "date": "2026-08-23",
+         "kind": "Other",
+         "amt": 46.54,
+         "note": "Rough-in"
+        },
+        {
+         "id": "v0415",
+         "vendor": "Evergreen Appliances Group",
+         "no": "ON89953",
+         "date": "2026-07-08",
+         "kind": "Material",
+         "amt": 190.29,
+         "note": "Touch-ups"
+        },
+        {
+         "id": "v0417",
+         "vendor": "Evergreen Appliances Group",
+         "no": "ME83477",
+         "date": "2026-09-02",
+         "kind": "Material",
+         "amt": 132.01,
+         "note": "Deposit 38"
+        },
+        {
+         "id": "v0419",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "47590",
+         "date": "2026-06-05",
+         "kind": "Material",
+         "amt": 114.99,
+         "note": "Touch-ups"
+        },
+        {
+         "id": "v0421",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "183556",
+         "date": "2026-06-12",
+         "kind": "Material",
+         "amt": 47.62,
+         "note": "Touch-ups"
+        },
+        {
+         "id": "v0423",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "15125443634",
+         "date": "2026-07-03",
+         "kind": "Material",
+         "amt": 25.23,
+         "note": "Touch-ups 38"
+        },
+        {
+         "id": "v0425",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "12338345796",
+         "date": "2026-07-10",
+         "kind": "Material",
+         "amt": 67.68,
+         "note": ""
+        },
+        {
+         "id": "v0427",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "14589392628",
+         "date": "2026-07-08",
+         "kind": "Material",
+         "amt": 76.69,
+         "note": "Progress payment"
+        },
+        {
+         "id": "v0429",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "14370986406",
+         "date": "2026-08-06",
+         "kind": "Material",
+         "amt": 53.48,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0431",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "92161836441",
+         "date": "2026-07-29",
+         "kind": "Material",
+         "amt": 38.76,
+         "note": "Rough-in 66"
+        },
+        {
+         "id": "v0433",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "31440545198",
+         "date": "2026-07-28",
+         "kind": "Material",
+         "amt": 42.38,
+         "note": ""
+        },
+        {
+         "id": "v0435",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "",
+         "date": "",
+         "kind": "Material",
+         "amt": 14.08,
+         "note": ""
+        },
+        {
+         "id": "v0437",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "21423186466",
+         "date": "2026-07-28",
+         "kind": "Material",
+         "amt": 110.93,
+         "note": "Warranty item"
+        },
+        {
+         "id": "v0439",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "33664401858",
+         "date": "2026-08-21",
+         "kind": "Material",
+         "amt": 37.35,
+         "note": ""
+        },
+        {
+         "id": "v0441",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "68623957538",
+         "date": "2026-08-22",
+         "kind": "Material",
+         "amt": 6.38,
+         "note": ""
+        },
+        {
+         "id": "v0443",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "52882657743",
+         "date": "2026-08-25",
+         "kind": "Material",
+         "amt": 12.8,
+         "note": ""
+        },
+        {
+         "id": "v0445",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "80704831841",
+         "date": "2026-09-10",
+         "kind": "Material",
+         "amt": 18.97,
+         "note": "Samples"
+        },
+        {
+         "id": "v0447",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "89372553794",
+         "date": "2026-09-10",
+         "kind": "Material",
+         "amt": 32.98,
+         "note": "Touch-ups 35"
+        },
+        {
+         "id": "v0449",
+         "vendor": "Yarrow Concrete Ltd",
+         "no": "6603615",
+         "date": "2026-08-27",
+         "kind": "Other",
+         "amt": 4.49,
+         "note": ""
+        },
+        {
+         "id": "v0451",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-06-26",
+         "kind": "Other",
+         "amt": 27.87,
+         "note": "Samples"
+        },
+        {
+         "id": "v0453",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-07-03",
+         "kind": "Other",
+         "amt": 21.08,
+         "note": "Samples"
+        },
+        {
+         "id": "v0455",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-07-20",
+         "kind": "Other",
+         "amt": 18.25,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0457",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-08-04",
+         "kind": "Other",
+         "amt": 24.92,
+         "note": "Samples"
+        },
+        {
+         "id": "v0459",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-07-17",
+         "kind": "Other",
+         "amt": 25.55,
+         "note": "Site cleanup"
+        },
+        {
+         "id": "v0461",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-07-16",
+         "kind": "Other",
+         "amt": 18.25,
+         "note": "Samples"
+        },
+        {
+         "id": "v0463",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-08-27",
+         "kind": "Other",
+         "amt": 22.06,
+         "note": ""
+        },
+        {
+         "id": "v0465",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-08-25",
+         "kind": "Other",
+         "amt": 26.87,
+         "note": ""
+        },
+        {
+         "id": "v0467",
+         "vendor": "Willow Electric Co.",
+         "no": "209063",
+         "date": "2026-06-16",
+         "kind": "Material",
+         "amt": 180.98,
+         "note": "Final install"
+        },
+        {
+         "id": "v0469",
+         "vendor": "Yarrow Electric Co.",
+         "no": "vj73971",
+         "date": "2026-06-16",
+         "kind": "Material",
+         "amt": 133.32,
+         "note": "Delivery 15"
+        },
+        {
+         "id": "v0471",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "5182",
+         "date": "2026-03-06",
+         "kind": "Other",
+         "amt": 269.67,
+         "note": ""
+        },
+        {
+         "id": "v0473",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "",
+         "date": "2026-03-06",
+         "kind": "Other",
+         "amt": 5.87,
+         "note": ""
+        },
+        {
+         "id": "v0475",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "28849",
+         "date": "2026-06-03",
+         "kind": "Other",
+         "amt": 21.74,
+         "note": "Delivery"
+        },
+        {
+         "id": "v0477",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "",
+         "date": "",
+         "kind": "Other",
+         "amt": 8.27,
+         "note": ""
+        },
+        {
+         "id": "v0479",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "",
+         "date": "",
+         "kind": "Other",
+         "amt": 37.75,
+         "note": ""
+        },
+        {
+         "id": "v0481",
+         "vendor": "Maple Leaf Glass Group",
+         "no": "",
+         "date": "",
+         "kind": "Other",
+         "amt": 7.17,
+         "note": ""
+        },
+        {
+         "id": "v0483",
+         "vendor": "Willow Lighting Inc.",
+         "no": "4",
+         "date": "2026-09-21",
+         "kind": "Trade",
+         "amt": 480.95,
+         "note": ""
+        },
+        {
+         "id": "v0485",
+         "vendor": "Willow Lighting Inc.",
+         "no": "6",
+         "date": "2026-09-22",
+         "kind": "Trade",
+         "amt": 67.33,
+         "note": ""
+        },
+        {
+         "id": "v0487",
+         "vendor": "Willow Lighting Inc.",
+         "no": "9",
+         "date": "2026-09-22",
+         "kind": "Trade",
+         "amt": 707.0,
+         "note": ""
+        },
+        {
+         "id": "v0489",
+         "vendor": "Clearwater Railings Inc.",
+         "no": "7201788",
+         "date": "2026-09-24",
+         "kind": "Material",
+         "amt": 153.42,
+         "note": "Second visit"
+        },
+        {
+         "id": "v0491",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-29",
+         "kind": "Other",
+         "amt": 23.07,
+         "note": ""
+        },
+        {
+         "id": "v0493",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-28",
+         "kind": "Other",
+         "amt": 24.02,
+         "note": ""
+        },
+        {
+         "id": "v0495",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-18",
+         "kind": "Other",
+         "amt": 25.88,
+         "note": ""
+        },
+        {
+         "id": "v0497",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-16",
+         "kind": "Other",
+         "amt": 17.26,
+         "note": ""
+        },
+        {
+         "id": "v0499",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-11",
+         "kind": "Other",
+         "amt": 24.92,
+         "note": ""
+        },
+        {
+         "id": "v0501",
+         "vendor": "Highline Appliances Inc.",
+         "no": "",
+         "date": "2026-09-10",
+         "kind": "Other",
+         "amt": 17.29,
+         "note": ""
+        },
+        {
+         "id": "v0503",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "",
+         "date": "2026-10-01",
+         "kind": "Material",
+         "amt": 15.0,
+         "note": ""
+        },
+        {
+         "id": "v0505",
+         "vendor": "Willow Lighting Inc.",
+         "no": "5",
+         "date": "2026-10-02",
+         "kind": "Trade",
+         "amt": 173.14,
+         "note": ""
+        },
+        {
+         "id": "v0507",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "9870620005",
+         "date": "2026-10-05",
+         "kind": "Material",
+         "amt": 85.81,
+         "note": ""
+        },
+        {
+         "id": "v0509",
+         "vendor": "Redstone Surveys Group",
+         "no": "G41584576",
+         "date": "2026-10-05",
+         "kind": "Material",
+         "amt": 29.28,
+         "note": ""
+        },
+        {
+         "id": "v0511",
+         "vendor": "Redstone Surveys Group",
+         "no": "U682400051903",
+         "date": "2026-10-06",
+         "kind": "Material",
+         "amt": 209.23,
+         "note": ""
+        },
+        {
+         "id": "v0513",
+         "vendor": "Redstone Surveys Group",
+         "no": "4",
+         "date": "2026-10-14",
+         "kind": "Material",
+         "amt": 58.84,
+         "note": ""
+        },
+        {
+         "id": "v0515",
+         "vendor": "Redstone Surveys Group",
+         "no": "g018750747185",
+         "date": "2026-10-15",
+         "kind": "Material",
+         "amt": 59.57,
+         "note": ""
+        },
+        {
+         "id": "v0517",
+         "vendor": "Highline Builders Co.",
+         "no": "4",
+         "date": "2026-10-18",
+         "kind": "Other",
+         "amt": 37.71,
+         "note": ""
+        },
+        {
+         "id": "v0519",
+         "vendor": "Redstone Surveys Group",
+         "no": "A977635533782",
+         "date": "2026-10-15",
+         "kind": "Material",
+         "amt": 45.44,
+         "note": ""
+        },
+        {
+         "id": "v0521",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "78934847918",
+         "date": "2026-10-19",
+         "kind": "Material",
+         "amt": 68.77,
+         "note": ""
+        },
+        {
+         "id": "v0523",
+         "vendor": "Willow Lighting Inc.",
+         "no": "2",
+         "date": "2026-10-22",
+         "kind": "Trade",
+         "amt": 192.38,
+         "note": ""
+        },
+        {
+         "id": "v0525",
+         "vendor": "Highline Appliances Inc.",
+         "no": "4",
+         "date": "2026-10-21",
+         "kind": "Other",
+         "amt": 24.99,
+         "note": ""
+        },
+        {
+         "id": "v0527",
+         "vendor": "Redstone Surveys Group",
+         "no": "z711729559011",
+         "date": "2026-10-23",
+         "kind": "Material",
+         "amt": 105.02,
+         "note": ""
+        },
+        {
+         "id": "v0529",
+         "vendor": "Willow Lighting Inc.",
+         "no": "6",
+         "date": "2026-10-29",
+         "kind": "Trade",
+         "amt": 192.38,
+         "note": ""
+        },
+        {
+         "id": "v0531",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "",
+         "date": "2026-10-29",
+         "kind": "Material",
+         "amt": 61.56,
+         "note": ""
+        },
+        {
+         "id": "v0533",
+         "vendor": "Redstone Surveys Group",
+         "no": "",
+         "date": "2026-10-27",
+         "kind": "Material",
+         "amt": 40.39,
+         "note": ""
+        },
+        {
+         "id": "v0535",
+         "vendor": "Sagebrush Masonry Ltd.",
+         "no": "779-5070491-0405313",
+         "date": "2026-11-02",
+         "kind": "Material",
+         "amt": 60.08,
+         "note": ""
+        },
+        {
+         "id": "v0537",
+         "vendor": "Willow Lighting Inc.",
+         "no": "9",
+         "date": "2026-11-03",
+         "kind": "Trade",
+         "amt": 261.64,
+         "note": ""
+        },
+        {
+         "id": "v0539",
+         "vendor": "Willow Lighting Inc.",
+         "no": "3",
+         "date": "2026-11-07",
+         "kind": "Trade",
+         "amt": 384.76,
+         "note": ""
+        },
+        {
+         "id": "v0541",
+         "vendor": "Willow Lighting Inc.",
+         "no": "32",
+         "date": "2026-11-09",
+         "kind": "Trade",
+         "amt": 432.86,
+         "note": ""
+        },
+        {
+         "id": "v0543",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "90200112960",
+         "date": "2026-11-09",
+         "kind": "Material",
+         "amt": 48.4,
+         "note": ""
+        },
+        {
+         "id": "v0545",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "70294096592",
+         "date": "2026-11-06",
+         "kind": "Material",
+         "amt": 27.4,
+         "note": ""
+        },
+        {
+         "id": "v0547",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "83053737142",
+         "date": "2026-11-05",
+         "kind": "Material",
+         "amt": 94.16,
+         "note": ""
+        },
+        {
+         "id": "v0549",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "43510598934",
+         "date": "2026-11-16",
+         "kind": "Material",
+         "amt": 20.97,
+         "note": ""
+        },
+        {
+         "id": "v0551",
+         "vendor": "Redstone Surveys Group",
+         "no": "e05790745",
+         "date": "2026-11-15",
+         "kind": "Material",
+         "amt": 132.98,
+         "note": ""
+        },
+        {
+         "id": "v0553",
+         "vendor": "Redstone Surveys Group",
+         "no": "x307190958178",
+         "date": "2026-11-15",
+         "kind": "Material",
+         "amt": 36.51,
+         "note": ""
+        },
+        {
+         "id": "v0555",
+         "vendor": "Juniper Interiors Co.",
+         "no": "69881629",
+         "date": "2026-11-21",
+         "kind": "Material",
+         "amt": 35.86,
+         "note": ""
+        },
+        {
+         "id": "v0557",
+         "vendor": "Redstone Surveys Group",
+         "no": "c653967286813",
+         "date": "2026-11-20",
+         "kind": "Material",
+         "amt": 25.03,
+         "note": ""
+        },
+        {
+         "id": "v0559",
+         "vendor": "Redstone Surveys Group",
+         "no": "o002322634497",
+         "date": "2026-11-18",
+         "kind": "Material",
+         "amt": 32.19,
+         "note": ""
+        },
+        {
+         "id": "v0561",
+         "vendor": "Redstone Surveys Group",
+         "no": "x554251365360",
+         "date": "2026-11-18",
+         "kind": "Material",
+         "amt": 23.22,
+         "note": ""
+        },
+        {
+         "id": "v0563",
+         "vendor": "Sagebrush Landscaping Co.",
+         "no": "4",
+         "date": "2026-11-17",
+         "kind": "Material",
+         "amt": 6.84,
+         "note": ""
+        },
+        {
+         "id": "v0565",
+         "vendor": "Redstone Surveys Group",
+         "no": "f963012956529",
+         "date": "2026-11-17",
+         "kind": "Material",
+         "amt": 31.58,
+         "note": ""
+        },
+        {
+         "id": "v0567",
+         "vendor": "Badlands Trucking Ltd",
+         "no": "782682",
+         "date": "2026-11-16",
+         "kind": "Material",
+         "amt": 20.97,
+         "note": ""
+        }
+       ]
+      },
+      {
+       "id": "i53",
+       "cat": "Site operations",
+       "name": "Site refreshments (coffee)",
+       "amt": 0,
+       "act": 1041.72,
+       "note": "Site cleanup 75",
+       "pays": [
+        {
+         "id": "p0029",
+         "date": "2026-05-14",
+         "method": "Visa",
+         "amt": 2.13,
+         "ref": "Visa",
+         "inv": "v0028"
+        },
+        {
+         "id": "p0031",
+         "date": "2026-06-05",
+         "method": "Visa",
+         "amt": 6.04,
+         "ref": "Visa",
+         "inv": "v0030"
+        },
+        {
+         "id": "p0033",
+         "date": "2026-06-09",
+         "method": "Visa",
+         "amt": 15.55,
+         "ref": "Visa",
+         "inv": "v0032"
+        },
+        {
+         "id": "p0035",
+         "date": "2026-06-26",
+         "method": "Visa",
+         "amt": 11.18,
+         "ref": "Visa",
+         "inv": "v0034"
+        },
+        {
+         "id": "p0037",
+         "date": "2026-06-27",
+         "method": "Visa",
+         "amt": 27.06,
+         "ref": "Visa",
+         "inv": "v0036"
+        },
+        {
+         "id": "p0039",
+         "date": "2026-07-10",
+         "method": "Visa",
+         "amt": 36.26,
+         "ref": "Visa",
+         "inv": "v0038"
+        },
+        {
+         "id": "p0041",
+         "date": "2026-07-17",
+         "method": "Visa",
+         "amt": 11.51,
+         "ref": "Visa",
+         "inv": "v0040"
+        },
+        {
+         "id": "p0043",
+         "date": "2026-07-24",
+         "method": "Visa",
+         "amt": 22.16,
+         "ref": "Visa",
+         "inv": "v0042"
+        },
+        {
+         "id": "p0045",
+         "date": "2026-07-27",
+         "method": "Visa",
+         "amt": 7.03,
+         "ref": "Visa",
+         "inv": "v0044"
+        },
+        {
+         "id": "p0047",
+         "date": "2026-07-28",
+         "method": "Visa",
+         "amt": 19.83,
+         "ref": "Visa",
+         "inv": "v0046"
+        },
+        {
+         "id": "p0049",
+         "date": "2026-07-31",
+         "method": "Visa",
+         "amt": 13.85,
+         "ref": "Visa",
+         "inv": "v0048"
+        },
+        {
+         "id": "p0051",
+         "date": "2026-08-04",
+         "method": "Visa",
+         "amt": 17.7,
+         "ref": "Visa",
+         "inv": "v0050"
+        },
+        {
+         "id": "p0053",
+         "date": "2026-08-05",
+         "method": "Visa",
+         "amt": 18.54,
+         "ref": "Visa",
+         "inv": "v0052"
+        },
+        {
+         "id": "p0055",
+         "date": "2026-08-18",
+         "method": "Visa",
+         "amt": 27.07,
+         "ref": "Visa",
+         "inv": "v0054"
+        },
+        {
+         "id": "p0057",
+         "date": "2026-08-20",
+         "method": "Visa",
+         "amt": 16.43,
+         "ref": "Visa",
+         "inv": "v0056"
+        },
+        {
+         "id": "p0059",
+         "date": "2026-08-21",
+         "method": "Visa",
+         "amt": 12.05,
+         "ref": "Visa",
+         "inv": "v0058"
+        },
+        {
+         "id": "p0061",
+         "date": "2026-08-22",
+         "method": "Visa",
+         "amt": 9.16,
+         "ref": "Visa",
+         "inv": "v0060"
+        },
+        {
+         "id": "p0063",
+         "date": "2026-08-25",
+         "method": "Visa",
+         "amt": 8.82,
+         "ref": "Visa",
+         "inv": "v0062"
+        },
+        {
+         "id": "p0065",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 8.62,
+         "ref": "Visa",
+         "inv": "v0064"
+        },
+        {
+         "id": "p0067",
+         "date": "2026-08-23",
+         "method": "Visa",
+         "amt": 15.99,
+         "ref": "Visa",
+         "inv": "v0066"
+        },
+        {
+         "id": "p0069",
+         "date": "2026-08-24",
+         "method": "Visa",
+         "amt": 12.67,
+         "ref": "Visa",
+         "inv": "v0068"
+        },
+        {
+         "id": "p0071",
+         "date": "2026-08-25",
+         "method": "Visa",
+         "amt": 20.91,
+         "ref": "Visa",
+         "inv": "v0070"
+        },
+        {
+         "id": "p0073",
+         "date": "2026-08-26",
+         "method": "Visa",
+         "amt": 20.73,
+         "ref": "Visa",
+         "inv": "v0072"
+        },
+        {
+         "id": "p0075",
+         "date": "2026-08-27",
+         "method": "Visa",
+         "amt": 13.51,
+         "ref": "Visa",
+         "inv": "v0074"
+        },
+        {
+         "id": "p0077",
+         "date": "2026-08-28",
+         "method": "Visa",
+         "amt": 28.58,
+         "ref": "Visa",
+         "inv": "v0076"
+        },
+        {
+         "id": "p0079",
+         "date": "2026-08-31",
+         "method": "Visa",
+         "amt": 14.81,
+         "ref": "Visa",
+         "inv": "v0078"
+        },
+        {
+         "id": "p0081",
+         "date": "2026-09-01",
+         "method": "Visa",
+         "amt": 7.78,
+         "ref": "Visa",
+         "inv": "v0080"
+        },
+        {
+         "id": "p0083",
+         "date": "2026-09-09",
+         "method": "Visa",
+         "amt": 24.91,
+         "ref": "Visa",
+         "inv": "v0082"
+        },
+        {
+         "id": "p0085",
+         "date": "2026-09-14",
+         "method": "Visa",
+         "amt": 18.77,
+         "ref": "Visa",
+         "inv": "v0084"
+        },
+        {
+         "id": "p0087",
+         "date": "2026-09-11",
+         "method": "Visa",
+         "amt": 12.12,
+         "ref": "Visa",
+         "inv": "v0086"
+        },
+        {
+         "id": "p0089",
+         "date": "2026-09-15",
+         "method": "Visa",
+         "amt": 10.67,
+         "ref": "Visa",
+         "inv": "v0088"
+        },
+        {
+         "id": "p0091",
+         "date": "2026-09-17",
+         "method": "Visa",
+         "amt": 19.14,
+         "ref": "Visa",
+         "inv": "v0090"
+        },
+        {
+         "id": "p0093",
+         "date": "2026-09-16",
+         "method": "Visa",
+         "amt": 24.26,
+         "ref": "Visa",
+         "inv": "v0092"
+        },
+        {
+         "id": "p0095",
+         "date": "2026-09-18",
+         "method": "Visa",
+         "amt": 16.95,
+         "ref": "Visa",
+         "inv": "v0094"
+        },
+        {
+         "id": "p0097",
+         "date": "2026-09-21",
+         "method": "Visa",
+         "amt": 17.06,
+         "ref": "Visa",
+         "inv": "v0096"
+        },
+        {
+         "id": "p0099",
+         "date": "2026-09-22",
+         "method": "Visa",
+         "amt": 5.0,
+         "ref": "Visa",
+         "inv": "v0098"
+        },
+        {
+         "id": "p0101",
+         "date": "2026-09-24",
+         "method": "Visa",
+         "amt": 17.26,
+         "ref": "Visa",
+         "inv": "v0100"
+        },
+        {
+         "id": "p0103",
+         "date": "2026-09-28",
+         "method": "Visa",
+         "amt": 29.53,
+         "ref": "Visa",
+         "inv": "v0102"
+        },
+        {
+         "id": "p0105",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 23.98,
+         "ref": "Visa",
+         "inv": "v0104"
+        },
+        {
+         "id": "p0107",
+         "date": "2026-09-29",
+         "method": "Visa",
+         "amt": 25.68,
+         "ref": "Visa",
+         "inv": "v0106"
+        },
+        {
+         "id": "p0109",
+         "date": "2026-09-14",
+         "method": "Visa",
+         "amt": 3.4,
+         "ref": "Visa",
+         "inv": "v0108"
+        },
+        {
+         "id": "p0111",
+         "date": "2026-09-02",
+         "method": "Visa",
+         "amt": 13.74,
+         "ref": "Visa",
+         "inv": "v0110"
+        },
+        {
+         "id": "p0113",
+         "date": "2026-10-01",
+         "method": "Visa",
+         "amt": 20.36,
+         "ref": "Visa",
+         "inv": "v0112"
+        },
+        {
+         "id": "p0115",
+         "date": "2026-10-02",
+         "method": "Visa",
+         "amt": 10.06,
+         "ref": "Visa",
+         "inv": "v0114"
+        },
+        {
+         "id": "p0117",
+         "date": "2026-10-05",
+         "method": "Visa",
+         "amt": 32.87,
+         "ref": "Visa",
+         "inv": "v0116"
+        },
+        {
+         "id": "p0119",
+         "date": "2026-10-04",
+         "method": "Visa",
+         "amt": 11.7,
+         "ref": "Visa",
+         "inv": "v0118"
+        },
+        {
+         "id": "p0121",
+         "date": "2026-10-04",
+         "method": "Visa",
+         "amt": 14.71,
+         "ref": "Visa",
+         "inv": "v0120"
+        },
+        {
+         "id": "p0123",
+         "date": "2026-10-02",
+         "method": "Visa",
+         "amt": 22.28,
+         "ref": "Visa",
+         "inv": "v0122"
+        },
+        {
+         "id": "p0125",
+         "date": "2026-10-14",
+         "method": "Visa",
+         "amt": 2.44,
+         "ref": "Visa",
+         "inv": "v0124"
+        },
+        {
+         "id": "p0127",
+         "date": "2026-10-15",
+         "method": "Visa",
+         "amt": 13.38,
+         "ref": "Visa",
+         "inv": "v0126"
+        },
+        {
+         "id": "p0129",
+         "date": "2026-10-14",
+         "method": "Visa",
+         "amt": 8.1,
+         "ref": "Visa",
+         "inv": "v0128"
+        },
+        {
+         "id": "p0131",
+         "date": "2026-10-16",
+         "method": "Visa",
+         "amt": 21.71,
+         "ref": "Visa",
+         "inv": "v0130"
+        },
+        {
+         "id": "p0133",
+         "date": "2026-10-16",
+         "method": "Visa",
+         "amt": 5.64,
+         "ref": "Visa",
+         "inv": "v0132"
+        },
+        {
+         "id": "p0135",
+         "date": "2026-10-15",
+         "method": "Visa",
+         "amt": 6.53,
+         "ref": "Visa",
+         "inv": "v0134"
+        },
+        {
+         "id": "p0137",
+         "date": "2026-10-19",
+         "method": "Visa",
+         "amt": 34.48,
+         "ref": "Visa",
+         "inv": "v0136"
+        },
+        {
+         "id": "p0139",
+         "date": "2026-10-27",
+         "method": "Visa",
+         "amt": 6.01,
+         "ref": "Visa",
+         "inv": "v0138"
+        },
+        {
+         "id": "p0141",
+         "date": "2026-11-03",
+         "method": "Visa",
+         "amt": 14.03,
+         "ref": "Visa",
+         "inv": "v0140"
+        },
+        {
+         "id": "p0143",
+         "date": "2026-11-13",
+         "method": "Visa",
+         "amt": 35.8,
+         "ref": "Visa",
+         "inv": "v0142"
+        },
+        {
+         "id": "p0145",
+         "date": "2026-11-23",
+         "method": "Visa",
+         "amt": 9.15,
+         "ref": "Visa",
+         "inv": "v0144"
+        },
+        {
+         "id": "p0147",
+         "date": "2026-11-23",
+         "method": "Visa",
+         "amt": 9.15,
+         "ref": "Visa",
+         "inv": "v0146"
+        },
+        {
+         "id": "p0149",
+         "date": "2026-11-21",
+         "method": "Visa",
+         "amt": 25.48,
+         "ref": "Visa",
+         "inv": "v0148"
+        },
+        {
+         "id": "p0151",
+         "date": "2026-11-20",
+         "method": "Visa",
+         "amt": 24.29,
+         "ref": "Visa",
+         "inv": "v0150"
+        },
+        {
+         "id": "p0153",
+         "date": "2026-11-19",
+         "method": "Visa",
+         "amt": 13.51,
+         "ref": "Visa",
+         "inv": "v0152"
+        },
+        {
+         "id": "p0155",
+         "date": "2026-11-18",
+         "method": "Visa",
+         "amt": 11.6,
+         "ref": "visa",
+         "inv": "v0154"
+        }
+       ],
+       "invs": [
+        {
+         "id": "v0028",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-05-14",
+         "kind": "Other",
+         "amt": 2.13,
+         "note": ""
+        },
+        {
+         "id": "v0030",
+         "vendor": "Corner Coffee Co.",
+         "no": "168878079",
+         "date": "2026-06-05",
+         "kind": "Other",
+         "amt": 6.04,
+         "note": ""
+        },
+        {
+         "id": "v0032",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-06-09",
+         "kind": "Other",
+         "amt": 15.55,
+         "note": ""
+        },
+        {
+         "id": "v0034",
+         "vendor": "Corner Coffee Co.",
+         "no": "818221841",
+         "date": "2026-06-26",
+         "kind": "Other",
+         "amt": 11.18,
+         "note": ""
+        },
+        {
+         "id": "v0036",
+         "vendor": "Corner Coffee Co.",
+         "no": "136844529",
+         "date": "2026-06-27",
+         "kind": "Other",
+         "amt": 27.06,
+         "note": ""
+        },
+        {
+         "id": "v0038",
+         "vendor": "Corner Coffee Co.",
+         "no": "501294755",
+         "date": "2026-07-10",
+         "kind": "Other",
+         "amt": 36.26,
+         "note": ""
+        },
+        {
+         "id": "v0040",
+         "vendor": "Corner Coffee Co.",
+         "no": "235471611",
+         "date": "2026-07-17",
+         "kind": "Other",
+         "amt": 11.51,
+         "note": ""
+        },
+        {
+         "id": "v0042",
+         "vendor": "Corner Coffee Co.",
+         "no": "394717027",
+         "date": "2026-07-24",
+         "kind": "Other",
+         "amt": 22.16,
+         "note": ""
+        },
+        {
+         "id": "v0044",
+         "vendor": "Corner Coffee Co.",
+         "no": "971244096",
+         "date": "2026-07-27",
+         "kind": "Other",
+         "amt": 7.03,
+         "note": ""
+        },
+        {
+         "id": "v0046",
+         "vendor": "Corner Coffee Co.",
+         "no": "542529062",
+         "date": "2026-07-28",
+         "kind": "Other",
+         "amt": 19.83,
+         "note": ""
+        },
+        {
+         "id": "v0048",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-07-31",
+         "kind": "Other",
+         "amt": 13.85,
+         "note": ""
+        },
+        {
+         "id": "v0050",
+         "vendor": "Corner Coffee Co.",
+         "no": "881071353",
+         "date": "2026-08-04",
+         "kind": "Other",
+         "amt": 17.7,
+         "note": ""
+        },
+        {
+         "id": "v0052",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-08-05",
+         "kind": "Other",
+         "amt": 18.54,
+         "note": ""
+        },
+        {
+         "id": "v0054",
+         "vendor": "Corner Coffee Co.",
+         "no": "986494057",
+         "date": "2026-08-18",
+         "kind": "Other",
+         "amt": 27.07,
+         "note": ""
+        },
+        {
+         "id": "v0056",
+         "vendor": "Corner Coffee Co.",
+         "no": "222861884",
+         "date": "2026-08-20",
+         "kind": "Other",
+         "amt": 16.43,
+         "note": ""
+        },
+        {
+         "id": "v0058",
+         "vendor": "Corner Coffee Co.",
+         "no": "924590549",
+         "date": "2026-08-21",
+         "kind": "Other",
+         "amt": 12.05,
+         "note": ""
+        },
+        {
+         "id": "v0060",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-08-22",
+         "kind": "Other",
+         "amt": 9.16,
+         "note": ""
+        },
+        {
+         "id": "v0062",
+         "vendor": "Corner Coffee Co.",
+         "no": "582520391",
+         "date": "2026-08-25",
+         "kind": "Other",
+         "amt": 8.82,
+         "note": ""
+        },
+        {
+         "id": "v0064",
+         "vendor": "Corner Coffee Co.",
+         "no": "252544171",
+         "date": "2026-08-23",
+         "kind": "Other",
+         "amt": 8.62,
+         "note": ""
+        },
+        {
+         "id": "v0066",
+         "vendor": "Corner Coffee Co.",
+         "no": "779497182",
+         "date": "2026-08-23",
+         "kind": "Other",
+         "amt": 15.99,
+         "note": ""
+        },
+        {
+         "id": "v0068",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-08-24",
+         "kind": "Other",
+         "amt": 12.67,
+         "note": ""
+        },
+        {
+         "id": "v0070",
+         "vendor": "Corner Coffee Co.",
+         "no": "190968497",
+         "date": "2026-08-25",
+         "kind": "Other",
+         "amt": 20.91,
+         "note": ""
+        },
+        {
+         "id": "v0072",
+         "vendor": "Corner Coffee Co.",
+         "no": "67191461",
+         "date": "2026-08-26",
+         "kind": "Other",
+         "amt": 20.73,
+         "note": ""
+        },
+        {
+         "id": "v0074",
+         "vendor": "Corner Coffee Co.",
+         "no": "628499708",
+         "date": "2026-08-27",
+         "kind": "Other",
+         "amt": 13.51,
+         "note": ""
+        },
+        {
+         "id": "v0076",
+         "vendor": "Corner Coffee Co.",
+         "no": "330257446",
+         "date": "2026-08-28",
+         "kind": "Other",
+         "amt": 28.58,
+         "note": ""
+        },
+        {
+         "id": "v0078",
+         "vendor": "Corner Coffee Co.",
+         "no": "738175534",
+         "date": "2026-08-31",
+         "kind": "Other",
+         "amt": 14.81,
+         "note": ""
+        },
+        {
+         "id": "v0080",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-09-01",
+         "kind": "Other",
+         "amt": 7.78,
+         "note": ""
+        },
+        {
+         "id": "v0082",
+         "vendor": "Corner Coffee Co.",
+         "no": "190876650",
+         "date": "2026-09-09",
+         "kind": "Other",
+         "amt": 24.91,
+         "note": ""
+        },
+        {
+         "id": "v0084",
+         "vendor": "Corner Coffee Co.",
+         "no": "248037502",
+         "date": "2026-09-14",
+         "kind": "Other",
+         "amt": 18.77,
+         "note": ""
+        },
+        {
+         "id": "v0086",
+         "vendor": "Corner Coffee Co.",
+         "no": "811068412",
+         "date": "2026-09-11",
+         "kind": "Other",
+         "amt": 12.12,
+         "note": ""
+        },
+        {
+         "id": "v0088",
+         "vendor": "Corner Coffee Co.",
+         "no": "376330724",
+         "date": "2026-09-15",
+         "kind": "Other",
+         "amt": 10.67,
+         "note": ""
+        },
+        {
+         "id": "v0090",
+         "vendor": "Corner Coffee Co.",
+         "no": "785120360",
+         "date": "2026-09-17",
+         "kind": "Other",
+         "amt": 19.14,
+         "note": ""
+        },
+        {
+         "id": "v0092",
+         "vendor": "Corner Coffee Co.",
+         "no": "865674264",
+         "date": "2026-09-16",
+         "kind": "Other",
+         "amt": 24.26,
+         "note": ""
+        },
+        {
+         "id": "v0094",
+         "vendor": "Corner Coffee Co.",
+         "no": "114177358",
+         "date": "2026-09-18",
+         "kind": "Other",
+         "amt": 16.95,
+         "note": ""
+        },
+        {
+         "id": "v0096",
+         "vendor": "Corner Coffee Co.",
+         "no": "797199703",
+         "date": "2026-09-21",
+         "kind": "Other",
+         "amt": 17.06,
+         "note": ""
+        },
+        {
+         "id": "v0098",
+         "vendor": "Corner Coffee Co.",
+         "no": "647072620",
+         "date": "2026-09-22",
+         "kind": "Other",
+         "amt": 5.0,
+         "note": ""
+        },
+        {
+         "id": "v0100",
+         "vendor": "Corner Coffee Co.",
+         "no": "220621414",
+         "date": "2026-09-24",
+         "kind": "Other",
+         "amt": 17.26,
+         "note": ""
+        },
+        {
+         "id": "v0102",
+         "vendor": "Corner Coffee Co.",
+         "no": "196076661",
+         "date": "2026-09-28",
+         "kind": "Other",
+         "amt": 29.53,
+         "note": ""
+        },
+        {
+         "id": "v0104",
+         "vendor": "Corner Coffee Co.",
+         "no": "430825235",
+         "date": "2026-09-29",
+         "kind": "Other",
+         "amt": 23.98,
+         "note": ""
+        },
+        {
+         "id": "v0106",
+         "vendor": "Corner Coffee Co.",
+         "no": "103376149",
+         "date": "2026-09-29",
+         "kind": "Other",
+         "amt": 25.68,
+         "note": ""
+        },
+        {
+         "id": "v0108",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-09-14",
+         "kind": "Other",
+         "amt": 3.4,
+         "note": ""
+        },
+        {
+         "id": "v0110",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-09-02",
+         "kind": "Other",
+         "amt": 13.74,
+         "note": ""
+        },
+        {
+         "id": "v0112",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-10-01",
+         "kind": "Other",
+         "amt": 20.36,
+         "note": ""
+        },
+        {
+         "id": "v0114",
+         "vendor": "Corner Coffee Co.",
+         "no": "725657288",
+         "date": "2026-10-02",
+         "kind": "Other",
+         "amt": 10.06,
+         "note": ""
+        },
+        {
+         "id": "v0116",
+         "vendor": "Corner Coffee Co.",
+         "no": "941005618",
+         "date": "2026-10-05",
+         "kind": "Other",
+         "amt": 32.87,
+         "note": ""
+        },
+        {
+         "id": "v0118",
+         "vendor": "Corner Coffee Co.",
+         "no": "545176707",
+         "date": "2026-10-04",
+         "kind": "Other",
+         "amt": 11.7,
+         "note": ""
+        },
+        {
+         "id": "v0120",
+         "vendor": "Corner Coffee Co.",
+         "no": "228185537",
+         "date": "2026-10-04",
+         "kind": "Other",
+         "amt": 14.71,
+         "note": ""
+        },
+        {
+         "id": "v0122",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-10-02",
+         "kind": "Other",
+         "amt": 22.28,
+         "note": ""
+        },
+        {
+         "id": "v0124",
+         "vendor": "Corner Coffee Co.",
+         "no": "",
+         "date": "2026-10-14",
+         "kind": "Other",
+         "amt": 2.44,
+         "note": ""
+        },
+        {
+         "id": "v0126",
+         "vendor": "Corner Coffee Co.",
+         "no": "413094122",
+         "date": "2026-10-15",
+         "kind": "Other",
+         "amt": 13.38,
+         "note": ""
+        },
+        {
+         "id": "v0128",
+         "vendor": "Corner Coffee Co.",
+         "no": "553687207",
+         "date": "2026-10-14",
+         "kind": "Other",
+         "amt": 8.1,
+         "note": ""
+        },
+        {
+         "id": "v0130",
+         "vendor": "Corner Coffee Co.",
+         "no": "112398740",
+         "date": "2026-10-16",
+         "kind": "Other",
+         "amt": 21.71,
+         "note": ""
+        },
+        {
+         "id": "v0132",
+         "vendor": "Corner Coffee Co.",
+         "no": "562193526",
+         "date": "2026-10-16",
+         "kind": "Other",
+         "amt": 5.64,
+         "note": ""
+        },
+        {
+         "id": "v0134",
+         "vendor": "Corner Coffee Co.",
+         "no": "589853339",
+         "date": "2026-10-15",
+         "kind": "Other",
+         "amt": 6.53,
+         "note": ""
+        },
+        {
+         "id": "v0136",
+         "vendor": "Corner Coffee Co.",
+         "no": "503466376",
+         "date": "2026-10-19",
+         "kind": "Other",
+         "amt": 34.48,
+         "note": "Framing materials"
+        },
+        {
+         "id": "v0138",
+         "vendor": "Corner Coffee Co.",
+         "no": "283301581",
+         "date": "2026-10-27",
+         "kind": "Other",
+         "amt": 6.01,
+         "note": ""
+        },
+        {
+         "id": "v0140",
+         "vendor": "Corner Coffee Co.",
+         "no": "132623928",
+         "date": "2026-11-03",
+         "kind": "Other",
+         "amt": 14.03,
+         "note": ""
+        },
+        {
+         "id": "v0142",
+         "vendor": "Corner Coffee Co.",
+         "no": "239267703",
+         "date": "2026-11-13",
+         "kind": "Other",
+         "amt": 35.8,
+         "note": ""
+        },
+        {
+         "id": "v0144",
+         "vendor": "Corner Coffee Co.",
+         "no": "942958845",
+         "date": "2026-11-23",
+         "kind": "Other",
+         "amt": 9.15,
+         "note": ""
+        },
+        {
+         "id": "v0146",
+         "vendor": "Corner Coffee Co.",
+         "no": "942958845",
+         "date": "2026-11-23",
+         "kind": "Other",
+         "amt": 9.15,
+         "note": "Touch-ups 25"
+        },
+        {
+         "id": "v0148",
+         "vendor": "Corner Coffee Co.",
+         "no": "209793785",
+         "date": "2026-11-21",
+         "kind": "Other",
+         "amt": 25.48,
+         "note": ""
+        },
+        {
+         "id": "v0150",
+         "vendor": "Corner Coffee Co.",
+         "no": "168329727",
+         "date": "2026-11-20",
+         "kind": "Other",
+         "amt": 24.29,
+         "note": ""
+        },
+        {
+         "id": "v0152",
+         "vendor": "Corner Coffee Co.",
+         "no": "197894059",
+         "date": "2026-11-19",
+         "kind": "Other",
+         "amt": 13.51,
+         "note": ""
+        },
+        {
+         "id": "v0154",
+         "vendor": "Corner Coffee Co.",
+         "no": "746455191",
+         "date": "2026-11-18",
+         "kind": "Other",
+         "amt": 11.6,
+         "note": ""
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "sheetId": "SAMPLE-BACKUP-SHEET-ID"
+  }
+ ],
+ "curBudget": "b-demo",
+ "catalog": [
+  {
+   "cat": "Soft costs",
+   "items": [
+    "New home warranty",
+    "Construction insurance",
+    "Permit fees",
+    "Architecture and rendering",
+    "Interior design",
+    "Survey Arc",
+    "P2P permit",
+    "Engineering",
+    "test",
+    "Marketing (photo and video)",
+    "Engineering review"
+   ]
+  },
+  {
+   "cat": "Site and foundation",
+   "items": [
+    "Demolition + Excavation",
+    "Foundation",
+    "Weeping Tile + Basement + garage slab + delta wrap",
+    "Services"
+   ]
+  },
+  {
+   "cat": "Structure and envelope",
+   "items": [
+    "Lumber + truss package",
+    "Framing",
+    "Stairs",
+    "Windows and doors",
+    "Roofing",
+    "Metal roofing",
+    "Siding (stucco, etc.)",
+    "Stone",
+    "Insulation w material and spray foam"
+   ]
+  },
+  {
+   "cat": "Mechanical and electrical",
+   "items": [
+    "Plumbing material",
+    "Plumber",
+    "Electrician",
+    "HVAC + AC",
+    "Lighting",
+    "Fireplace"
+   ]
+  },
+  {
+   "cat": "Interior finishes",
+   "items": [
+    "Drywall/ mudtape",
+    "Paint",
+    "Kitchen cabinets",
+    "Moulding store",
+    "Carpenter Finishing",
+    "Countertop",
+    "Flooring",
+    "Carpet/ additional flooring",
+    "Mantel",
+    "Glass work",
+    "Tiles",
+    "Tiles installation",
+    "Wallpaper/ plaster/ decorative materials",
+    "Appliances"
+   ]
+  },
+  {
+   "cat": "Exterior and garage",
+   "items": [
+    "Concrete steps",
+    "Outside railing",
+    "Garage doors",
+    "Garage epoxy",
+    "Landscaping"
+   ]
+  },
+  {
+   "cat": "Site operations",
+   "items": [
+    "Pit stop",
+    "Garbage truck",
+    "Construction fence",
+    "Cleaning",
+    "Staging",
+    "Miscellaneous",
+    "Site refreshments (coffee)"
+   ]
+  }
+ ]
+}
