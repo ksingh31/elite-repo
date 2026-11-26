@@ -13,7 +13,7 @@ def W(pg):return J(pg,'window.__tcW')
 def staged(pg,r):return pg.locator(f'#tc-r{r}.staged').count()==1
 def new(b,extra='',w=1300,h=900,th='light',hash='#tocheck'):
   pg=b.new_page(viewport={'width':w,'height':h},color_scheme=th);pg.errs=[];pg.on('pageerror',lambda e:pg.errs.append(str(e)))
-  pg.add_init_script(TCI+extra);pg.goto(URL+hash);pg.wait_for_timeout(1300);return pg
+  pg.add_init_script(TCI+extra+(";localStorage.setItem('ec-theme','dark');" if th=='dark' else ''));pg.goto(URL+hash);pg.wait_for_timeout(1300);return pg
 with sync_playwright() as p:
   b=p.chromium.launch();allerr=[]
   pg=new(b)

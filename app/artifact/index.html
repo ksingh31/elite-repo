@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en" data-theme="light"><head><meta charset="utf-8">
+<script>/* colour mode: light unless this device chose dark; set before first paint, never in the team store */(function(){var t=null;try{t=localStorage.getItem('ec-theme')}catch(e){}document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light')})()</script><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project profit calculator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -8,7 +9,7 @@
    PICTURE: the live result panel, profit and returns set large beside the inputs
    COLOUR and TYPE: EliteCraft navy band, white sheets, teal for money results; Public Sans
    LAYOUT: navy header with project picker and tabs; form left, sticky results right; stacks under 900px */
-:root{color-scheme:light dark;--bg:light-dark(#f2f5f7,#0b131e);--card:light-dark(#fff,#121e2f);--ink:light-dark(#17212c,#e5ecf2);--mute:light-dark(#5a6774,#93a3b4);--line:light-dark(#dbe3e9,#23344a);--navy:#14263d;--teal:light-dark(#0d7a75,#41c4b9);--tealbg:light-dark(#e2f0ef,#103534);--alt:light-dark(#f4f7f9,#16253a);--red:light-dark(#b42318,#ff8f85);--field:light-dark(#fff,#0d1826)}
+:root{color-scheme:light;--bg:light-dark(#f2f5f7,#0b131e);--card:light-dark(#fff,#121e2f);--ink:light-dark(#17212c,#e5ecf2);--mute:light-dark(#5a6774,#93a3b4);--line:light-dark(#dbe3e9,#23344a);--navy:#14263d;--teal:light-dark(#0d7a75,#41c4b9);--tealbg:light-dark(#e2f0ef,#103534);--alt:light-dark(#f4f7f9,#16253a);--red:light-dark(#b42318,#ff8f85);--field:light-dark(#fff,#0d1826)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,sans-serif;overflow-x:clip}
@@ -379,7 +380,7 @@ label:has(>input[type=checkbox]){cursor:default;pointer-events:auto}label:has(>i
 #form .chk input[type=checkbox]:focus-visible{outline:2px solid var(--teal);outline-offset:-7px}
 #form .chk input[type=checkbox]:disabled{opacity:.5}
 :root{--cbu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='20' height='20' rx='4' fill='%23fff' stroke='%23768594' stroke-width='2'/%3E%3C/svg%3E");--cbc:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%230d7a75'/%3E%3Cpath d='M6 11.5l3.3 3.3L16 8' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--cbu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='20' height='20' rx='4' fill='%230d1826' stroke='%2393a3b4' stroke-width='2'/%3E%3C/svg%3E");--cbc:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%2341c4b9'/%3E%3Cpath d='M6 11.5l3.3 3.3L16 8' fill='none' stroke='%2306231f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}}
+@media print{:root[data-theme=dark]{color-scheme:light;--cbu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='20' height='20' rx='4' fill='%23fff' stroke='%23768594' stroke-width='2'/%3E%3C/svg%3E");--cbc:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%230d7a75'/%3E%3Cpath d='M6 11.5l3.3 3.3L16 8' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}}
 :root[data-theme=dark]{--cbu:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='20' height='20' rx='4' fill='%230d1826' stroke='%2393a3b4' stroke-width='2'/%3E%3C/svg%3E");--cbc:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%2341c4b9'/%3E%3Cpath d='M6 11.5l3.3 3.3L16 8' fill='none' stroke='%2306231f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 /* Inputs page tap targets */
 #form details>summary{min-height:44px;display:flex;align-items:center;gap:6px}
@@ -587,7 +588,6 @@ label:has(>input[type=checkbox]){cursor:default;pointer-events:auto}label:has(>i
 #v-tocheck .fchip .c{color:var(--mute);font-variant-numeric:tabular-nums}
 #v-tocheck .fchip[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}#v-tocheck .fchip[aria-pressed=true] .c{color:#b9c9d8}
 :root[data-theme=dark] #v-tocheck .fchip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#062420}:root[data-theme=dark] #v-tocheck .fchip[aria-pressed=true] .c{color:#0a3b37}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]) #v-tocheck .fchip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#062420}:root:not([data-theme=light]) #v-tocheck .fchip[aria-pressed=true] .c{color:#0a3b37}}
 #v-tocheck .linefilter{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px 0 14px;border-radius:999px;background:var(--tealbg);color:var(--teal);font-weight:700;font-size:14px;border:1px solid light-dark(#b9dcd9,#1f5653)}
 #v-tocheck .linefilter button{border:0;background:transparent;color:inherit;width:40px;height:40px;border-radius:50%;font-size:16px;cursor:pointer}
 #v-tocheck .listhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;margin:22px 0 10px}
@@ -1197,9 +1197,19 @@ label:has(>input[type=checkbox]){cursor:default;pointer-events:auto}label:has(>i
 .ihead.edit input,.ihead.edit select,.pline.edit input,.pline.edit select{box-sizing:border-box;height:40px}
 @media(max-width:1599px){.paybtn small .paidok,.paybtn small .owed{display:block}.paybtn small .psep{display:none}}
 #v-budget .btable tr.cat td.c-note{order:0!important}
+/* colour mode switch (header) */
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:32px}
+.thsw{display:inline-flex;border:1px solid #3a5272;border-radius:999px;padding:2px;gap:2px;flex:none}
+.thsw button{display:inline-flex;align-items:center;gap:6px;min-height:30px;min-width:30px;padding:0 10px;border:0;border-radius:999px;background:transparent;color:#b9c9d8;font-size:12.5px;font-weight:700;cursor:pointer}
+.thsw button svg{width:15px;height:15px;flex:none}
+.thsw button:hover{color:#fff;background:#21395a}
+.thsw button[aria-pressed=true]{background:#e5ecf2;color:#14263d}
+.thsw button:focus-visible{outline:2px solid #2bb3a8;outline-offset:1px}
+@media(max-width:600px){.brandrow{margin:-6px 0 -4px}.thsw button{min-height:40px;min-width:44px;padding:0 10px}.thsw button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media print{.thsw{display:none}}
 </style></head><body>
 <header class="top">
-  <div class="brand">ELITECRAFT / REAL ESTATE</div>
+  <div class="brandrow"><div class="brand">ELITECRAFT / REAL ESTATE</div><div class="thsw" role="group" aria-label="Colour mode"><button type="button" data-theme-set="light" aria-pressed="true" aria-label="Light mode" title="Light mode"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><span>Light</span></button><button type="button" data-theme-set="dark" aria-pressed="false" aria-label="Dark mode" title="Dark mode"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><span>Dark</span></button></div></div>
   <div class="toprow">
     <h1>Project profit calculator</h1>
     <div class="ctrl">
@@ -3320,5 +3330,9 @@ try{const s=JSON.parse(sessionStorage.getItem(T_RE)||'null');if(s&&s.reopen==='t
 addEventListener('hashchange',route);route();buildForm();markDirty();tReopen();
 if(window.claude&&claude.use){claude.use('artifact').then(x=>{artifact=x;}).catch(()=>{});claude.use('downloads').then(x=>{downloads=x;pdfBtns();}).catch(()=>{});claude.use('mcp').then(x=>{mcp=x;}).catch(()=>{});}
 }
+</script>
+<script>/* colour mode switch: device-only preference (localStorage 'ec-theme'); not part of the team store */
+(function(){var R=document.documentElement;function sync(){var t=R.getAttribute('data-theme')==='dark'?'dark':'light';document.querySelectorAll('[data-theme-set]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-theme-set')===t?'true':'false')})}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-set]');if(!b)return;var t=b.getAttribute('data-theme-set')==='dark'?'dark':'light';R.setAttribute('data-theme',t);try{localStorage.setItem('ec-theme',t)}catch(_){}sync()});sync()})();
 </script>
 </body></html>

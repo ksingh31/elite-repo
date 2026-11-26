@@ -114,7 +114,7 @@ with sync_playwright() as p:
   chk('no page errors',not errs,errs)
   # dark + mobile
   for nm,kw in [('dark_1300',dict(viewport={'width':1300,'height':900},color_scheme='dark')),('m390',dict(viewport={'width':390,'height':844},device_scale_factor=2)),('m390_dark',dict(viewport={'width':390,'height':844},color_scheme='dark'))]:
-    c=b.new_context(**kw);q=c.new_page();q.add_init_script(INIT);q.goto(URL+'#breport');q.wait_for_timeout(700)
+    c=b.new_context(**kw);q=c.new_page();q.add_init_script(INIT+(";localStorage.setItem('ec-theme','dark');" if kw.get('color_scheme')=='dark' else ''));q.goto(URL+'#breport');q.wait_for_timeout(700)
     q.screenshot(path=f'{OUT}/breport_{nm}.png',full_page=True)
     chk(nm+': no horizontal page overflow',q.evaluate("document.documentElement.scrollWidth<=innerWidth+1"))
     c.close()

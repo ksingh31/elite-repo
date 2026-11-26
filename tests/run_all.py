@@ -8,7 +8,7 @@ Each suite prints PASS/FAIL lines and ends with "N / M" (or "errors []" / "BAD [
 import os, re, subprocess, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 REGRESSION = ['bk_test', 'sync_test', 'inv_test', 'modal_test', 'cp_test', 'bc_test', 'save_test', 'audit', 'report_test_src']
-FEATURES = ['tc_test', 'reopen_test', 'noreload_test', 'move_test', 'up_test', 'up_sheet_test', 'lay_test']
+FEATURES = ['tc_test', 'reopen_test', 'noreload_test', 'move_test', 'up_test', 'up_sheet_test', 'lay_test', 'th_test']
 SMOKE = ['standalone_smoke']
 sel = sys.argv[1] if len(sys.argv) > 1 else 'all'
 suites = {'regression': REGRESSION, 'features': FEATURES, 'smoke': SMOKE}.get(sel, REGRESSION + FEATURES + SMOKE)

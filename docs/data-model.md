@@ -73,3 +73,5 @@ store
 * AWS: `s3://<data bucket>/store/store.json` (versioned; every save is a version, kept 365 days).
 * Every backup: full JSON in the budget sheet's `Backup data` tab (40,000-character parts) = restore points.
 * Device: drafts in localStorage (see [logic/06-save-drafts-undo.md](logic/06-save-drafts-undo.md)).
+* Device only, never in the store: the Light/Dark choice `localStorage['ec-theme']` (`'light'` | `'dark'`, absent =
+  light) — see [logic/08-ui.md](logic/08-ui.md#colour-mode-light--dark-switch). No store / schema change.

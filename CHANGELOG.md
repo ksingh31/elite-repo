@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-26 — Light/Dark switch, light by default
+* Header **Light / Dark** switch; the app opens in **light** by default and no longer follows the OS
+  `prefers-color-scheme`. The choice is saved per device in `localStorage['ec-theme']` (not in the team store or backups)
+  and applied before first paint. Print / PDF stay light. Tap targets ≥ 44 px on phones.
+* New `tests/th_test.py`; `lay_test`, `tc_test`, `report_test_src` now select dark via `ec-theme` instead of the
+  browser colour scheme.
+
 ## 2026-11-26 — AWS-only infrastructure as code
 * **Removed Azure / Bicep** (`infra/azure/`, `api/azure/`) and every mention of it: the team is on AWS and Bicep only
   targets Azure.

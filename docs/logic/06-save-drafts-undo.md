@@ -10,6 +10,7 @@
 | Undo restore | `localStorage['ec-calc5-undo'] = {data, dirty, restore, at}` | this device |
 | View | `localStorage['ec-view'] = {cur, bud}` (project/budget being looked at) | this device |
 | To check name | `localStorage['ec-tc-name']` | this device |
+| Colour mode | `localStorage['ec-theme'] = 'light' \| 'dark'` (absent = light) | this device |
 | Item types reopen | `sessionStorage['ec-types-reopen']` | this tab |
 | Next view after reload | `sessionStorage['ec-next'] = {proj, bud, hash, at}` | this tab |
 

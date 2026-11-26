@@ -8,7 +8,7 @@ with sync_playwright() as p:
   for w in [375,390,768,1300]:
     for th in ['light','dark']:
       pg=b.new_page(viewport={'width':w,'height':860},color_scheme=th);errs=[];pg.on('pageerror',lambda e:errs.append(str(e)))
-      pg.add_init_script(TCI);pg.goto(APP_URL+'#tocheck');pg.wait_for_timeout(1300)
+      pg.add_init_script(TCI+(";localStorage.setItem('ec-theme','dark');" if th=='dark' else ''));pg.goto(APP_URL+'#tocheck');pg.wait_for_timeout(1300)
       # stage one + select two for bulk bar + open resolved
       pg.click('#tc-r5 [data-act=tc-do][data-k=keepboth]');pg.wait_for_timeout(100)
       pg.click('#tc-r8 '+('.cbw .cb' if w<=640 else '.ck .cb'));pg.click('#tc-r9 '+('.cbw .cb' if w<=640 else '.ck .cb'));pg.wait_for_timeout(200)
