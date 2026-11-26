@@ -1,0 +1,436 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >-
+  EliteCraft project profit calculator (internal). Cheapest viable stack: S3 + CloudFront (static app),
+  API Gateway HTTP API + Lambda (Node.js 20+ code, nodejs24.x runtime by default, arm64), store JSON in a versioned S3 bucket with ETag optimistic
+  concurrency, Cognito user pool (hosted UI) for team sign-in, Google credentials in SSM Parameter Store
+  (SecureString, created by deploy.sh), EventBridge Scheduler daily backup at 22:37 America/Edmonton,
+  monthly cost budget + error alarms.
+
+Parameters:
+  AppName:
+    Type: String
+    Default: elite-calc
+    AllowedPattern: '^[a-z][a-z0-9-]{2,20}$'
+    Description: Short lowercase name used in resource names.
+  AlertEmail:
+    Type: String
+    Description: Email for cost budget and error alarm notifications (confirm the SNS subscription email).
+  AdminEmail:
+    Type: String
+    Default: ''
+    Description: Optional first team member; Cognito emails them a temporary password.
+  CognitoDomainPrefix:
+    Type: String
+    Description: Globally unique prefix for the Cognito hosted sign-in page (https://PREFIX.auth.REGION.amazoncognito.com).
+    AllowedPattern: '^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$'
+  GoogleCredentialsParam:
+    Type: String
+    Default: /elite-calc/google-credentials
+    Description: SSM SecureString parameter name holding the Google service account key (or OAuth refresh token) JSON.
+  BackupFolderId:
+    Type: String
+    Default: ''
+    Description: Google Drive folder id that holds the per-budget backup sheets (the only place sheets may be written).
+  AllowSheetIds:
+    Type: CommaDelimitedList
+    Default: ''
+    Description: Extra backup sheet ids that may be written (only needed for backup sheets outside the folder).
+  DenySheetIds:
+    Type: CommaDelimitedList
+    Default: ''
+    Description: Sheet ids that must never be written (the team's invoice sheet, the retired master sheet, any original).
+  WritersGroup:
+    Type: String
+    Default: ''
+    Description: Optional Cognito group required to save / write sheets. Empty = every signed-in user can save.
+  MonthlyBudgetUsd:
+    Type: Number
+    Default: 5
+    Description: Monthly cost budget; alerts at 80% actual and 100% forecast.
+  LambdaRuntime:
+    Type: String
+    Default: nodejs24.x
+    AllowedValues: [nodejs20.x, nodejs22.x, nodejs24.x]
+    Description: The code runs on Node 20+. nodejs20.x reached AWS end of support on 2026-04-30, so the default is nodejs24.x.
+  DailyBackupEnabled:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+
+Conditions:
+  HasAdmin: !Not [!Equals [!Ref AdminEmail, '']]
+  BackupOn: !Equals [!Ref DailyBackupEnabled, 'true']
+
+Globals:
+  Function:
+    Runtime: !Ref LambdaRuntime
+    Architectures: [arm64]
+    MemorySize: 256
+    CodeUri: ../../api/
+    Environment:
+      Variables:
+        DATA_BUCKET: !Ref DataBucket
+        STORE_KEY: store/store.json
+        SITE_BUCKET: !Ref SiteBucket
+        APP_KEY: index.html
+        GOOGLE_CREDENTIALS_PARAM: !Ref GoogleCredentialsParam
+        BACKUP_FOLDER_ID: !Ref BackupFolderId
+        ALLOW_SHEET_IDS: !Join [',', !Ref AllowSheetIds]
+        DENY_SHEET_IDS: !Join [',', !Ref DenySheetIds]
+        WRITERS_GROUP: !Ref WritersGroup
+        BACKUP_TIME_ZONE: America/Edmonton
+        NODE_OPTIONS: --enable-source-maps
+
+Resources:
+  # ---------------------------------------------------------------- storage
+  DataBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      VersioningConfiguration: { Status: Enabled }   # every save is a restore point
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
+      PublicAccessBlockConfiguration: { BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true }
+      OwnershipControls: { Rules: [{ ObjectOwnership: BucketOwnerEnforced }] }
+      LifecycleConfiguration:
+        Rules:
+          - Id: keep-old-versions-1-year
+            Status: Enabled
+            NoncurrentVersionExpiration: { NoncurrentDays: 365 }
+            AbortIncompleteMultipartUpload: { DaysAfterInitiation: 1 }
+
+  DataBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref DataBucket
+      PolicyDocument:
+        Statement:
+          - Sid: TLSOnly
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: [!GetAtt DataBucket.Arn, !Sub '${DataBucket.Arn}/*']
+            Condition: { Bool: { 'aws:SecureTransport': 'false' } }
+
+  SiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
+      PublicAccessBlockConfiguration: { BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true }
+      OwnershipControls: { Rules: [{ ObjectOwnership: BucketOwnerEnforced }] }
+
+  SiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SiteBucket
+      PolicyDocument:
+        Statement:
+          - Sid: CloudFrontReadOnly
+            Effect: Allow
+            Principal: { Service: cloudfront.amazonaws.com }
+            Action: s3:GetObject
+            Resource: !Sub '${SiteBucket.Arn}/*'
+            Condition: { StringEquals: { 'AWS:SourceArn': !Sub 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${Distribution}' } }
+          - Sid: TLSOnly
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: [!GetAtt SiteBucket.Arn, !Sub '${SiteBucket.Arn}/*']
+            Condition: { Bool: { 'aws:SecureTransport': 'false' } }
+
+  # ---------------------------------------------------------------- auth
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub '${AppName}-team'
+      UserPoolTier: LITE
+      AdminCreateUserConfig: { AllowAdminCreateUserOnly: true }   # internal app: no self sign-up
+      UsernameAttributes: [email]
+      AutoVerifiedAttributes: [email]
+      Policies:
+        PasswordPolicy: { MinimumLength: 12, RequireLowercase: true, RequireUppercase: true, RequireNumbers: true, RequireSymbols: false, TemporaryPasswordValidityDays: 7 }
+      AccountRecoverySetting:
+        RecoveryMechanisms: [{ Name: verified_email, Priority: 1 }]
+
+  UserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: !Ref CognitoDomainPrefix
+      UserPoolId: !Ref UserPool
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref UserPool
+      ClientName: !Sub '${AppName}-web'
+      GenerateSecret: false                      # browser app: authorization code + PKCE
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows: [code]
+      AllowedOAuthScopes: [openid, email]
+      SupportedIdentityProviders: [COGNITO]
+      CallbackURLs: [!Sub 'https://${Distribution.DomainName}/']
+      LogoutURLs: [!Sub 'https://${Distribution.DomainName}/']
+      ExplicitAuthFlows: [ALLOW_REFRESH_TOKEN_AUTH, ALLOW_USER_SRP_AUTH]
+      PreventUserExistenceErrors: ENABLED
+      AccessTokenValidity: 1
+      IdTokenValidity: 1
+      RefreshTokenValidity: 30
+      TokenValidityUnits: { AccessToken: hours, IdToken: hours, RefreshToken: days }
+
+  AdminUser:
+    Type: AWS::Cognito::UserPoolUser
+    Condition: HasAdmin
+    Properties:
+      UserPoolId: !Ref UserPool
+      Username: !Ref AdminEmail
+      DesiredDeliveryMediums: [EMAIL]
+      UserAttributes:
+        - { Name: email, Value: !Ref AdminEmail }
+        - { Name: email_verified, Value: 'true' }
+
+  # ---------------------------------------------------------------- API
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DefaultRouteSettings: { ThrottlingBurstLimit: 50, ThrottlingRateLimit: 20 }
+      Auth:
+        DefaultAuthorizer: Cognito
+        Authorizers:
+          Cognito:
+            IdentitySource: $request.header.Authorization
+            JwtConfiguration:
+              issuer: !Sub 'https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}'
+              audience: [!Ref UserPoolClient]
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Calculator API (store load/save with optimistic concurrency, Google Sheets/Drive proxy with write guard)
+      Handler: src/handler.handler
+      Timeout: 29
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: [s3:GetObject, s3:GetObjectVersion, s3:PutObject]
+              Resource: !Sub '${DataBucket.Arn}/store/*'
+            - Effect: Allow
+              Action: [s3:ListBucketVersions, s3:ListBucket]
+              Resource: !GetAtt DataBucket.Arn
+              Condition: { StringLike: { 's3:prefix': ['store/*'] } }
+            - Effect: Allow
+              Action: ssm:GetParameter
+              Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${GoogleCredentialsParam}'
+            - Effect: Allow
+              Action: kms:Decrypt
+              Resource: '*'
+              Condition: { StringEquals: { 'kms:ViaService': !Sub 'ssm.${AWS::Region}.amazonaws.com' } }
+      Events:
+        Health: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/health, Method: GET, Auth: { Authorizer: NONE } } }
+        GetStore: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store, Method: GET } }
+        PutStore: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store, Method: PUT } }
+        History: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/store/history, Method: GET } }
+        Mcp: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: /api/mcp, Method: POST } }
+
+  ApiFunctionLogs:
+    Type: AWS::Logs::LogGroup
+    Properties: { LogGroupName: !Sub '/aws/lambda/${ApiFunction}', RetentionInDays: 30 }
+
+  DailyBackupFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Daily backup of every budget to its Google Sheet (safe swap), same logic as the app's Back up now
+      Handler: src/handler.dailyHandler
+      Timeout: 600
+      MemorySize: 512
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: s3:GetObject
+              Resource: [!Sub '${DataBucket.Arn}/store/*', !Sub '${SiteBucket.Arn}/index.html']
+            - Effect: Allow
+              Action: ssm:GetParameter
+              Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${GoogleCredentialsParam}'
+            - Effect: Allow
+              Action: kms:Decrypt
+              Resource: '*'
+              Condition: { StringEquals: { 'kms:ViaService': !Sub 'ssm.${AWS::Region}.amazonaws.com' } }
+
+  DailyBackupLogs:
+    Type: AWS::Logs::LogGroup
+    Properties: { LogGroupName: !Sub '/aws/lambda/${DailyBackupFunction}', RetentionInDays: 90 }
+
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: { Service: scheduler.amazonaws.com }
+            Action: sts:AssumeRole
+            Condition: { StringEquals: { 'aws:SourceAccount': !Ref AWS::AccountId } }
+      Policies:
+        - PolicyName: invoke-daily-backup
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt DailyBackupFunction.Arn
+
+  DailyBackupSchedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Description: Daily calculator backup, 22:37 Edmonton time (same as the Claude scheduled task)
+      ScheduleExpression: cron(37 22 * * ? *)
+      ScheduleExpressionTimezone: America/Edmonton
+      FlexibleTimeWindow: { Mode: 'OFF' }
+      State: !If [BackupOn, ENABLED, DISABLED]
+      Target:
+        Arn: !GetAtt DailyBackupFunction.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+        RetryPolicy: { MaximumRetryAttempts: 2, MaximumEventAgeInSeconds: 3600 }
+
+  # ---------------------------------------------------------------- CDN (one origin for app + API: no CORS)
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${AppName}-${AWS::Region}-oac'
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  ApiCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: !Sub '${AppName}-${AWS::Region}-api-no-cache'
+        Comment: Forwards Authorization; API responses are Cache-Control no-store, so nothing is cached
+        DefaultTTL: 0
+        MinTTL: 0
+        MaxTTL: 1
+        ParametersInCacheKeyAndForwardedToOrigin:
+          EnableAcceptEncodingGzip: true
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig: { HeaderBehavior: whitelist, Headers: [Authorization] }
+          CookiesConfig: { CookieBehavior: none }
+          QueryStringsConfig: { QueryStringBehavior: all }
+
+  SecurityHeaders:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub '${AppName}-${AWS::Region}-security'
+        SecurityHeadersConfig:
+          StrictTransportSecurity: { AccessControlMaxAgeSec: 31536000, IncludeSubdomains: true, Override: true }
+          ContentTypeOptions: { Override: true }
+          FrameOptions: { FrameOption: DENY, Override: true }
+          ReferrerPolicy: { ReferrerPolicy: same-origin, Override: true }
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub '${AppName} calculator'
+        PriceClass: PriceClass_100          # cheapest: North America + Europe edges
+        HttpVersion: http2and3
+        DefaultRootObject: index.html
+        Origins:
+          - Id: site
+            DomainName: !GetAtt SiteBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt OriginAccessControl.Id
+            S3OriginConfig: { OriginAccessIdentity: '' }
+          - Id: api
+            DomainName: !Sub '${HttpApi}.execute-api.${AWS::Region}.amazonaws.com'
+            CustomOriginConfig: { OriginProtocolPolicy: https-only, OriginSSLProtocols: [TLSv1.2] }
+        DefaultCacheBehavior:
+          TargetOriginId: site
+          ViewerProtocolPolicy: redirect-to-https
+          Compress: true
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6          # Managed-CachingOptimized (index/config/platform are uploaded with no-cache)
+          ResponseHeadersPolicyId: !Ref SecurityHeaders
+        CacheBehaviors:
+          - PathPattern: /api/*
+            TargetOriginId: api
+            ViewerProtocolPolicy: https-only
+            AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+            CachedMethods: [GET, HEAD]
+            Compress: true
+            CachePolicyId: !Ref ApiCachePolicy
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac  # Managed-AllViewerExceptHostHeader
+            ResponseHeadersPolicyId: !Ref SecurityHeaders
+
+  # ---------------------------------------------------------------- cost + health alerts
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription: [{ Protocol: email, Endpoint: !Ref AlertEmail }]
+
+  CostBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: !Sub '${AppName}-monthly'
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit: { Amount: !Ref MonthlyBudgetUsd, Unit: USD }
+      NotificationsWithSubscribers:
+        - Notification: { NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 80, ThresholdType: PERCENTAGE }
+          Subscribers: [{ SubscriptionType: EMAIL, Address: !Ref AlertEmail }]
+        - Notification: { NotificationType: FORECASTED, ComparisonOperator: GREATER_THAN, Threshold: 100, ThresholdType: PERCENTAGE }
+          Subscribers: [{ SubscriptionType: EMAIL, Address: !Ref AlertEmail }]
+
+  ApiErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Calculator API Lambda errors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions: [{ Name: FunctionName, Value: !Ref ApiFunction }]
+      Statistic: Sum
+      Period: 3600
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref AlertTopic]
+
+  DailyBackupFailedAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: The daily Google Sheets backup failed for at least one budget
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions: [{ Name: FunctionName, Value: !Ref DailyBackupFunction }]
+      Statistic: Sum
+      Period: 86400
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref AlertTopic]
+
+Outputs:
+  AppUrl:
+    Value: !Sub 'https://${Distribution.DomainName}/'
+  DistributionId:
+    Value: !Ref Distribution
+  SiteBucketName:
+    Value: !Ref SiteBucket
+  DataBucketName:
+    Value: !Ref DataBucket
+  UserPoolId:
+    Value: !Ref UserPool
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+  CognitoDomain:
+    Value: !Sub '${CognitoDomainPrefix}.auth.${AWS::Region}.amazoncognito.com'
+  DailyBackupFunctionName:
+    Value: !Ref DailyBackupFunction
+  ApiFunctionName:
+    Value: !Ref ApiFunction
