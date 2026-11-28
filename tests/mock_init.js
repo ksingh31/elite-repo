@@ -1,3 +1,4 @@
+try{localStorage.setItem('ec-cats','open');}catch(_){}
 // window.claude mock used by every Playwright suite: artifact.publish counts publishes, downloads.save is a no-op,
 // mcp.callTool emulates the Google Sheets / Drive connectors in memory (window.__books, window.__cells).
 window.__calls=[];window.__pub=0;window.__cells={};window.__books={};window.__found={};

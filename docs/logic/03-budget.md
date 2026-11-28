@@ -127,3 +127,16 @@ additive and optional; a budget without `designs` looks and works as before.
   cards show "Design: <name>" for versions made from a design. Discard resets the Designs card state.
 * Compare designs shows all lines of an opened category (differing lines bold); the checkbox "Show only lines that
   differ" (`#bddiff`) filters. Columns have fixed widths. App title: "Project planner & budget tracker".
+
+## 3.10 Budget page usability (Nov 28)
+* Tiles sit at the top of the page (hidden while `dEmpty`). "Still owed" and the new "Projected vs budget" tile use a
+  warning colour when above 0; Still owed notes payments not tied to an invoice. Projected final cost stays the last tile.
+* Items: filter chips All / Over budget / Still owed / Not finished (`bflt`; subtotals and Total always cover every line);
+  "Open/Close all categories" (`b-catall`, remembered per device in `localStorage ec-cats`); categories start closed on
+  widths ≤ 768 unless that preference says open.
+* Invoices & payments window: search (vendor / invoice no.) and "Unpaid only" when a line has more than 5 invoices; the
+  title row with Close stays visible while scrolling. Enter adds the invoice / creates the version / adds the design.
+* Amounts and sq ft reject letters and negatives and are rounded to cents; version names cannot be blank or duplicated.
+* After an edit re-render, focus moves to the next control instead of being lost.
+* `guard()` treats the app as clean when the store equals the last team save (e.g. a value typed back).
+* Duplicate budget copies budget lines and upgrades only (no invoices, payments, actuals or Finished ticks).
