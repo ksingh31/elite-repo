@@ -119,5 +119,7 @@ above; `deleteSheet` only for the six data tabs (or their "(updating)" copies); 
 append-only; `create_file` only as a Google Sheet in the backup folder.
 
 
-Designs (budget.designs) are not written to the backup sheet as their own tab: only the six data tabs may be deleted
-by a backup, so the calculator adds no new builder-owned tabs. Designs are kept in the store (and the S3 store versions).
+**Designs** tab (budget sheets only, when the budget has designs): one column per design (★ building), every line grouped
+by category with category totals, Total budget, per sq ft, sq ft, selling price, lot price and Gross return. It is written
+**in place** like `Read me` (added once, cleared and rewritten at each backup, never staged, never deleted), so backups
+still delete only the six data tabs. All other tabs (Summary, Budget, Trade, Material, Service, Other) are unchanged.

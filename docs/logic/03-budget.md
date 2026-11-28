@@ -125,3 +125,5 @@ additive and optional; a budget without `designs` looks and works as before.
   under all cards. While no design is built and the budget is empty (`dEmpty`), the Versions/tiles/Items cards are hidden
   behind a "No design is built yet" note. Building adds every catalog item type missing from the design at $0. Version
   cards show "Design: <name>" for versions made from a design. Discard resets the Designs card state.
+* Compare designs shows all lines of an opened category (differing lines bold); the checkbox "Show only lines that
+  differ" (`#bddiff`) filters. Columns have fixed widths. App title: "Project planner & budget tracker".
