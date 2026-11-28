@@ -94,3 +94,28 @@ shows "Saved for the team". Failure keeps the change as an unsaved change. Witho
 ## 3.8 Inline edit rules
 Money inputs show thousands separators and are never truncated; numbers parse by stripping `$ , % spaces`. Budget cell
 edits use `data-b="item:<id>:<field>"` → `setB()`; version fields `v:<field>`. Every edit is an unsaved change.
+
+## 3.9 Designs (`b.designs`, `b.built`, `project.budget.design`)
+Designs are the different homes that could be built (e.g. Bungalow, 2 storey front garage), compared **before**
+building. Versions (3.4) stay exactly as before: revisions over time of the budget that is being built. All fields are
+additive and optional; a budget without `designs` looks and works as before.
+
+* `budget.designs[] = {id, name, note, above, base, rate, sell?, cats[], items[{id, cat, name, amt, note, ups?}]}`;
+  `budget.built` = id of the design the budget was made from.
+* **Designs card** (`dCard`, above Versions; entry point "+ Compare designs" in the Versions header when there are none):
+  one card per design (total, lowest, per sq ft above grade, selling price − budget, Edit, Build this design / Switch to
+  this), "+ Add design" (start from current budget, a copy of a design, or the empty template), editor (`dEditor`: fields
+  + lines by category, add/remove line, Delete design, Done; `data-d` inputs → `dSet`), and the **Compare designs** table
+  (`dCmp`: category totals, tap to show lines, "Lines that differ"/"All lines", Total with lowest, per sq ft, selling
+  price, selling price − budget). Open by default until a design is built, then folds to "Building: <name>".
+* **Build this design** (`dBuild`, asks first via `askQ`): when the budget has one empty version (no amounts, invoices,
+  payments, upgrades, finished), the design's lines replace it; otherwise a new version vN+1 is made from the design and
+  invoices, payments, upgrades, finished ticks and typed actuals of the latest version are **copied** to matching lines
+  (cat + name; missing lines added at $0). The previous version is unchanged. `built` is set, projects' `design` picks
+  are cleared (they follow the latest version as usual).
+* **Projects before building**: the Version dropdown (Inputs and Used by) has a "Designs (before building)" group;
+  `project.budget.design` makes `resolveBudget` (and the backup's resolve) use that design's lines. Ignored once built.
+* **Compare with** defaults to No comparison; lines are matched by id, else by category + name.
+* **Actual invoiced** cell: a button (`b-payinv`) that opens the Invoices & payments window with the invoice form; amounts
+  are no longer typed in the table.
+* Upgrades stay on each version's lines ("Upgrades in vN"); building a design copies the design lines' upgrades.

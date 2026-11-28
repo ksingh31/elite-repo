@@ -117,3 +117,7 @@ Reads `Budget!A1:J400`, `Summary!A2`, `Backup log!A1:G`, each type tab `A1:J2000
 always wins; target must be in the backup folder (Drive parent check) or the explicit allow list; only the request types
 above; `deleteSheet` only for the six data tabs (or their "(updating)" copies); To check only one K:L row; Backup data / log
 append-only; `create_file` only as a Google Sheet in the backup folder.
+
+**Designs** tab (sheet id 11, teal, only when the budget has designs): one column per design (★ building), rows =
+category totals, Total, Per sq ft above grade, Selling price, Selling price − budget (money); the built design's column is
+shaded. Written only to the budget's own backup sheet.

@@ -26,10 +26,12 @@ store
 │   ├─ cp {base 'lb'|'build', ltv, fee, rate, mode 'pct'|'amt', draws[{at, v}], loans[]}   Cash + Private
 │   ├─ extras[{label, amount, up}]   investors[{name, amount}]
 │   ├─ co {…company}                project's own rates / overhead
-│   └─ budget {use, id, ver 'latest'|versionId, src 'proj'|'budget'|'inv'|'manual', manual, cont}
+│   └─ budget {use, id, ver 'latest'|versionId, design? (designId, before building), src 'proj'|'budget'|'inv'|'manual', manual, cont}
 ├─ budgets[]
 │   ├─ id, name, sheetId?           its own Google backup sheet
 │   ├─ toCheck? {'r<row>': {vendor, label, ops[], by, at, py?}}   reversible To check resolutions
+│   ├─ designs?[{id, name, note, above, base, rate, sell?, cats[], items[]}]   homes that could be built (compared before building)
+│   ├─ built?                       id of the design the budget was made from
 │   └─ versions[]                   oldest → newest; last = current
 │       ├─ id, label, date, note, above (sq ft), base (basement sq ft), rate (basement $/sq ft), cats[]
 │       └─ items[]
