@@ -119,3 +119,9 @@ additive and optional; a budget without `designs` looks and works as before.
 * **Actual invoiced** cell: a button (`b-payinv`) that opens the Invoices & payments window with the invoice form; amounts
   are no longer typed in the table.
 * Upgrades stay on each version's lines ("Upgrades in vN"); building a design copies the design lines' upgrades.
+* Design `lot?` (lot price): cards, editor and compare show **Gross return** = selling price − lot − budget (falls back
+  to "Selling price − budget" when no design has a lot price).
+* The Designs card stays open after building (built design outlined, "Switch to this" on the others); the editor opens
+  under all cards. While no design is built and the budget is empty (`dEmpty`), the Versions/tiles/Items cards are hidden
+  behind a "No design is built yet" note. Building adds every catalog item type missing from the design at $0. Version
+  cards show "Design: <name>" for versions made from a design. Discard resets the Designs card state.
